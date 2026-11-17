@@ -14,7 +14,7 @@
   const ESTADO = {
     ok: ["Leído hoy", "ok"], manual: ["Búsqueda web", "aviso"], bloqueado: ["Tienda bloquea lectura", "mal"],
     sin_precio: ["Sin precio en la página", "mal"], robots: ["robots.txt lo impide", "mal"],
-    referencia: ["Referencia de medidas", "aviso"],
+    referencia: ["Solo referencia", "aviso"],
   };
   const orden = ["Cerebro", "Cara", "Audio", "Sensores", "Movimiento", "Energía", "Todo en uno", "Alternativa todo en uno"];
 
@@ -31,7 +31,7 @@
     const e = ESTADO[l.estado] || [l.estado, "mal"];
     const d = l.disponible && DISP[l.disponible];
     const precio = l.precio != null
-      ? `<b>${num(l.precio)} ${esc(l.moneda)}</b>${l.unidades > 1 ? ` <small>por ${l.unidades}</small>` : ""}${l.moneda !== "USD" && l.precio_usd != null ? `<small>≈ USD ${num(l.precio_usd)}${l.unidades > 1 ? " c/u" : ""}</small>` : ""}`
+      ? `<b>${num(l.precio)} ${esc(l.moneda)}</b>${l.unidades > 1 ? ` <small>por ${l.unidades}</small>` : ""}${(l.moneda !== "USD" || l.unidades > 1) && l.precio_usd != null ? `<small>≈ USD ${num(l.precio_usd)}${l.unidades > 1 ? " c/u" : ""}</small>` : ""}`
       : `<b>—</b>`;
     return `<tr${l.estado === "ok" && l.precio_usd === minima ? ' class="mejor"' : ""}>
       <td><a href="${esc(l.url)}" rel="noopener" target="_blank">${esc(l.tienda)}</a>${l.nota ? `<small>${esc(l.nota)}</small>` : ""}</td>

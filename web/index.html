@@ -36,12 +36,12 @@
 
 <header class="portada" id="portada">
   <div class="wrap">
-    <p class="folio"><span>Zine de investigación · Nº 1</span><span>Piloto de mini robot asistente IA</span><span>Revisado el 16-11-2026</span></p>
+    <p class="folio"><span>Zine de investigación · Nº 1</span><span>Piloto de mini robot asistente IA</span><span>Revisado el 17-11-2026</span></p>
     <div class="portada-grid">
       <div>
         <h1 class="masthead"><span data-ink="BITU">BITU</span></h1>
         <p class="lema">Tu <em>bit</em> de genio.</p>
-        <p class="intro">Un robot de escritorio que escucha, piensa con un LLM en la nube o en un PC propio, y responde con voz y una cara en pantalla. Pensado para que adolescentes lo armen con piezas de unos USD 22–50.</p>
+        <p class="intro">Un robot de escritorio que escucha, piensa con un LLM en la nube (DeepSeek) o en un PC propio, y responde con voz y una cara en pantalla. Pensado para que adolescentes lo armen con piezas de unos USD 34–71.</p>
       </div>
       <figure class="sello">
         <svg viewBox="0 0 320 300" role="img" aria-labelledby="sello-t">
@@ -65,18 +65,20 @@
 
     <div class="portada-grid" style="margin-top:clamp(28px,4vw,48px);align-items:start">
       <div class="prose">
-        <p><b>Qué hay en este zine.</b> Lo que existe hoy (Emo, Vector, Stack-chan, xiaozhi), cada componente con su precio y fuente, la arquitectura de voz, las carcasas, tres formas de armarlo con su tabla de pines, las normas de seguridad para un aula y un plan con puertas de decisión.</p>
+        <p><b>Qué hay en este zine.</b> Lo que existe hoy (Emo, Vector, Stack-chan, xiaozhi), cada componente con su precio y fuente, la arquitectura de voz, la carcasa elegida (Delta suave), dos formas de armarlo (básico y expresivo) con su tabla de pines, las normas de seguridad para un aula y un plan con puertas de decisión.</p>
         <p>Los precios se revisaron en noviembre de 2026 y no incluyen envío. Lo marcado <span class="est">est.</span> es estimación propia, no medida.</p>
       </div>
       <aside class="pedido" aria-labelledby="pedido-t">
         <h2 id="pedido-t">Recomendada para el piloto</h2>
         <p class="nombre">Propuesta A · ESP32-S3</p>
-        <p class="precio"><span>USD 22–50</span><small>por robot<br>barato · retail</small></p>
+        <p class="precio"><span>USD 34–71</span><small>por robot<br>barato · retail</small></p>
         <dl>
           <dt>Montaje</dt><dd>3–5 h</dd>
           <dt>Latencia</dt><dd>1,5–3 s <span class="est">est.</span></dd>
-          <dt>Nube con Haiku</dt><dd>≈ USD 0,90/mes</dd>
+          <dt>LLM DeepSeek</dt><dd>≈ USD 0,04–0,19/mes <span class="est">est.</span></dd>
           <dt>Batería</dt><dd>No (USB-C)</dd>
+          <dt>Carcasa</dt><dd>Delta suave · 9,8 × 8,4 × 8,8 cm</dd>
+          <dt>Pantalla</dt><dd>Redonda táctil 1,85″ (Ø 5,5 cm)</dd>
         </dl>
         <a class="boton" href="#ensamble">Ir al ensamble
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"/></svg>
@@ -153,7 +155,7 @@
         <tr><td><b>ESP32-S3-BOX-3</b></td><td>Todo en uno: pantalla 2,4", 2 mics, altavoz, carcasa</td><td class="r">49,95</td><td><a href="https://www.adafruit.com/product/5835">Adafruit</a></td></tr>
         <tr><td>M5Stack CoreS3 / SE</td><td>Pantalla 2", 2 mics, altavoz; base de StackChan</td><td class="r">59,90 / 38,60</td><td><a href="https://www.cnx-software.com/2024/05/31/m5stack-cores3-se-cost-down-esp32-s3-iot-controller-features-a-2-inch-touch-display-a-microsd-card-slot-a-speaker-two-microphones/">CNX</a></td></tr>
         <tr><td>Raspberry Pi Zero 2 W</td><td>Wake word y STT tiny; no LLM</td><td class="r">19,05</td><td><a href="https://www.adafruit.com/product/5291">Adafruit</a></td></tr>
-        <tr><td>Raspberry Pi 5 · 4 / 8 / 16 GB</td><td>8 GB es el mínimo para LLM local de 1–3B</td><td class="r">130 / 200 / 385</td><td><a href="https://www.adafruit.com/product/5813">Adafruit</a>, <a href="https://omgubuntu.co.uk/2026/11/raspberry-pi-5-price-goes-up-and-up">OMG! Ubuntu</a></td></tr>
+        <tr><td>Raspberry Pi 5 · 4 / 8 / 16 GB</td><td>8 GB es el mínimo para LLM local de 1–3B. <b>Descartada para el MVP</b> por precio</td><td class="r">130 / 200 / 385</td><td><a href="https://www.adafruit.com/product/5813">Adafruit</a>, <a href="https://omgubuntu.co.uk/2026/11/raspberry-pi-5-price-goes-up-and-up">OMG! Ubuntu</a></td></tr>
         <tr><td>Orange Pi 5 Max / Rock 5B+ 8 GB</td><td>NPU 6 TOPS con RKLLM; ecosistema menos amable</td><td class="r">~225 / ~251</td><td><a href="https://dev.to/revenueclaw/orange-pi-5-max-vs-rock-5b-the-32gb-sbc-battle-in-2026-3ho0">dev.to</a></td></tr>
       </tbody>
     </table></div>
@@ -164,12 +166,23 @@
         <div class="tabla"><table>
           <thead><tr><th>Pantalla</th><th class="r">USD</th></tr></thead>
           <tbody>
-            <tr><td><b>GC9A01 1,28" redonda</b> 240×240 SPI</td><td class="r">8,90 · ~3–4 <span class="est">est.</span></td></tr>
+            <tr><td><b>Redonda táctil 1,85" ST77916</b> 360×360 QSPI, Ø 5,5 cm · elegida para A</td><td class="r">17,99 (Waveshare) · ~12 <span class="est">est.</span></td></tr>
+            <tr><td>GC9A01 1,28" redonda 240×240 SPI (antes en A)</td><td class="r">8,90 · ~3–4 <span class="est">est.</span></td></tr>
             <tr><td>Adafruit GC9A01A 1,28" (EYESPI)</td><td class="r">17,50</td></tr>
             <tr><td><b>IPS 2" ST7789</b> 320×240</td><td class="r">19,95 · ~4–6 <span class="est">est.</span></td></tr>
             <tr><td>OLED 0,96"/1,3" SSD1306</td><td class="r">~2–4 <span class="est">est.</span></td></tr>
           </tbody>
         </table></div>
+        <h3>¿Una cara más grande?</h3>
+        <div class="tabla"><table>
+          <thead><tr><th>Candidata (búsqueda 17-11-2026)</th><th class="r">USD</th></tr></thead>
+          <tbody>
+            <tr><td><b>Redonda 2,1" ST7701S</b> 480×480, ≈ Ø 5,3 cm (+36 % de área). Interfaz RGB de ≈ 20 GPIO: no cabe en la DevKit con el audio</td><td class="r">11,75–49,90</td></tr>
+            <tr><td>Waveshare ESP32-S3-Touch-LCD-2.1 (placa + pantalla 2,1"). Sin micrófono ni altavoz; xiaozhi no la soporta</td><td class="r">—</td></tr>
+            <tr><td>Waveshare ESP32-S3-Touch-AMOLED-2.16, 480×480. xiaozhi la soporta, pero parece cuadrada (≈ 3,9 cm de lado): no ganaría área</td><td class="r">29,99–31,99</td></tr>
+          </tbody>
+        </table></div>
+        <p class="cat-nota">No hay redonda QSPI entre 1,85" y 2,1", así que A se queda con la 1,85". La 2,1" queda como opción para la variante de B. Detalle y fuentes en <code>docs/research/02-componentes-y-precios.md</code>.</p>
         <h3>Movimiento</h3>
         <div class="tabla"><table>
           <thead><tr><th>Servo</th><th class="r">USD</th></tr></thead>
@@ -212,7 +225,7 @@
   <div class="wrap">
     <div class="hoja-head">
       <h2 class="h-riso" id="sw-t">Cómo piensa</h2>
-      <p>Cliente ligero estilo xiaozhi: el ESP32-S3 solo escucha y habla. Todo lo demás corre en un servidor propio.</p>
+      <p>Cliente ligero estilo xiaozhi: el ESP32-S3 solo escucha y habla. Todo lo demás corre en un servidor propio, que manda a la API de DeepSeek solo el texto de cada frase.</p>
     </div>
 
     <figure class="pipeline" aria-label="Pipeline de voz">
@@ -220,11 +233,11 @@
         <li><b>Mic</b><span>INMP441</span><small>Opus 16 kHz</small></li>
         <li><b>Activar</b><span>Botón o wake word</span><small>ESP-SR local</small></li>
         <li><b>VAD</b><span>Fin de frase</span><small>Silero</small></li>
-        <li><b>STT</b><span>Voz a texto</span><small>Whisper / nube</small></li>
+        <li><b>STT</b><span>Voz a texto</span><small>Vosk / Whisper local</small></li>
         <li class="filtro"><b>Filtro</b><span>¿Apto 13+?</span><small>entrada</small></li>
-        <li><b>LLM</b><span>Haiku 5.5 u Ollama</span><small>+ system prompt</small></li>
+        <li><b>LLM</b><span>DeepSeek u Ollama</span><small>deepseek-flash + system prompt</small></li>
         <li class="filtro"><b>Filtro</b><span>Revisar salida</span><small>salida</small></li>
-        <li><b>TTS → altavoz</b><span>Piper / nube</span><small>streaming</small></li>
+        <li><b>TTS → altavoz</b><span>Voz local / nube</span><small>streaming</small></li>
       </ol>
       <div class="donde" aria-hidden="true"><span class="dev">ESP32</span><span class="srv">Servidor propio (PC del aula o VPS)</span><span class="dev2">ESP32</span></div>
     </figure>
@@ -235,18 +248,21 @@
         <div class="tabla"><table>
           <thead><tr><th>Cadena</th><th class="r">Total</th></tr></thead>
           <tbody>
-            <tr><td>ESP32 → servidor → nube (streaming)</td><td class="r">1,5–3 s</td></tr>
+            <tr><td>ESP32 → servidor (ASR local) → <b>DeepSeek</b></td><td class="r">1,6–3,3 s</td></tr>
+            <tr><td>ESP32 → servidor → nube (STT y TTS en la nube)</td><td class="r">1,5–3 s</td></tr>
             <tr><td>ESP32 → PC local (GPU, LLM 7B, Piper)</td><td class="r">1,2–2,7 s</td></tr>
-            <tr><td>Pi 5 todo local (1–3B)</td><td class="r">3–8 s</td></tr>
+            <tr><td>Pi 5 todo local (1–3B) · descartada para el MVP</td><td class="r">3–8 s</td></tr>
           </tbody>
         </table></div>
         <h3>Coste de nube por robot <span class="est">est.</span></h3>
         <div class="tabla"><table>
-          <caption>300 turnos/mes. El TTS domina; con Piper baja a ≈ USD 0,15.</caption>
+          <caption>300 turnos/mes de 1500 tokens de entrada y 150 de salida.</caption>
           <thead><tr><th>Configuración</th><th class="r">USD/mes</th></tr></thead>
           <tbody>
-            <tr><td>STT + <b>Claude Haiku 5.5</b> + TTS nube</td><td class="r">≈ 0,90</td></tr>
-            <tr><td>STT + Claude Sonnet 5.5 + TTS nube</td><td class="r">≈ 2,20</td></tr>
+            <tr><td>ASR y voz locales + <b>DeepSeek Flash</b> (fuera de pico, con caché)</td><td class="r">≈ 0,04</td></tr>
+            <tr><td>ASR y voz locales + DeepSeek Flash (hora pico, sin caché)</td><td class="r">≈ 0,19</td></tr>
+            <tr><td>STT + DeepSeek Flash + TTS en la nube</td><td class="r">≈ 0,90–1,00</td></tr>
+            <tr><td>DeepSeek V4 Pro en lugar de Flash (solo LLM)</td><td class="r">≈ 0,77</td></tr>
           </tbody>
         </table></div>
         <h3>Activación</h3>
@@ -256,16 +272,30 @@
         <h3>Seguridad para 12–19 años</h3>
         <ol class="capas">
           <li><b>System prompt fijo:</b> compañero amable, sin contenido sexual, violento ni de autolesión; deriva a adultos de confianza y dice que es una IA.</li>
-          <li><b>Clasificador de entrada y salida:</b> Haiku como juez «¿apto 13+?»; bloquea y reformula.</li>
+          <li><b>Clasificador de entrada y salida:</b> el <code>safety_check</code> de DeepSeek más un juez propio «¿apto 13+?»; bloquea y reformula.</li>
           <li><b>Temas sensibles:</b> respuesta empática fija con recursos locales.</li>
           <li><b>Límites de uso:</b> tiempo diario y horario.</li>
           <li><b>Sin memoria persistente</b> por defecto, o visible y borrable.</li>
           <li><b>Antidependencia:</b> nunca «soy tu único amigo»; propone actividades fuera de la pantalla.</li>
         </ol>
         <h3>Privacidad</h3>
-        <p>Servidor propio obligatorio: el servidor público de xiaozhi está en China. No guardar audio; transcripciones solo con consentimiento parental y retención corta. GDPR art. 8 y COPPA: confirmar con asesoría legal. Anthropic permite productos para menores con salvaguardas (<a href="https://support.claude.com/en/articles/9307344-responsible-use-of-anthropic-s-models-guidelines-for-organizations-serving-minors">guía</a>).</p>
+        <p>Servidor propio obligatorio: el servidor público de xiaozhi está en China. El audio no sale del servidor: no se guarda y a DeepSeek solo llega el texto, sin nombres ni identificadores. <b>DeepSeek trata los datos en China y su servicio no está dirigido a niños</b> (<a href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html">privacidad</a>). Por eso el consentimiento parental lo dice explícitamente, se revisa la política del centro y del país, y el plan B es Ollama en un PC del aula. GDPR art. 8 y COPPA: confirmar con asesoría legal.</p>
       </div>
     </div>
+
+    <h3 style="margin-top:clamp(28px,4vw,44px)">DeepSeek en el servidor</h3>
+    <div class="tabla"><table>
+      <caption>Decisión del 17-11-2026. Plantilla lista en <code>tools/servidor/config-deepseek.yaml</code>; detalle en el doc 03 §5.3. Sin probar todavía con el robot.</caption>
+      <tbody>
+        <tr><td><b>Modelo</b></td><td><code>deepseek-flash</code> (V4.1 Flash), sin modo de razonamiento: menos latencia y coste. <code>deepseek-v4-pro</code> si falta calidad en español.</td></tr>
+        <tr><td><b>Conexión</b></td><td>xiaozhi-esp32-server ya trae <code>DeepSeekLLM</code> (API con formato OpenAI, <code>https://api.deepseek.com</code>) y desactiva el razonamiento solo. Basta con elegirlo y poner la clave en el servidor.</td></tr>
+        <tr><td><b>Precio</b></td><td>USD 0,30 / 1,20 por millón de tokens de entrada / salida en hora pico y la mitad fuera de pico; el system prompt en caché cuesta 50 veces menos.</td></tr>
+        <tr><td><b>Voz</b></td><td>El TTS de DeepSeek no habla español, así que la voz y el ASR (Vosk en español) van en el servidor propio.</td></tr>
+        <tr><td><b>Moderación</b></td><td><code>safety_check: high</code> revisa entrada y salida, pero la salida al final: hace falta un parche propio, un filtro por frase y cortar el audio si llega un rechazo.</td></tr>
+        <tr><td><b>Configuración segura</b></td><td>Sin memoria, sin herramientas (ni búsqueda web ni cambio de personaje) y con el system prompt para 12–19 años.</td></tr>
+        <tr><td><b>Plan B</b></td><td>Ollama en un PC del aula u otra API con formato OpenAI: se cambia una línea del servidor, no el firmware.</td></tr>
+      </tbody>
+    </table></div>
   </div>
 </section>
 
@@ -274,55 +304,59 @@
   <div class="wrap">
     <div class="hoja-head">
       <h2 class="h-riso" id="car-t">La carcasa</h2>
-      <p>Impresa en 3D (PLA para A, PETG con servos o cerca de la Pi), cortada en láser o comprada hecha.</p>
+      <p>Elegida: <b>Delta suave</b>, un prisma triangular de 11,8 cm de lado con la cara de Bitu, una pantalla redonda de 5,5 cm, en el centro. Se imprime en PLA en tres piezas; la B, con servos, irá en PETG.</p>
     </div>
 
     <div class="plano">
       <figure>
         <svg viewBox="0 0 520 400" role="img" aria-labelledby="plano-t">
-          <title id="plano-t">Plano de la cabeza del nivel A: 65–75 mm, pantalla frontal inclinada 10–15 grados, micrófono a 30 mm o más del altavoz trasero</title>
+          <title id="plano-t">Plano de la carcasa Delta suave: vista frontal triangular de 9,8 cm de ancho y 8,8 de alto con la pantalla redonda de 5,5 cm en el centro, a 3,4 cm del suelo; vista lateral de 8,4 cm de fondo con la pantalla inclinada 12 grados y el altavoz en la cara trasera, a 5,4 cm del micrófono</title>
           <defs>
             <marker id="fl" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#17143a"/></marker>
-            <pattern id="rej" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2" fill="#2c3fd6"/></pattern>
+            <pattern id="rej" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.8" fill="#2c3fd6"/></pattern>
           </defs>
-          <g>
-            <rect x="128" y="88" width="230" height="230" rx="70" fill="none" stroke="#ff4fa0" stroke-width="5" transform="translate(7 7)"/>
-            <rect x="128" y="88" width="230" height="230" rx="70" fill="#ffe27a" stroke="#2c3fd6" stroke-width="5"/>
-          </g>
-          <g transform="rotate(-12 200 200)">
-            <rect x="112" y="140" width="22" height="122" rx="4" fill="#2c3fd6"/>
-            <text x="92" y="206" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#17143a" text-anchor="end" transform="rotate(12 92 206)">GC9A01</text>
-          </g>
-          <rect x="350" y="170" width="18" height="70" rx="3" fill="url(#rej)"/>
-          <text x="380" y="210" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#17143a">altavoz</text>
-          <circle cx="243" cy="94" r="5" fill="#17143a"/>
-          <text x="256" y="76" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#17143a">mic Ø1,5–2</text>
-          <rect x="196" y="190" width="98" height="38" rx="3" fill="none" stroke="#17143a" stroke-width="2" stroke-dasharray="6 4"/>
-          <text x="245" y="214" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#17143a" text-anchor="middle">DevKit 63×25</text>
-          <line x1="128" y1="352" x2="358" y2="352" stroke="#17143a" stroke-width="2" marker-start="url(#fl)" marker-end="url(#fl)"/>
-          <text x="243" y="378" font-family="JetBrains Mono" font-size="15" font-weight="700" fill="#17143a" text-anchor="middle">65–75 mm</text>
-          <path d="M120 300 L120 330 M120 330 L148 324" stroke="#17143a" stroke-width="2" fill="none"/>
-          <text x="40" y="340" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#17143a">10–15°</text>
-          <path d="M250 98 Q330 110 352 170" stroke="#ff4fa0" stroke-width="3" fill="none" stroke-dasharray="7 5" marker-end="url(#fl)"/>
-          <text x="372" y="140" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#17143a">≥ 30 mm</text>
+          <text x="125" y="34" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" text-anchor="middle">FRENTE</text>
+          <path d="M52.0 330.0 L198.0 330.0 A29.4 29.4 0 0 0 223.4 285.9 L150.5 159.5 A29.4 29.4 0 0 0 99.5 159.5 L26.6 285.9 A29.4 29.4 0 0 0 52.0 330.0Z" fill="none" stroke="#ff4fa0" stroke-width="5" transform="translate(6 6)"/>
+          <path d="M52.0 330.0 L198.0 330.0 A29.4 29.4 0 0 0 223.4 285.9 L150.5 159.5 A29.4 29.4 0 0 0 99.5 159.5 L26.6 285.9 A29.4 29.4 0 0 0 52.0 330.0Z" fill="#ffe27a" stroke="#2c3fd6" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="125.0" cy="258.5" r="65.1" fill="#fff" stroke="#2c3fd6" stroke-width="3"/>
+          <circle cx="125.0" cy="258.5" r="48.0" fill="#2c3fd6"/>
+          <rect x="111.0" y="244.5" width="8" height="15" rx="2" fill="#fff"/><rect x="131.0" y="244.5" width="8" height="15" rx="2" fill="#fff"/>
+          <text x="125.0" y="288.5" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" fill="#fff" text-anchor="middle" style="fill:#fff">Ø 5,5 cm</text>
+          <circle cx="90.1" cy="186.2" r="4" fill="#17143a"/>
+          <rect x="151.9" y="179.2" width="10" height="14" rx="2" fill="none" stroke="#17143a" stroke-width="2"/>
+          <text x="78.1" y="180.2" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" text-anchor="end">mic</text>
+          <text x="171.9" y="180.2" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12">táctil</text>
+          <line x1="22.6" y1="356" x2="227.4" y2="356" stroke="#17143a" stroke-width="2" marker-start="url(#fl)" marker-end="url(#fl)"/>
+          <text x="125" y="382" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="15" text-anchor="middle">9,8 cm</text>
+          <text x="373.5" y="34" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" text-anchor="middle">LADO</text>
+          <rect x="300" y="144.8" width="147.0" height="185.2" rx="4" fill="#fff" stroke="#2c3fd6" stroke-width="4"/>
+          <g transform="rotate(12 300 258.5)"><rect x="283.4" y="193.4" width="16.6" height="130.2" rx="4" fill="#2c3fd6"/></g>
+          <text x="286.0" y="181.4" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" text-anchor="end">12°</text>
+          <rect x="444.0" y="237.6" width="9" height="42.0" rx="3" fill="url(#rej)"/>
+          <text x="439.0" y="229.6" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="12" text-anchor="end">altavoz</text>
+          <rect x="310.0" y="285.9" width="127.0" height="33.6" rx="2" fill="none" stroke="#17143a" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="373.5" y="309.0" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="11" text-anchor="middle">DevKit + placa</text>
+          <line x1="281.4" y1="356" x2="447.0" y2="356" stroke="#17143a" stroke-width="2" marker-start="url(#fl)" marker-end="url(#fl)"/>
+          <text x="367.2" y="382" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="15" text-anchor="middle">8,4 cm</text>
+          <line x1="475.0" y1="144.8" x2="475.0" y2="330" stroke="#17143a" stroke-width="2" marker-start="url(#fl)" marker-end="url(#fl)"/>
+          <text x="483.0" y="213.4" font-family="JetBrains Mono" font-weight="700" fill="#17143a" font-size="15" transform="rotate(90 483.0 213.4)">8,8 cm</text>
+          <line x1="20" y1="331" x2="505" y2="331" stroke="#17143a" stroke-width="1.5" opacity=".35"/>
         </svg>
-        <figcaption>Cabeza nivel A, vista lateral. Medidas de referencia <span class="est">est.</span>: mide tus módulos antes de diseñar.</figcaption>
+        <figcaption>Carcasa elegida: <b>Delta suave</b> (propuesta A), vistas frontal y lateral a escala. El centro de la pantalla queda a 3,4 cm de la mesa. Medidas del modelo CAD (doc 09); sin imprimir todavía. <a href="#3d-carcasa-delta-suave">Verla en 3D</a>.</figcaption>
       </figure>
       <div>
         <div class="tabla"><table>
           <thead><tr><th>Pieza</th><th class="r">Gramos</th><th class="r">Horas</th><th class="r">USD</th></tr></thead>
           <tbody>
-            <tr><td>Nivel A · cabeza 70 mm</td><td class="r">60–90</td><td class="r">3–5</td><td class="r">1–2</td></tr>
-            <tr><td>Nivel B · cabeza 55 mm + pan/tilt</td><td class="r">150–200</td><td class="r">7–10</td><td class="r">2,3–4,4</td></tr>
-            <tr><td>Nivel C · cuerpo Pi 5 ventilado</td><td class="r">220–300</td><td class="r">10–14</td><td class="r">3,5–6,6</td></tr>
+            <tr><td>A · Delta suave (frontal 49 g, trasera 37,1 g, antena 1,3 g)</td><td class="r">87,4</td><td class="r">≈ 7,3</td><td class="r">1,75</td></tr>
+            <tr><td>B · variante Delta para IPS 2" + pan/tilt (por diseñar)</td><td class="r">150–200</td><td class="r">7–10</td><td class="r">2,3–4,4</td></tr>
           </tbody>
-          <caption>Capa 0,2 mm, relleno 15 %, Bambu A1 mini. Estimado.</caption>
+          <caption>A: gramos del CAD (PLA 1,24 g/cm³) y horas estimadas a 12 g/h. B: estimado. Capa 0,2 mm, relleno 15 %.</caption>
         </table></div>
         <h3 style="margin-top:1em">Sin impresora</h3>
         <ul class="lista-limpia">
           <li class="prod"><b>Servicio JLC3DP</b><span class="r">desde 1/pieza</span><p>PLA FDM, entrega en 96 h.</p></li>
-          <li class="prod"><b>Corte láser 3 mm</b><span class="r">2–5 <span class="est">est.</span></span><p>Caja finger-joint de 60 mm, hueco de 33 mm para la GC9A01.</p></li>
-          <li class="prod"><b>Comprar impresora (A1 mini)</b><span class="r">199,99–299</span><p>Se amortiza desde ~15–20 robots <span class="est">est.</span></p></li>
+                    <li class="prod"><b>Comprar impresora (A1 mini)</b><span class="r">199,99–299</span><p>Se amortiza desde ~15–20 robots <span class="est">est.</span></p></li>
         </ul>
         <h3>Diseños de partida</h3>
         <p>Stack-chan (<a href="https://github.com/stack-chan/stack-chan">GitHub</a>), caja Xiaozhi (<a href="https://makerworld.com/models/1300610">MakerWorld 1300610</a>), compañero de 5 GDL (<a href="https://makerworld.com/models/2913469">2913469</a>), Clawd Mochi (<a href="https://makerworld.com/models/2559505">2559505</a>). <b>Revisa la licencia</b>: varias son BY-NC o exclusivas de MakerWorld.</p>
@@ -337,7 +371,7 @@
 <section class="hoja rosa" id="ensamble" aria-labelledby="ens-t">
   <div class="wrap">
     <div class="hoja-head">
-      <h2 class="h-riso" id="ens-t">Tres formas de armarlo</h2>
+      <h2 class="h-riso" id="ens-t">Dos formas de armarlo</h2>
       <p>Elige una propuesta para ver su inventario, el precio, la tabla de pines y los pasos.</p>
     </div>
 
@@ -345,7 +379,6 @@
       <div class="pestanas" role="tablist" aria-label="Propuesta de ensamble">
         <button role="tab" id="tab-A" data-id="A" aria-controls="ficha" aria-selected="true"><span class="letra">A</span> Básico <span class="reco">recomendada</span></button>
         <button role="tab" id="tab-B" data-id="B" aria-controls="ficha" aria-selected="false" tabindex="-1"><span class="letra">B</span> Expresivo</button>
-        <button role="tab" id="tab-C" data-id="C" aria-controls="ficha" aria-selected="false" tabindex="-1"><span class="letra">C</span> Autónomo local</button>
       </div>
       <div class="conmutador" role="group" aria-label="Tipo de precio">
         <button type="button" data-modo="barato" aria-pressed="true">Barato</button>
@@ -356,7 +389,7 @@
     <div class="ficha" id="ficha" role="tabpanel" aria-live="polite">
       <div class="resumen impreso">
         <h3 id="f-nombre">Básico · cliente ligero ESP32-S3</h3>
-        <p class="total" id="f-total">≈ USD 22</p>
+        <p class="total" id="f-total">≈ USD 34</p>
         <p class="total-nota" id="f-nota"></p>
         <dl class="datos" id="f-datos"></dl>
         <h4 style="font:800 .8rem/1 var(--f-read);text-transform:uppercase;letter-spacing:.08em;margin:0 0 .5rem">Inventario de piezas</h4>
@@ -383,7 +416,7 @@
 
     <div class="alerta" style="margin-top:2.5rem">
       <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M22 4 41 38H3z"/><path d="M22 16v11M22 32v1" stroke-linecap="round"/></svg>
-      <p><b>Para el piloto:</b> arranca con 2–3 unidades <b>A′ (ESP32-S3-BOX-3, USD 49,95)</b>, sin soldar, y pasa a la A DIY en los talleres. La B es el «nivel 2» cuando la conversación ya funcione. Herramientas para A: soldador de 60 W regulable, estaño con flux, pinzas, pelacables, multímetro, protoboard, PC con Chrome o ESP-IDF e impresora 3D o servicio.</p>
+      <p><b>Para el piloto:</b> arranca con 3 unidades <b>A en la carcasa Delta suave</b> y lleva esa misma A a los talleres. La B es el «nivel 2» cuando la conversación ya funcione. La variante A′ (ESP32-S3-BOX-3) queda aparcada y la C (Raspberry Pi 5) queda <b>descartada para el MVP</b> por precio; el modo local usa Ollama en un PC del aula. Herramientas para A: soldador de 60 W regulable, estaño con flux, pinzas, pelacables, multímetro, protoboard, PC con Chrome o ESP-IDF e impresora 3D o servicio.</p>
     </div>
   </div>
 </section>
@@ -393,7 +426,7 @@
   <div class="wrap">
     <div class="hoja-head">
       <h2 class="h-riso" id="v3d-t">Bitu en 3D</h2>
-      <p>Todas las piezas modeladas a escala real en milímetros y la simulación del montaje físico de la propuesta A, paso a paso. Es un modelo de referencia, no un CAD de fabricación: lo marcado (est.) en las medidas no se ha verificado con la pieza.</p>
+      <p>Las piezas de las propuestas A y B modeladas a escala real (medidas en centímetros), la simulación del montaje de la propuesta A paso a paso y los diseños de carcasa en CAD, con la elegida, <a href="#3d-carcasa-delta-suave">Delta suave</a>. La simulación monta la propuesta A dentro de la Delta suave, con las mallas reales del CAD y la pantalla de 1,85".</p>
     </div>
 
     <div class="v3d" id="v3d">
@@ -401,6 +434,7 @@
         <div class="conmutador" role="group" aria-label="Modo del visor">
           <button type="button" data-modo3d="ensamble" aria-pressed="true">Simulación del ensamblaje</button>
           <button type="button" data-modo3d="piezas" aria-pressed="false">Todas las piezas</button>
+          <button type="button" data-modo3d="carcasas" aria-pressed="false">Diseños de carcasa</button>
         </div>
         <div class="v3d-acciones">
           <button type="button" class="v3d-chip" id="v3d-rayos" aria-pressed="false">Ver interior</button>
@@ -423,6 +457,22 @@
           </div>
           <label class="v3d-rango"><span class="sr">Línea de tiempo del ensamblaje</span><input type="range" id="v3d-barra" min="0" max="8" step="0.01" value="0"></label>
           <ol class="v3d-pasos" id="v3d-pasos"></ol>
+        </aside>
+
+        <aside class="v3d-panel v3d-panel-carcasas" hidden aria-live="polite">
+          <p class="v3d-num">Carcasa elegida: Delta suave · los otros 4 quedan como referencia</p>
+          <div class="v3d-opciones" role="group" aria-label="Diseño de carcasa">
+            <button type="button" class="v3d-chip" data-carcasa="cubo" aria-pressed="false">1 · Cubo 70</button>
+            <button type="button" class="v3d-chip" data-carcasa="capsula" aria-pressed="false">2 · Cápsula</button>
+            <button type="button" class="v3d-chip" data-carcasa="lampara" aria-pressed="false">3 · Lámpara</button>
+            <button type="button" class="v3d-chip" data-carcasa="delta" aria-pressed="false">4 · Delta</button>
+            <button type="button" class="v3d-chip" data-carcasa="delta-suave" aria-pressed="true">5 · Delta suave ✓ elegida</button>
+          </div>
+          <h3 id="v3d-carc-nombre">—</h3>
+          <p id="v3d-carc-idea"></p>
+          <dl class="v3d-carc-datos" id="v3d-carc-datos"></dl>
+          <p class="v3d-nota" id="v3d-carc-imp"></p>
+          <p class="v3d-nota">«Ver interior» deja la carcasa translúcida para comprobar la electrónica (volúmenes con las medidas de ficha). Archivos imprimibles (STL y STEP) en <code>cad/carcasas/</code>.</p>
         </aside>
 
         <aside class="v3d-panel v3d-panel-piezas" hidden>
@@ -450,9 +500,7 @@
       <div class="conmutador" id="cat-filtro" role="group" aria-label="Filtrar por propuesta">
         <button type="button" data-prop="todas" aria-pressed="true">Todas</button>
         <button type="button" data-prop="A" aria-pressed="false">A</button>
-        <button type="button" data-prop="A′" aria-pressed="false">A′</button>
         <button type="button" data-prop="B" aria-pressed="false">B</button>
-        <button type="button" data-prop="C" aria-pressed="false">C</button>
       </div>
       <div class="conmutador" id="cat-orden" role="group" aria-label="Ordenar">
         <button type="button" data-orden="categoria" aria-pressed="true">Por tipo</button>
@@ -463,6 +511,21 @@
     <p class="cat-nota" id="cat-nota-total" hidden>El total suma piezas × cantidad más consumibles (carcasa, cables, tornillos) del doc 02. «Retail leído hoy» usa solo precios leídos automáticamente; si una pieza no tiene lectura, toma el del doc 05.</p>
 
     <div class="cat-grid" id="cat-grid"></div>
+
+    <h3>Antes de pagar</h3>
+    <p class="cat-nota">Diez comprobaciones para no tener que recomprar. Pide primero una unidad completa e imprime la carcasa de prueba; el resto, cuando todo encaje. La lista completa con el porqué de cada punto está en <code>docs/research/07-precios-exactos.md</code>.</p>
+    <ul class="reglas">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>DevKit N16R8</b> con dos USB-C y 25,4 mm de ancho. El enlace de Adafruit es la N8R8: solo vale de referencia.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>Pantalla 1,85" «Touch» LCD Module</b>: trae un cable GH1.25 a hembras dupont, que en el montaje final se corta y se suelda.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>INMP441</b>, no INMP401 (que es analógico).</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>TTP223 de 15 × 11 mm</b>: el AT42QT1010 de Adafruit tiene otro tamaño.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>Altavoz de cavidad de 8 Ω 2 W y 30 × 20 mm</b>: el de 3 W no cabe.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>Cabeceras hembra de 8,5 mm de alto</b>, no las «short».</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>3 tornillos M2,5 × 40</b> (los kits llegan a 20–25 mm) e insertos para un agujero de 3,6 mm.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>Cable USB-C de datos</b> y cargador de 5 V 2 A.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>Adhesivo</b> (cinta de espuma de 2 mm y termofusible) y cable de silicona de 26–28 AWG.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><b>En B:</b> cargador con entrada USB-C (el PowerBoost es micro-USB), portapilas para celdas de 69–70 mm y pines macho para los servos.</li>
+    </ul>
 
     <p class="cat-nota">Fotos enlazadas desde la tienda de origen, que conserva sus derechos. Precios sin envío ni impuestos; las monedas se convierten a USD con open.er-api.com. Detalle y método en <code>docs/research/07-precios-exactos.md</code>.</p>
   </div>
@@ -521,7 +584,7 @@
     </div>
     <ol class="fases">
       <li><span class="sem">sem 1–2</span><b>Cimientos</b><p>Servidor propio, system prompt, filtro, licencias, marca.</p><span class="puerta">G0 · 0 fallos en 50 prompts</span></li>
-      <li><span class="sem">sem 2–3</span><b>Demo A′</b><p>3× ESP32-S3-BOX-3 con xiaozhi y latencia medida.</p><span class="puerta">G1 · p90 ≤ 3 s</span></li>
+      <li><span class="sem">sem 2–3</span><b>Demo A</b><p>3× Bitu A en carcasa Delta suave con xiaozhi y latencia medida.</p><span class="puerta">G1 · p90 ≤ 3 s</span></li>
       <li><span class="sem">sem 3–6</span><b>Bitu DIY</b><p>Perfboard, ojos animados, carcasa propia, modo Ollama.</p><span class="puerta">G2 · 5 unidades ≤ 5 h</span></li>
       <li><span class="sem">sem 7–9</span><b>Taller</b><p>Guía, seguridad y consentimiento; 8–12 adolescentes.</p><span class="puerta">G3 · ≥ 80 % termina</span></li>
       <li><span class="sem">sem 10+</span><b>Nivel 2</b><p>Propuesta B con servos y gestos vía MCP.</p><span class="puerta">G4 · presupuesto</span></li>
@@ -533,7 +596,7 @@
           <tbody>
             <tr><td><b>G0</b></td><td>Sin demo con menores; añadir LLM juez al filtro</td></tr>
             <tr><td><b>G1</b></td><td>TTS por frases y animación «pensando»; servidor en la red local</td></tr>
-            <tr><td><b>G2</b></td><td>Taller con A′ sin soldar; A DIY para mayores de 15</td></tr>
+            <tr><td><b>G2</b></td><td>Placa perforada ya soldada en el taller; soldar solo mayores de 15</td></tr>
             <tr><td><b>G3</b></td><td>Repetir con grupo más pequeño (1 adulto por 6)</td></tr>
             <tr><td><b>G4</b></td><td>B queda como proyecto de club</td></tr>
           </tbody>
@@ -542,8 +605,8 @@
       <div>
         <h3 style="margin-top:0">Esta semana</h3>
         <ol class="acciones" style="grid-template-columns:1fr">
-          <li>Levantar <code>xiaozhi-esp32-server</code> con Claude Haiku 5.5, sin guardar audio.</li>
-          <li>Pedir 3× ESP32-S3-BOX-3 y el material de la A para 5 unidades.</li>
+          <li>Levantar <code>xiaozhi-esp32-server</code> con la plantilla de DeepSeek, ASR local y sin guardar audio.</li>
+          <li>Pedir el material de la A para 8 unidades e imprimir una Delta suave de prueba.</li>
           <li>Escribir el system prompt para adolescentes y 50 prompts de red teaming.</li>
         </ol>
       </div>
@@ -559,8 +622,8 @@
     <h2 class="h-riso" style="font-size:clamp(2.2rem,5vw,3.6rem);margin-bottom:1.5rem">Fuentes</h2>
     <div class="dos-col">
       <div class="prose">
-        <p>Esta web es un reflejo de la carpeta <code>docs/</code>, que es la fuente de verdad. Cada cifra sale de ahí, con su enlace (~125 URL en <code>docs/research/fuentes.md</code>).</p>
-        <p><b>Huecos conocidos:</b> no se pudo abrir el listado HY-049986 de made-in-china; los precios de AliExpress son estimados; los de Emo y Eilik vienen de un competidor; ninguna latencia está medida en hardware real.</p>
+        <p>Esta web es un reflejo de la carpeta <code>docs/</code>, que es la fuente de verdad. Cada cifra sale de ahí, con su enlace (121 URL en <code>docs/research/fuentes.md</code>, más los enlaces dentro de cada doc).</p>
+        <p><b>Huecos conocidos:</b> no se pudo abrir el listado HY-049986 de made-in-china; los precios de AliExpress son estimados; los de Emo y Eilik vienen de un competidor; ninguna latencia está medida en hardware real. Sin probar todavía con el hardware: la pantalla de 1,85" con la placa propia de xiaozhi, la impresión de la Delta suave (tolerancias, insertos y ventana USB) y DeepSeek con el robot.</p>
       </div>
       <ul>
         <li><a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32 (firmware, MIT)</a></li>
@@ -568,12 +631,15 @@
         <li><a href="https://cdn.jsdelivr.net/gh/xinnan-tech/xiaozhi-esp32-server@main/docs/readme/README_en.md">xiaozhi-esp32-server</a></li>
         <li><a href="https://github.com/stack-chan/stack-chan">Stack-chan</a></li>
         <li><a href="https://www.adafruit.com/product/5835">ESP32-S3-BOX-3 en Adafruit</a></li>
-        <li><a href="https://platform.claude.com/docs/en/about-claude/pricing">Precios de Claude</a></li>
-        <li><a href="https://support.claude.com/en/articles/9307344-responsible-use-of-anthropic-s-models-guidelines-for-organizations-serving-minors">Anthropic: organizaciones con menores</a></li>
+        <li><a href="https://api-docs.deepseek.com/quick_start/pricing">Modelos y precios de la API de DeepSeek</a></li>
+        <li><a href="https://api-docs.deepseek.com/guides/safety">DeepSeek: moderación con safety_check</a></li>
+        <li><a href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html">Política de privacidad de DeepSeek</a></li>
+        <li><a href="https://www.waveshare.com/1.85inch-touch-lcd-module.htm">Waveshare 1.85inch Touch LCD Module</a></li>
+        <li><a href="https://dl.espressif.com/dl/schematics/esp_idf/DXF_ESP32-S3-DevKitC-1_V1.1_20220429.pdf">Plano del ESP32-S3-DevKitC-1 v1.1</a></li>
         <li><a href="https://omgubuntu.co.uk/2026/11/raspberry-pi-5-price-goes-up-and-up">Subida de precio de la Pi 5 (nov-2026)</a></li>
       </ul>
     </div>
-    <p class="pie"><span>Bitu · zine Nº 1 · piloto</span><span>docs/research · docs/plan</span><span>16-11-2026</span></p>
+    <p class="pie"><span>Bitu · zine Nº 1 · piloto</span><span>docs/research · docs/plan</span><span>17-11-2026</span></p>
   </div>
 </footer>
 

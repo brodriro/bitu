@@ -202,8 +202,9 @@ def main() -> int:
                 else:
                     mon = p["moneda"] or f.get("moneda_esperada") or "USD"
                     tasa = tasas.get(mon)
-                    lec.update(p, moneda=mon,
-                               precio_usd=round(p["precio"] / tasa, 2) if tasa else None)
+                    u = f.get("unidades", 1)  # packs: el precio leído es del pack; se reparte por unidad
+                    lec.update(p, moneda=mon, unidades=u,
+                               precio_usd=round(p["precio"] / u / tasa, 2) if tasa else None)
             print(f"  {pieza['id']:<10} {f['tienda']:<16} {lec['estado']:<10} "
                   f"{lec.get('precio', '')} {lec.get('moneda', '')}", file=sys.stderr)
             lecturas.append(lec)

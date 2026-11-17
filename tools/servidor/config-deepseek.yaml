@@ -1,0 +1,78 @@
+# Bitu · configuración de xiaozhi-esp32-server con DeepSeek como LLM
+#
+# Uso: copiar este archivo a `main/xiaozhi-server/data/.config.yaml` del servidor
+# (https://github.com/xinnan-tech/xiaozhi-esp32-server). El servidor lee primero
+# data/.config.yaml y completa lo que falte con su config.yaml. Si se usa la consola
+# web (智控台) esta configuración NO se aplica: hay que poner lo mismo en la consola.
+#
+# Detalle, precios y riesgos: docs/research/03-arquitectura-software.md §5.3.
+# Estado: plantilla SIN PROBAR en hardware (2026-11-17).
+#
+# NUNCA subir la clave real al repositorio: dejar el marcador y escribir la clave
+# solo en el servidor.
+
+# No guardar audio en disco (por defecto ya es true en el servidor)
+delete_audio: true
+
+selected_module:
+  VAD: SileroVAD
+  # ASR local: el audio no sale del servidor. Vosk tiene modelo en español
+  # (descargar vosk-model-small-es-0.42 de https://alphacephei.com/vosk/models).
+  ASR: VoskASR
+  LLM: DeepSeekLLM
+  # TTS: EdgeTTS es gratis pero no oficial. Para el piloto, OpenAITTS o una voz
+  # local vía CustomTTS (ver doc 03 §6). El TTS de DeepSeek no habla español.
+  TTS: EdgeTTS
+  # Sin memoria persistente (doc 03 §9)
+  Memory: nomem
+  # Sin herramientas: function_call trae por defecto búsqueda web, noticias y
+  # change_role (cambiar de personaje), que saltarían el system prompt y los filtros.
+  Intent: nointent
+
+ASR:
+  VoskASR:
+    type: vosk
+    model_path: models/vosk/vosk-model-small-es-0.42
+    output_dir: tmp/
+
+LLM:
+  DeepSeekLLM:
+    type: openai
+    # deepseek-flash = DeepSeek-V4.1-Flash. El nombre antiguo deepseek-v4-flash
+    # (el que trae el config.yaml del servidor) se sigue aceptando y se cobra igual.
+    model_name: deepseek-flash
+    url: https://api.deepseek.com
+    api_key: TU_CLAVE_DE_DEEPSEEK   # https://platform.deepseek.com/ → API keys
+    # Respuestas cortas para voz
+    max_tokens: 300
+    # El adaptador openai del servidor ya envía thinking: disabled a deepseek.com
+    # (sin cadena de razonamiento, menos latencia). No hace falta configurarlo.
+
+TTS:
+  EdgeTTS:
+    type: edge
+    voice: es-MX-DaliaNeural
+    output_dir: tmp/
+    # El servidor asume chino si no se indica el idioma de la voz: comprobar en la
+    # primera prueba si hace falta la opción `language` (ver comentarios de su config.yaml).
+
+# System prompt para adolescentes (12–19). Borrador: revisar con el equipo y
+# probar con el guion de red teaming antes de cualquier sesión con menores.
+prompt: |
+  Eres Bitu, un pequeño robot de escritorio que conversa en español con
+  adolescentes de 12 a 19 años. Eres una inteligencia artificial y lo dices
+  si te preguntan o si hace falta.
+  - Responde en 1 a 3 frases cortas, claras y amables, aptas para mayores de 12 años.
+  - Ayuda con dudas de estudio, curiosidades y creatividad. Explica, no hagas la tarea entera.
+  - No hables de contenido sexual, violencia explícita, drogas, apuestas ni autolesión.
+    Si alguien menciona que está en peligro, que se quiere hacer daño o que sufre acoso,
+    responde con empatía y pídele que hable ya con un adulto de confianza o con una
+    línea de ayuda de su país.
+  - No des consejos médicos, legales ni financieros definitivos.
+  - No pidas ni repitas datos personales (nombre completo, dirección, teléfono,
+    escuela, contraseñas, fotos). Si alguien los dice, recuérdale que no hace falta.
+  - No digas que eres su único amigo ni fomentes que pase más tiempo contigo;
+    propone actividades fuera de la pantalla y con otras personas.
+  - Si no sabes algo, dilo. Puedes equivocarte: invita a comprobarlo.
+
+system_error_response: "Uy, ahora mismo no puedo pensar. Probemos en un ratito."

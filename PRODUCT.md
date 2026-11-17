@@ -16,11 +16,11 @@ Lector principal (confirmado): el **equipo técnico / makers** que construirá e
 
 ## Product Purpose
 
-Piloto de un mini robot asistente IA físico de escritorio (cara en pantalla, micrófono, altavoz, movimiento opcional) que responde vía API de LLM en la nube o modelo local. La web reúne la investigación (estado del arte, componentes y precios, software, carcasas, propuestas de ensamble, seguridad), el nombre del proyecto y el plan de mejora. Éxito: el equipo puede pedir piezas y empezar a ensamblar la propuesta recomendada sin buscar fuera.
+Piloto de un mini robot asistente IA físico de escritorio (cara en pantalla, micrófono, altavoz, movimiento opcional) que responde vía API de LLM en la nube (DeepSeek por defecto desde el 2026-11-17) o modelo local. La web reúne la investigación (estado del arte, componentes y precios, software, carcasas, propuestas de ensamble, seguridad), el nombre del proyecto y el plan de mejora. Éxito: el equipo puede pedir piezas y empezar a ensamblar la propuesta recomendada sin buscar fuera.
 
 ## Positioning
 
-Robot abierto y construible por el propio equipo con piezas de ~USD 22–50, con cerebro intercambiable (nube o local) y pensado para adolescentes, no para niños pequeños.
+Robot abierto y construible por el propio equipo con piezas de ~USD 34–71, con cerebro intercambiable (nube o local) y pensado para adolescentes, no para niños pequeños.
 
 ## Capabilities and Constraints
 
