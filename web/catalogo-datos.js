@@ -1,6 +1,6 @@
 // Generado por tools/precios/scrape_precios.py. No editar a mano.
 window.CATALOGO = {
- "fecha": "2026-11-16",
+ "fecha": "2026-11-17",
  "tipo_cambio": {
   "fuente": "https://open.er-api.com/v6/latest/USD",
   "actualizado": "Tue, 17 Nov 2026 00:02:31 +0000"
@@ -8,92 +8,28 @@ window.CATALOGO = {
  "user_agent": "minirobot-precios/0.1 (investigacion de precios para un piloto educativo)",
  "piezas": [
   {
-   "id": "amoled175",
-   "nombre": "Waveshare ESP32-S3-Touch-AMOLED-1.75",
-   "cantidad": {},
-   "categoria": "Alternativa todo en uno",
-   "uso": "Sustituye a DevKit + pantalla + altavoz: ESP32-S3 con pantalla AMOLED redonda táctil de 1,75\" (466 × 466) y altavoz 8 Ω 2 W incluido; tiene placa propia en xiaozhi-esp32 (main/boards/waveshare/esp32-s3-touch-amoled-1.75). El micrófono doble solo está confirmado en la versión 1.75C.",
-   "imagen": null,
-   "modelo": "Waveshare ESP32-S3-Touch-AMOLED-1.75 / 1.75C",
-   "medidas": "Ø 48,96 × 10,4 mm",
-   "fuente_medidas": "https://core-electronics.com.au/esp32-s3-1-75inch-amoled-round-touch-display-development-board.html",
-   "alternativa": true,
-   "barato_est": null,
-   "retail_doc": 39.99,
-   "retail_min_leido": null,
-   "lecturas": [
-    {
-     "tienda": "Waveshare (1.75C, caja de aluminio)",
-     "url": "https://www.waveshare.com/esp32-s3-touch-amoled-1.75.htm",
-     "estado": "manual",
-     "nota": null,
-     "precio": 39.99,
-     "moneda": "USD",
-     "fecha": "2026-11-16",
-     "unidades": 1,
-     "disponible": "39,99–41,99 según versión",
-     "precio_usd": 39.99,
-     "metodo": "búsqueda web"
-    },
-    {
-     "tienda": "The Pi Hut",
-     "url": "https://thepihut.com/collections/maker-store/products/esp32-s3-1-75-amoled-round-touch-display-dev-board-466x466",
-     "estado": "manual",
-     "nota": null,
-     "precio": 32.7,
-     "moneda": "GBP",
-     "fecha": "2026-11-16",
-     "unidades": 1,
-     "disponible": "Oferta, pocas unidades",
-     "precio_usd": 43.13,
-     "metodo": "búsqueda web"
-    },
-    {
-     "tienda": "Abra Electronics (1.75C)",
-     "url": "https://abra-electronics.com/opto-illumination/lcds-and-displays/lcd-oled-displays/0.9-2.3/wave-33691-esp32-s3-1-75inch-amoled-round-touch-display-development-board-466-466-resolution-aluminum-alloy-case-onboard-dual-microphones-array-portable-mini-display.html",
-     "estado": "manual",
-     "nota": null,
-     "precio": 71.39,
-     "moneda": "USD",
-     "fecha": "2026-11-16",
-     "unidades": 1,
-     "disponible": null,
-     "precio_usd": 71.39,
-     "metodo": "búsqueda web"
-    }
-   ]
-  },
-  {
    "id": "esp32s3",
    "nombre": "ESP32-S3-DevKitC-1-N16R8",
    "cantidad": {
     "A": 1,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Cerebro",
-   "uso": "Microcontrolador Wi-Fi que captura y reproduce audio y dibuja la cara. xiaozhi pide la variante N16R8 (16 MB flash, 8 MB PSRAM).",
-   "imagen": "https://www.adafruit.com/images/480x360/5336-00.jpg",
+   "uso": "Microcontrolador Wi-Fi que captura y reproduce audio y dibuja la cara. xiaozhi pide la variante N16R8 (16 MB flash, 8 MB PSRAM). Comprar exactamente: N16R8, dos USB-C, 2 × 22 pines y 25,4 mm de ancho (filas a 22,86 mm); hay clones con micro-USB, con N8R8 o más anchos que no encajan en la carcasa.",
+   "imagen": null,
    "modelo": "Espressif ESP32-S3-DevKitC-1-N16R8 (v1.1)",
-   "medidas": "62,87 × 25,4 mm; filas de pines a 21,6 mm",
+   "medidas": "6,274 × 2,54 cm; filas de pines a 2,286 cm (9 × 2,54)",
    "fuente_medidas": "https://dl.espressif.com/dl/schematics/esp_idf/DXF_ESP32-S3-DevKitC-1_V1.1_20220429.pdf",
    "alternativa": false,
    "barato_est": 7,
    "retail_doc": 12.5,
-   "retail_min_leido": 19.95,
+   "retail_min_leido": null,
    "lecturas": [
     {
      "tienda": "Adafruit",
      "url": "https://www.adafruit.com/product/5336",
-     "estado": "ok",
-     "nota": "Variante N8R8 (8 MB flash); xiaozhi pide N16R8",
-     "imagen": "https://www.adafruit.com/images/480x360/5336-00.jpg",
-     "precio": 19.95,
-     "moneda": "USD",
-     "disponible": "Discontinued",
-     "titulo": "ESP32-S3-DevKitC-1-N8R8 - ESP32-S3-WROOM-1",
-     "metodo": "json-ld",
-     "precio_usd": 19.95
+     "estado": "referencia",
+     "nota": "Solo referencia: es la variante N8R8 (8 MB de flash), no la N16R8 que pide xiaozhi. No comprar este enlace para Bitu."
     },
     {
      "tienda": "Walmart (clon N16R8)",
@@ -124,80 +60,34 @@ window.CATALOGO = {
    ]
   },
   {
-   "id": "gc9a01",
-   "nombre": "Pantalla redonda GC9A01 1,28\" 240×240",
+   "id": "lcd185",
+   "nombre": "Pantalla redonda táctil 1,85\" ST77916 360×360",
    "cantidad": {
     "A": 1,
-    "B": 0,
-    "C": 0
+    "B": 0
    },
    "categoria": "Cara",
-   "uso": "Ojos de Bitu en la propuesta A. SPI de 4 hilos, IPS.",
-   "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/6178-04.jpg",
-   "modelo": "Waveshare 1.28inch LCD Module (GC9A01, 240×240, SPI)",
-   "medidas": "Ø 37,5 mm; 40,4 con lengüeta; área activa Ø 32,4",
-   "fuente_medidas": "https://www.waveshare.com/1.28inch-lcd-module.htm",
+   "uso": "Cara de Bitu en la propuesta A desde el 2026-11-17 (sustituye a la GC9A01 de 1,28\": Ø activo 4,57 cm frente a 3,24, el doble de área). IPS de 360 × 360 por QSPI con táctil capacitivo CST816S por I2C. xiaozhi trae el driver ST77916 en la placa waveshare/esp32-s3-touch-lcd-1.85; con el DevKit hace falta una placa propia en el firmware. Comprar la versión «Touch LCD Module» (con táctil). Incluye un cable GH1.25 de 15 pines a hembras dupont de 15 cm: sirve para la protoboard; en el montaje final se cortan las hembras y se sueldan a la placa perforada.",
+   "imagen": null,
+   "modelo": "Waveshare 1.85inch Touch LCD Module (SKU 35079)",
+   "medidas": "Ø 5,5 × 0,91 cm; área activa Ø 4,57 cm; 3 tornillos M2",
+   "fuente_medidas": "https://www.waveshare.com/1.85inch-touch-lcd-module.htm",
    "alternativa": false,
-   "barato_est": 3.5,
-   "retail_doc": 8.9,
-   "retail_min_leido": 17.5,
+   "barato_est": 12.0,
+   "retail_doc": 17.99,
+   "retail_min_leido": null,
    "lecturas": [
     {
-     "tienda": "Waveshare (módulo de referencia)",
-     "url": "https://www.waveshare.com/1.28inch-lcd-module.htm",
-     "estado": "referencia",
-     "nota": "Medidas de referencia del modelo 3D; precio no leído"
-    },
-    {
-     "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/6178",
-     "estado": "ok",
-     "nota": "Versión Adafruit con EYESPI y microSD",
-     "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/6178-04.jpg",
-     "precio": 17.5,
-     "moneda": "USD",
-     "disponible": null,
-     "titulo": "Adafruit 1.28\" 240x240 Round TFT LCD Display with MicroSD",
-     "metodo": "og:price",
-     "precio_usd": 17.5
-    },
-    {
-     "tienda": "DisplayModule",
-     "url": "https://www.displaymodule.com/products/1-28-240-x-240-round-tft-spi",
+     "tienda": "Waveshare",
+     "url": "https://www.waveshare.com/1.85inch-touch-lcd-module.htm",
      "estado": "manual",
      "nota": null,
-     "precio": 8.9,
+     "precio": 17.99,
      "moneda": "USD",
-     "fecha": "2026-11-16",
+     "fecha": "2026-11-17",
      "unidades": 1,
-     "disponible": null,
-     "precio_usd": 8.9,
-     "metodo": "búsqueda web"
-    },
-    {
-     "tienda": "Walmart",
-     "url": "https://www.walmart.com/ip/1-28Inch-Round-Display-LCD-Screen-Module-GC9A01-SPI-Communication-RGB-65K-Color-Support-for-Raspberry/17303960632",
-     "estado": "manual",
-     "nota": null,
-     "precio": 10.66,
-     "moneda": "USD",
-     "fecha": "2026-11-16",
-     "unidades": 1,
-     "disponible": null,
-     "precio_usd": 10.66,
-     "metodo": "búsqueda web"
-    },
-    {
-     "tienda": "Alibaba (lote)",
-     "url": "https://electronics.alibaba.com/product/gc9a01-display",
-     "estado": "manual",
-     "nota": null,
-     "precio": 2.1,
-     "moneda": "USD",
-     "fecha": "2026-11-16",
-     "unidades": 1,
-     "disponible": "Mínimo 100 unidades",
-     "precio_usd": 2.1,
+     "disponible": "17,31 desde 4 u.; incluye cable GH1.25 de 15 pines y FFC de 18",
+     "precio_usd": 17.99,
      "metodo": "búsqueda web"
     }
    ]
@@ -207,14 +97,13 @@ window.CATALOGO = {
    "nombre": "Pantalla IPS 2\" ST7789 320×240",
    "cantidad": {
     "A": 0,
-    "B": 1,
-    "C": 1
+    "B": 1
    },
    "categoria": "Cara",
    "uso": "Cara rectangular estilo Stack-chan para las propuestas B y C.",
    "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/4311-06.jpg",
    "modelo": "Adafruit 4311 · 2,0\" 320×240 IPS ST7789",
-   "medidas": "59,2 × 35,5 × 3,7 mm",
+   "medidas": "5,92 × 3,55 × 0,37 cm",
    "fuente_medidas": "https://www.adafruit.com/product/4311",
    "alternativa": false,
    "barato_est": 5,
@@ -232,6 +121,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "2.0\" 320x240 Color IPS TFT Display with microSD Card Breakout",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 19.95
     }
    ]
@@ -241,14 +131,13 @@ window.CATALOGO = {
    "nombre": "Micrófono INMP441 (I2S)",
    "cantidad": {
     "A": 1,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Audio",
-   "uso": "Micrófono MEMS digital omnidireccional; va directo al I2S del ESP32.",
+   "uso": "Micrófono MEMS digital omnidireccional; va directo al I2S del ESP32. No confundir con el INMP401, que es analógico.",
    "imagen": null,
    "modelo": "Módulo INMP441 redondo (6 pines)",
-   "medidas": "Ø 14 × 2,2 mm",
+   "medidas": "Ø 1,4 × 0,22 cm",
    "fuente_medidas": "https://oe2.open-electronics.org/?p=46708",
    "alternativa": false,
    "barato_est": 1.8,
@@ -314,14 +203,13 @@ window.CATALOGO = {
    "nombre": "Amplificador MAX98357A I2S 3 W",
    "cantidad": {
     "A": 1,
-    "B": 1,
-    "C": 1
+    "B": 1
    },
    "categoria": "Audio",
    "uso": "Amplificador de clase D con entrada I2S; mueve el altavoz sin DAC aparte.",
    "imagen": "https://www.adafruit.com/images/480x360/3006-04.jpg",
    "modelo": "Adafruit 3006 · MAX98357A I2S 3 W",
-   "medidas": "19,4 × 17,8 × 3,0 mm",
+   "medidas": "1,94 × 1,78 × 0,3 cm",
    "fuente_medidas": "https://www.adafruit.com/product/3006",
    "alternativa": false,
    "barato_est": 2,
@@ -339,6 +227,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 5.95
     }
    ]
@@ -348,14 +237,13 @@ window.CATALOGO = {
    "nombre": "Altavoz de cavidad 8 Ω 2 W",
    "cantidad": {
     "A": 1,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Audio",
-   "uso": "Voz de Bitu en A y B. Caja cerrada de 30 × 20 mm que cabe contra la pared trasera; el MAX98357A da ≈ 1,4 W en 8 Ω a 5 V, dentro de los 2 W del altavoz.",
+   "uso": "Voz de Bitu en A y B. Caja cerrada de 30 × 20 mm que cabe contra la pared trasera; el MAX98357A da ≈ 1,4 W en 8 Ω a 5 V, dentro de los 2 W del altavoz. Preferir el de 2 W: la alternativa de Adafruit de 1 W cabe igual, pero el MAX98357A a 5 V le entrega ≈ 1,4 W a todo volumen; si se compra, limitar el volumen máximo en el firmware.",
    "imagen": "https://www.adafruit.com/images/480x360/4227-06.jpg",
    "modelo": "Waveshare 8Ω 2W Speaker (cavidad 2030, conector PH)",
-   "medidas": "30 × 20 × 5,5 mm",
+   "medidas": "3 × 2 × 0,55 cm",
    "fuente_medidas": "https://www.waveshare.com/8ohm-2w-speaker.htm",
    "alternativa": false,
    "barato_est": 1.5,
@@ -386,75 +274,34 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "Mini Oval Speaker with Short Wires - 8 Ohm 1 Watt",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 1.95
     }
    ]
   },
   {
-   "id": "altavoz",
-   "nombre": "Altavoz cerrado 3 W · 4 Ω",
-   "cantidad": {
-    "A": 0,
-    "B": 0,
-    "C": 1
-   },
-   "categoria": "Audio",
-   "uso": "Voz de la propuesta C. Mide 70 × 31 × 17 mm: no cabe en la cabeza de 70 mm de A ni en la de 55 mm de B.",
-   "imagen": "https://www.adafruit.com/images/480x360/4445-01.jpg",
-   "modelo": "Adafruit 4445 · Mono Enclosed Speaker 3 W 4 Ω",
-   "medidas": "70 × 31 × 17 mm",
-   "fuente_medidas": "https://www.adafruit.com/product/4445",
-   "alternativa": false,
-   "barato_est": 1.5,
-   "retail_doc": 3.95,
-   "retail_min_leido": 3.95,
-   "lecturas": [
-    {
-     "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/4445",
-     "estado": "ok",
-     "nota": null,
-     "imagen": "https://www.adafruit.com/images/480x360/4445-01.jpg",
-     "precio": 3.95,
-     "moneda": "USD",
-     "disponible": null,
-     "titulo": "Mono Enclosed Speaker with Plain Wires - 3W 4 Ohm",
-     "metodo": "og:price",
-     "precio_usd": 3.95
-    }
-   ]
-  },
-  {
    "id": "tactil",
-   "nombre": "Sensor táctil capacitivo",
+   "nombre": "Sensor táctil capacitivo TTP223",
    "cantidad": {
     "A": 1,
-    "B": 1,
-    "C": 1
+    "B": 1
    },
    "categoria": "Sensores",
-   "uso": "Botón de pulsar-para-hablar o «caricia en la cabeza». Barato: TTP223; retail: AT42QT1010.",
-   "imagen": "https://www.adafruit.com/images/480x360/1374-07.jpg",
+   "uso": "Botón de pulsar-para-hablar o «caricia en la cabeza». Barato: TTP223; retail: AT42QT1010. Comprar el módulo TTP223 de 15 × 11 mm (el que usa el diseño de la carcasa).",
+   "imagen": null,
    "modelo": "Módulo TTP223 (alternativa: Adafruit 1374 AT42QT1010, 20 × 28 mm)",
-   "medidas": "15 × 11 mm",
+   "medidas": "1,5 × 1,1 cm",
    "fuente_medidas": "https://oe2.open-electronics.org/?p=42454",
    "alternativa": false,
    "barato_est": 0.4,
    "retail_doc": 5.95,
-   "retail_min_leido": 5.95,
+   "retail_min_leido": null,
    "lecturas": [
     {
      "tienda": "Adafruit",
      "url": "https://www.adafruit.com/product/1374",
-     "estado": "ok",
-     "nota": null,
-     "imagen": "https://www.adafruit.com/images/480x360/1374-07.jpg",
-     "precio": 5.95,
-     "moneda": "USD",
-     "disponible": null,
-     "titulo": "Standalone Momentary Capacitive Touch Sensor Breakout",
-     "metodo": "og:price",
-     "precio_usd": 5.95
+     "estado": "referencia",
+     "nota": "Referencia de precio: Adafruit vende un AT42QT1010 de otro tamaño; no es el TTP223 de 15 × 11 mm del diseño."
     }
    ]
   },
@@ -463,14 +310,13 @@ window.CATALOGO = {
    "nombre": "Micro servo SG92R",
    "cantidad": {
     "A": 0,
-    "B": 2,
-    "C": 0
+    "B": 2
    },
    "categoria": "Movimiento",
    "uso": "Cuello pan/tilt de la propuesta B (2 unidades). Alimentar desde 5 V con 470 µF.",
    "imagen": "https://www.adafruit.com/images/480x360/169-06.jpg",
    "modelo": "TowerPro SG92R (Adafruit 169)",
-   "medidas": "23 × 11 × 29 mm",
+   "medidas": "2,3 × 1,1 × 2,9 cm",
    "fuente_medidas": "https://www.adafruit.com/product/169",
    "alternativa": false,
    "barato_est": 1.5,
@@ -488,6 +334,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "Micro servo",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 5.95
     }
    ]
@@ -497,14 +344,13 @@ window.CATALOGO = {
    "nombre": "Sensor de distancia ToF VL53L0X",
    "cantidad": {
     "A": 0,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Sensores",
    "uso": "Detecta a la persona que se acerca para que Bitu la «mire».",
    "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/3317-03.jpg",
    "modelo": "Adafruit 3317 · VL53L0X",
-   "medidas": "21 × 18 × 2,8 mm",
+   "medidas": "2,1 × 1,8 × 0,28 cm",
    "fuente_medidas": "https://www.adafruit.com/product/3317",
    "alternativa": false,
    "barato_est": 3,
@@ -522,6 +368,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "Adafruit VL53L0X Time of Flight Distance Sensor - ~30 to 1000mm",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 14.95
     }
    ]
@@ -531,14 +378,13 @@ window.CATALOGO = {
    "nombre": "IMU MPU-6050",
    "cantidad": {
     "A": 0,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Sensores",
    "uso": "Detecta si levantan o agitan el robot (reacción «¡mareado!»).",
    "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/3886-06.jpg",
    "modelo": "Adafruit 3886 · MPU-6050",
-   "medidas": "26 × 17,8 × 4,6 mm",
+   "medidas": "2,6 × 1,78 × 0,46 cm",
    "fuente_medidas": "https://www.adafruit.com/product/3886",
    "alternativa": false,
    "barato_est": 2,
@@ -556,6 +402,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "Adafruit MPU-6050 6-DoF Accel and Gyro Sensor - STEMMA QT Qwiic",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 12.95
     }
    ]
@@ -565,14 +412,13 @@ window.CATALOGO = {
    "nombre": "Celda 18650 2200 mAh con protección",
    "cantidad": {
     "A": 0,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Energía",
-   "uso": "Batería de la propuesta B. Preferible a LiPo de bolsa para adolescentes.",
+   "uso": "Batería de la propuesta B. Preferible a LiPo de bolsa para adolescentes. Con protección mide ≈ 69 mm: el portapilas debe admitir celdas de 69–70 mm (muchos son de 65 mm).",
    "imagen": "https://www.adafruit.com/images/480x360/1781-04.jpg",
    "modelo": "Adafruit 1781 · 18650 2200 mAh con protección",
-   "medidas": "69 × Ø 18 mm",
+   "medidas": "6,9 × Ø 1,8 cm",
    "fuente_medidas": "https://www.adafruit.com/product/1781",
    "alternativa": false,
    "barato_est": 4,
@@ -590,6 +436,7 @@ window.CATALOGO = {
      "disponible": "OutOfStock",
      "titulo": "Lithium Ion Cylindrical Battery - 3.7v 2200mAh",
      "metodo": "json-ld",
+     "unidades": 1,
      "precio_usd": 9.95
     }
    ]
@@ -599,14 +446,13 @@ window.CATALOGO = {
    "nombre": "Cargador + elevador a 5 V",
    "cantidad": {
     "A": 0,
-    "B": 1,
-    "C": 0
+    "B": 1
    },
    "categoria": "Energía",
-   "uso": "Carga la 18650 y da 5 V a servos y amplificador. Retail: PowerBoost 1000C; barato: IP5306.",
+   "uso": "Carga la 18650 y da 5 V a servos y amplificador. Retail: PowerBoost 1000C; barato: IP5306. Ojo al cable: el PowerBoost 1000C carga por micro-USB (el cable del catálogo es USB-C). El IP5306 barato debe tener entrada USB-C y se apaga si el consumo baja de ≈ 45–50 mA durante 32 s: hay que desactivarlo por I2C o mantener una carga mínima.",
    "imagen": "https://www.adafruit.com/images/480x360/2465-09.jpg",
    "modelo": "Adafruit 2465 · PowerBoost 1000C (barato: IP5306)",
-   "medidas": "45 × 23 × 10 mm con USB-A",
+   "medidas": "4,5 × 2,3 × 1 cm con USB-A",
    "fuente_medidas": "https://www.adafruit.com/product/2465",
    "alternativa": false,
    "barato_est": 1,
@@ -624,6 +470,7 @@ window.CATALOGO = {
      "disponible": null,
      "titulo": "PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A",
      "metodo": "og:price",
+     "unidades": 1,
      "precio_usd": 19.95
     },
     {
@@ -642,210 +489,162 @@ window.CATALOGO = {
    ]
   },
   {
-   "id": "pi5_8gb",
-   "nombre": "Raspberry Pi 5 de 8 GB",
+   "id": "cableusbc",
+   "nombre": "Cable USB-A a USB-C de 1 m",
    "cantidad": {
-    "A": 0,
-    "B": 0,
-    "C": 1
-   },
-   "categoria": "Cerebro",
-   "uso": "Cerebro local de la propuesta C: ejecuta STT, LLM de 1–3B y TTS sin internet.",
-   "imagen": "https://www.adafruit.com/images/480x360/5813-01.jpg",
-   "modelo": "Raspberry Pi 5 · 8 GB",
-   "medidas": "85 × 56 mm",
-   "fuente_medidas": "https://www.raspberrypi.com/products/raspberry-pi-5/",
-   "alternativa": false,
-   "barato_est": null,
-   "retail_doc": 200,
-   "retail_min_leido": 200.0,
-   "lecturas": [
-    {
-     "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/5813",
-     "estado": "ok",
-     "nota": null,
-     "imagen": "https://www.adafruit.com/images/480x360/5813-01.jpg",
-     "precio": 200.0,
-     "moneda": "USD",
-     "disponible": "InStock",
-     "titulo": "Raspberry Pi 5 - 8 GB RAM",
-     "metodo": "json-ld",
-     "precio_usd": 200.0
-    }
-   ]
-  },
-  {
-   "id": "fuente27w",
-   "nombre": "Fuente oficial Raspberry Pi 27 W USB-C",
-   "cantidad": {
-    "A": 0,
-    "B": 0,
-    "C": 1
+    "A": 1,
+    "B": 1
    },
    "categoria": "Energía",
-   "uso": "Obligatoria para la Pi 5 bajo carga de LLM.",
-   "imagen": "https://www.adafruit.com/images/480x360/5814-02.jpg",
-   "modelo": "Raspberry Pi 27 W USB-C PD (Adafruit 5814)",
-   "medidas": "68,9 × 51,7 × 35,6 mm",
-   "fuente_medidas": "https://www.adafruit.com/product/5814",
+   "uso": "Alimenta el robot y sirve para cargar el firmware desde el PC. Sin él la A no enciende (no lleva batería).",
+   "imagen": "https://www.adafruit.com/images/480x360/4474-02.jpg",
+   "modelo": "Adafruit 4474 · USB Type A to Type C, ~1 m",
+   "medidas": "1 m",
+   "fuente_medidas": "https://www.adafruit.com/product/4474",
    "alternativa": false,
-   "barato_est": null,
-   "retail_doc": 14.04,
-   "retail_min_leido": 14.04,
+   "barato_est": 1.0,
+   "retail_doc": 4.95,
+   "retail_min_leido": 4.95,
    "lecturas": [
     {
      "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/5814",
+     "url": "https://www.adafruit.com/product/4474",
      "estado": "ok",
      "nota": null,
-     "imagen": "https://www.adafruit.com/images/480x360/5814-02.jpg",
-     "precio": 14.04,
+     "imagen": "https://www.adafruit.com/images/480x360/4474-02.jpg",
+     "precio": 4.95,
      "moneda": "USD",
-     "disponible": "InStock",
-     "titulo": "Official Raspberry Pi 27W PD Power Supply 5.1V 5A with USB C",
-     "metodo": "json-ld",
-     "precio_usd": 14.04
-    }
-   ]
-  },
-  {
-   "id": "cooler",
-   "nombre": "Active Cooler Raspberry Pi 5",
-   "cantidad": {
-    "A": 0,
-    "B": 0,
-    "C": 1
-   },
-   "categoria": "Cerebro",
-   "uso": "Disipador con ventilador para inferencia sostenida.",
-   "imagen": "https://www.adafruit.com/images/480x360/5815-04.jpg",
-   "modelo": "Raspberry Pi Active Cooler (SC1148)",
-   "medidas": "63,5 × 42,5 × 13,7 mm",
-   "fuente_medidas": "https://www.electrokit.com/upload/quick/85/54/63f9_41036302-tds.pdf",
-   "alternativa": false,
-   "barato_est": null,
-   "retail_doc": 13.5,
-   "retail_min_leido": 13.5,
-   "lecturas": [
-    {
-     "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/5815",
-     "estado": "ok",
-     "nota": null,
-     "imagen": "https://www.adafruit.com/images/480x360/5815-04.jpg",
-     "precio": 13.5,
-     "moneda": "USD",
-     "disponible": "InStock",
-     "titulo": "Official Raspberry Pi 5 Active Cooler",
-     "metodo": "json-ld",
-     "precio_usd": 13.5
-    }
-   ]
-  },
-  {
-   "id": "respeaker",
-   "nombre": "ReSpeaker Lite (2 mics, AEC)",
-   "cantidad": {
-    "A": 0,
-    "B": 0,
-    "C": 1
-   },
-   "categoria": "Audio",
-   "uso": "Matriz de 2 micrófonos con cancelación de eco por USB para la Pi 5.",
-   "imagen": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/961a49e1875f8c1f40e5990d74e68365/1/-/1-107990273-respeaker-lite-45font.jpg",
-   "modelo": "Seeed ReSpeaker Lite (USB, XU316)",
-   "medidas": "Sin plano oficial localizado",
-   "fuente_medidas": "https://www.seeedstudio.com/ReSpeaker-Lite-p-5928.html",
-   "alternativa": false,
-   "barato_est": null,
-   "retail_doc": 29.12,
-   "retail_min_leido": null,
-   "lecturas": [
-    {
-     "tienda": "Seeed Studio",
-     "url": "https://www.seeedstudio.com/ReSpeaker-Lite-p-5928.html",
-     "estado": "sin_precio",
-     "nota": null,
-     "imagen": "https://media-cdn.seeedstudio.com/media/catalog/product/cache/961a49e1875f8c1f40e5990d74e68365/1/-/1-107990273-respeaker-lite-45font.jpg"
-    },
-    {
-     "tienda": "RobotShop",
-     "url": "https://www.robotshop.com/products/respeaker-lite-usb-2-mic-array-with-onboard-ai-audio-processing-algorithms",
-     "estado": "manual",
-     "nota": null,
-     "precio": 29.12,
-     "moneda": "USD",
-     "fecha": "2026-11-16",
+     "disponible": null,
+     "titulo": "USB Type A to Type C Cable - approx 1 meter / 3 ft long",
+     "metodo": "og:price",
      "unidades": 1,
-     "disponible": "Precio del doc 02",
-     "precio_usd": 29.12,
-     "metodo": "búsqueda web"
+     "precio_usd": 4.95
     }
    ]
   },
   {
-   "id": "box3",
-   "nombre": "ESP32-S3-BOX-3",
+   "id": "fuente5v",
+   "nombre": "Cargador USB de 5 V 2 A",
    "cantidad": {
-    "A′": 1
+    "A": 1,
+    "B": 1
    },
-   "categoria": "Todo en uno",
-   "uso": "Variante A′ sin soldar: pantalla táctil 2,4\", 2 micrófonos, altavoz y carcasa. Placa oficial de xiaozhi.",
-   "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/5835-06.jpg",
-   "modelo": "Espressif ESP32-S3-BOX-3",
-   "medidas": "Sin plano oficial localizado",
-   "fuente_medidas": "https://github.com/espressif/esp-box/blob/master/docs/hardware_overview/esp32_s3_box_3/hardware_overview_for_box_3.md",
+   "categoria": "Energía",
+   "uso": "Fuente de pared para el cable USB-C. 2 A dan margen para el ESP32 con Wi-Fi, la pantalla y el amplificador. Sirve un cargador de móvil de 5 V y al menos 2 A.",
+   "imagen": "https://www.adafruit.com/images/480x360/1994-01.jpg",
+   "modelo": "Adafruit 1994 · 5V 2A Switching Power Supply w/ USB-A",
+   "medidas": "Salida USB-A, 5 V 2 A",
+   "fuente_medidas": "https://www.adafruit.com/product/1994",
    "alternativa": false,
-   "barato_est": null,
-   "retail_doc": 49.95,
-   "retail_min_leido": 49.95,
+   "barato_est": 2.5,
+   "retail_doc": 7.95,
+   "retail_min_leido": 7.95,
    "lecturas": [
     {
      "tienda": "Adafruit",
-     "url": "https://www.adafruit.com/product/5835",
+     "url": "https://www.adafruit.com/product/1994",
      "estado": "ok",
      "nota": null,
-     "imagen": "https://cdn-shop.adafruit.com/product-videos/320x240/5835-06.jpg",
-     "precio": 49.95,
+     "imagen": "https://www.adafruit.com/images/480x360/1994-01.jpg",
+     "precio": 7.95,
      "moneda": "USD",
-     "disponible": "OutOfStock",
-     "titulo": "Espressif ESP32-S3-BOX-3",
+     "disponible": null,
+     "titulo": "5V 2A Switching Power Supply w/ USB-A Connector",
+     "metodo": "og:price",
+     "unidades": 1,
+     "precio_usd": 7.95
+    }
+   ]
+  },
+  {
+   "id": "perfboard",
+   "nombre": "Placa perforada de 5 × 7 cm",
+   "cantidad": {
+    "A": 1,
+    "B": 1
+   },
+   "categoria": "Montaje",
+   "uso": "Base de la electrónica: lleva las cabeceras hembra donde se encaja el DevKit y los puntos de soldadura de cada cable. Se apoya en los postes de la carcasa.",
+   "imagen": "https://www.adafruit.com/images/480x360/4786-05.jpg",
+   "modelo": "Adafruit 4786 · Universal Proto-Board PCB 5 × 7 cm (se recorta a 6 × 4 cm)",
+   "medidas": "5 × 7 cm; en el robot, 6 × 4 cm",
+   "fuente_medidas": "https://www.adafruit.com/product/4786",
+   "alternativa": false,
+   "barato_est": 0.3,
+   "retail_doc": 0.98,
+   "retail_min_leido": 0.98,
+   "lecturas": [
+    {
+     "tienda": "Adafruit (pack de 3)",
+     "url": "https://www.adafruit.com/product/4786",
+     "estado": "ok",
+     "nota": null,
+     "imagen": "https://www.adafruit.com/images/480x360/4786-05.jpg",
+     "precio": 2.95,
+     "moneda": "USD",
+     "disponible": "InStock",
+     "titulo": "Universal Proto-Board PCBs 5cm x 7cm - 3 Pack",
      "metodo": "json-ld",
-     "precio_usd": 49.95
+     "unidades": 3,
+     "precio_usd": 0.98
+    }
+   ]
+  },
+  {
+   "id": "cabeceras",
+   "nombre": "Tira de cabecera hembra de 36 pines (paso 2,54)",
+   "cantidad": {
+    "A": 2,
+    "B": 2
+   },
+   "categoria": "Montaje",
+   "uso": "Dos tiras cortadas a 22 pines, soldadas a la placa perforada, para encajar el DevKit sin soldarlo y poder cambiarlo. Altura estándar de 8,5 mm (no la versión «short», que cambia la altura de la pila y la ranura USB).",
+   "imagen": "https://www.adafruit.com/images/480x360/598-04.jpg",
+   "modelo": "Adafruit 598 · 36-pin 0.1\" Female header",
+   "medidas": "36 pines a 2,54 mm (se cortan a 22); 8,5 mm de alto",
+   "fuente_medidas": "https://www.adafruit.com/product/598",
+   "alternativa": false,
+   "barato_est": 0.15,
+   "retail_doc": 0.59,
+   "retail_min_leido": 0.59,
+   "lecturas": [
+    {
+     "tienda": "Adafruit (pack de 5)",
+     "url": "https://www.adafruit.com/product/598",
+     "estado": "ok",
+     "nota": null,
+     "imagen": "https://www.adafruit.com/images/480x360/598-04.jpg",
+     "precio": 2.95,
+     "moneda": "USD",
+     "disponible": null,
+     "titulo": "36-pin 0.1\" Female header - pack of 5!",
+     "metodo": "og:price",
+     "unidades": 5,
+     "precio_usd": 0.59
     }
    ]
   }
  ],
  "totales": {
   "A": {
-   "retail": 63.85,
-   "retail_doc": 48.84,
-   "barato_est": 21.8,
+   "retail": 69.99,
+   "retail_doc": 71.03,
+   "barato_est": 34.0,
    "piezas_con_precio_del_documento": [
-    "inmp441"
+    "esp32s3",
+    "lcd185",
+    "inmp441",
+    "tactil"
    ]
-  },
-  "A′": {
-   "retail": 51.95,
-   "retail_doc": 51.95,
-   "barato_est": null,
-   "piezas_con_precio_del_documento": []
   },
   "B": {
-   "retail": 138.9,
-   "retail_doc": 132.49,
-   "barato_est": 39.2,
+   "retail": 147.35,
+   "retail_doc": 148.39,
+   "barato_est": 44.0,
    "piezas_con_precio_del_documento": [
-    "inmp441"
-   ]
-  },
-  "C": {
-   "retail": 312.46,
-   "retail_doc": 312.46,
-   "barato_est": null,
-   "piezas_con_precio_del_documento": [
-    "respeaker"
+    "esp32s3",
+    "inmp441",
+    "tactil"
    ]
   }
  }
