@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T00:00:00Z",
+  "title": "Design System: Bitu",
+  "extensions": {
+    "colorMeta": {
+      "paper-yellow": { "role": "neutral", "displayName": "Yellow Paper", "canonical": "#ffd23f", "tonalRamp": ["#3d2f00", "#5e4a00", "#826700", "#a88600", "#d0a800", "#f5c21c", "#ffd23f", "#ffeeb0"] },
+      "paper-yellow-deep": { "role": "neutral", "displayName": "Deep Yellow", "canonical": "#f5c21c" },
+      "paper-pink": { "role": "neutral", "displayName": "Pink Paper", "canonical": "#ffc2dc" },
+      "federal-blue": { "role": "primary", "displayName": "Federal Blue", "canonical": "#2c3fd6", "tonalRamp": ["#0d1240", "#141c66", "#1d2a9e", "#2c3fd6", "#5566e6", "#8592ef", "#b6bef6", "#e3e6fc"] },
+      "federal-blue-deep": { "role": "primary", "displayName": "Federal Blue Deep", "canonical": "#1d2a9e" },
+      "fluoro-pink": { "role": "secondary", "displayName": "Fluoro Pink", "canonical": "#ff4fa0", "tonalRamp": ["#4a0024", "#78003b", "#a80d57", "#d92a7c", "#ff4fa0", "#ff80bb", "#ffb3d6", "#ffe3ef"] },
+      "overprint-violet": { "role": "tertiary", "displayName": "Overprint Violet", "canonical": "#6b2fb3" },
+      "ink": { "role": "neutral", "displayName": "Riso Ink", "canonical": "#17143a" },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#3a3466" },
+      "pale-yellow-on-blue": { "role": "neutral", "displayName": "Pale Yellow on Blue", "canonical": "#ffe68a" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Masthead", "purpose": "Masthead only, with a misregistered pink duplicate layer." },
+      "headline": { "displayName": "Riso Headline", "purpose": "Section titles with pink text-shadow offset." },
+      "title": { "displayName": "Sheet Title", "purpose": "h3 within sheets." },
+      "body": { "displayName": "Body", "purpose": "Prose to a 68ch measure." },
+      "label": { "displayName": "Label", "purpose": "Uppercase table headers, definition terms, nav links." },
+      "data": { "displayName": "Data", "purpose": "Captions, folios, tags, tabular figures." }
+    },
+    "shadows": [
+      { "name": "sheet-lift", "value": "0 14px 30px -18px rgba(23,20,58,.55)", "purpose": "Order sheet resting on the page." },
+      { "name": "bar", "value": "0 6px 18px -10px rgba(23,20,58,.6)", "purpose": "Sticky contents bar." },
+      { "name": "ink-underprint", "value": "0 3px 0 #ff4fa0", "purpose": "Pink second pass under primary button and selected tab." },
+      { "name": "misregistration", "value": "text-shadow: .045em .035em 0 #ff4fa0", "purpose": "Display type only." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Button lift and reprint animation." },
+      { "name": "reprint", "value": "reimprime .7s", "purpose": "Content re-inks when the build option changes; off under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "560px" },
+      { "name": "md", "value": "960px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Blue pill with a pink ink under-print.",
+      "html": "<a class=\"ds-boton\" href=\"#\">Ver el pedido</a>",
+      "css": ".ds-boton { display: inline-flex; align-items: center; gap: .55rem; background: #2c3fd6; color: #ffd23f; font: 800 1rem/1 'Atkinson Hyperlegible', system-ui, sans-serif; letter-spacing: .02em; text-decoration: none; border: 0; cursor: pointer; padding: .95rem 1.25rem; border-radius: 999px; box-shadow: 0 3px 0 #ff4fa0, 0 10px 18px -10px rgba(23,20,58,.7); transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s cubic-bezier(.16,1,.3,1), background .2s; } .ds-boton:hover { background: #6b2fb3; transform: translateY(-2px); box-shadow: 0 5px 0 #ff4fa0, 0 14px 22px -12px rgba(23,20,58,.7); } .ds-boton:active { transform: translateY(1px); box-shadow: 0 1px 0 #ff4fa0; } .ds-boton:focus-visible { outline: 3px solid #2c3fd6; outline-offset: 3px; }"
+    },
+    {
+      "name": "Tab",
+      "kind": "button",
+      "refersTo": "tab",
+      "description": "Outlined pill tab with display letter; selected fills blue.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab\" aria-selected=\"true\"><span class=\"ds-letra\">A</span>Básico</button><button class=\"ds-tab\" aria-selected=\"false\"><span class=\"ds-letra\">B</span>Medio</button></div>",
+      "css": ".ds-tabs { display: flex; gap: .5rem; } .ds-tab { font: 800 1rem/1.1 'Atkinson Hyperlegible', system-ui, sans-serif; color: #2c3fd6; background: transparent; border: 2.5px solid #2c3fd6; border-radius: 999px; padding: .7rem 1.1rem; cursor: pointer; display: flex; align-items: center; gap: .55rem; transition: background .2s, color .2s; } .ds-letra { font: 800 1.35rem/1 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 75; } .ds-tab:hover { background: rgba(44,63,214,.1); } .ds-tab[aria-selected='true'] { background: #2c3fd6; color: #ffd23f; box-shadow: 0 3px 0 #ff4fa0; } .ds-tab:focus-visible { outline: 3px solid #2c3fd6; outline-offset: 3px; }"
+    },
+    {
+      "name": "Toggle",
+      "kind": "button",
+      "refersTo": "toggle-pressed",
+      "description": "Ink-outlined segmented pill.",
+      "html": "<div class=\"ds-conmutador\"><button aria-pressed=\"true\">Comprado</button><button aria-pressed=\"false\">Impreso</button></div>",
+      "css": ".ds-conmutador { display: inline-flex; border: 2px solid #17143a; border-radius: 999px; padding: 3px; gap: 2px; } .ds-conmutador button { font: 700 .85rem/1 'Atkinson Hyperlegible', system-ui, sans-serif; background: none; border: 0; padding: .55rem .9rem; border-radius: 999px; cursor: pointer; color: #17143a; } .ds-conmutador button[aria-pressed='true'] { background: #17143a; color: #ffd23f; } .ds-conmutador button:focus-visible { outline: 3px solid #2c3fd6; outline-offset: 3px; }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Pink mono tag.",
+      "html": "<span class=\"ds-tag\">NUEVO</span> <span class=\"ds-est\">est.</span>",
+      "css": ".ds-tag { display: inline-block; font: 700 .76rem/1 'JetBrains Mono', ui-monospace, monospace; background: #ff4fa0; color: #17143a; padding: .3rem .45rem; border-radius: 3px; } .ds-est { font: 700 12px/1 'JetBrains Mono', ui-monospace, monospace; color: #6b2fb3; border: 1.5px dashed currentColor; padding: .12em .35em; border-radius: 3px; }"
+    },
+    {
+      "name": "Contents Bar",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Sticky blue bar; pink fill on hover and current.",
+      "html": "<nav class=\"ds-sumario\"><a class=\"ds-marca\" href=\"#\"><i></i>Bitu</a><a href=\"#\" aria-current=\"true\">Portada</a><a href=\"#\">Pedido</a></nav>",
+      "css": ".ds-sumario { display: flex; align-items: center; gap: .25rem; min-height: 56px; padding: 0 16px; background: #2c3fd6; } .ds-sumario a { color: #ffd23f; text-decoration: none; font: 700 .82rem/1 'Atkinson Hyperlegible', system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; padding: .7rem; border-radius: 4px; } .ds-sumario .ds-marca { font: 800 1.35rem/1 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 75; text-transform: none; display: flex; gap: .5rem; align-items: center; margin-right: 1rem; } .ds-marca i { width: 10px; height: 10px; background: #ff4fa0; display: inline-block; } .ds-sumario a:not(.ds-marca):hover, .ds-sumario a[aria-current='true'] { background: #ff4fa0; color: #17143a; } .ds-sumario a:focus-visible { outline: 3px solid #ffd23f; outline-offset: 3px; }"
+    },
+    {
+      "name": "Order Sheet",
+      "kind": "card",
+      "description": "Taped, tilted paper sheet.",
+      "html": "<div class=\"ds-pedido\"><p class=\"ds-nombre\">Bitu A</p><p class=\"ds-precio\">48 €</p></div>",
+      "css": ".ds-pedido { background: color-mix(in srgb, #ffd23f 55%, white); border: 2px solid #17143a; border-radius: 6px; padding: 1.1rem 1.25rem 1.25rem; position: relative; box-shadow: 0 14px 30px -18px rgba(23,20,58,.55); rotate: -.6deg; margin-top: 16px; } .ds-pedido::before { content: ''; position: absolute; top: -14px; left: 50%; width: 110px; height: 26px; translate: -50% 0; rotate: 3deg; background: color-mix(in srgb, #ff4fa0 70%, transparent); } .ds-nombre { font: 800 1.9rem/1 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 80; color: #2c3fd6; margin: 0 0 .8rem; } .ds-precio { font: 800 3rem/1 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 75; font-variant-numeric: tabular-nums; color: #2c3fd6; margin: 0; }"
+    },
+    {
+      "name": "Riso Headline",
+      "kind": "custom",
+      "description": "Condensed display with misregistered pink pass.",
+      "html": "<h2 class=\"ds-h-riso\">Estado del arte</h2>",
+      "css": ".ds-h-riso { font: 800 clamp(2.6rem, 6.4vw, 5.25rem)/.9 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 75, 'opsz' 96; letter-spacing: -.02em; color: #2c3fd6; text-shadow: .045em .035em 0 #ff4fa0; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Two-Ink Riso Zine",
+    "overview": "The system is a stapled research zine printed on yellow stock with two risograph inks: federal blue and fluoro pink. Every surface reads as a sheet (`hoja`) in a bound pamphlet; sections are separated by staples on a dashed fold, some sheets flip to full blue ink, and inserts drop onto pink paper. Pink is the second pass of ink, so it appears as a slight misregistration behind blue display type and as a solid under-print beneath selected controls.\n\nDensity is that of a dense technical dossier: tables, specs, and numbered lists set in a hyperlegible body face, with numbers in a monospace data voice. Display type is condensed, heavy, and tight, and it carries the personality; the body stays calm and readable. A fixed multiply grain over the whole page gives the paper its tooth.",
+    "keyCharacteristics": [
+      "Yellow paper ground, blue ink for structure and display, pink ink as the second pass.",
+      "Condensed 800-weight Bricolage Grotesque with a pink offset shadow for headlines.",
+      "Sheets, staples, tape, and full-bleed inverse blue sheets as the section grammar.",
+      "Monospace tabular figures for every price, quantity, and estimate."
+    ],
+    "rules": [
+      { "name": "The Two Inks Rule", "body": "Colour comes from blue and pink ink on yellow or pink paper. Violet is only their overprint; no other hue enters.", "section": "colors" },
+      { "name": "The Second Pass Rule", "body": "Pink sits behind or beneath blue, offset like a misregistered plate; it is ink, not a glow.", "section": "colors" },
+      { "name": "The Tabular Figures Rule", "body": "Every number that can be compared (price, count, estimate, pin) is mono or display with `tabular-nums`.", "section": "typography" }
+    ],
+    "dos": [
+      "Do set display type in Bricolage Grotesque 800 at wdth 75 with the pink misregistration offset.",
+      "Do separate sections as sheets: staples, blue `tinta` sheets, pink inserts.",
+      "Do put the pink ink under pressed or selected controls as a solid 3px under-print.",
+      "Do set every comparable number in JetBrains Mono or display type with tabular figures.",
+      "Do honour `prefers-reduced-motion`: the reprint, blink, and float animations switch off."
+    ],
+    "donts": [
+      "Don't introduce a hue beyond the two inks, their overprint violet, and the paper stocks.",
+      "Don't use blurred glows or coloured soft shadows; depth is paper and offset ink.",
+      "Don't set long reading text in the display face or the mono."
+    ]
+  }
+}
