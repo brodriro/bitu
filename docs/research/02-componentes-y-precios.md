@@ -30,8 +30,20 @@
 |---|---|---|---|
 | **GC9A01 1,28" redonda 240×240** (genérica, SPI) | IPS, 4 hilos SPI | USD 8.90 (DisplayModule); USD 2–5 por volumen en Alibaba; ~USD 3–4 en AliExpress **(est.)** | [DisplayModule](https://www.displaymodule.com/products/1-28-240-x-240-round-tft-spi), [Alibaba](https://electronics.alibaba.com/product/gc9a01-display) |
 | Adafruit 1,28" redonda GC9A01A (EYESPI + microSD) | Calidad Adafruit | USD 17.50 | [Adafruit 6178](https://www.adafruit.com/product/6178) |
+| **Redonda táctil 1,85" 360×360 ST77916** (Waveshare 1.85inch Touch LCD Module) · **elegida para A el 2026-11-17** | IPS, QSPI + táctil CST816S por I2C; vidrio Ø 5,5 cm, área activa Ø 4,57 cm, 0,91 cm de grueso; 3 tornillos M2 | USD 17.99 (17,31 desde 4 u.) | [Waveshare](https://www.waveshare.com/1.85inch-touch-lcd-module.htm) |
 | **IPS 2,0" 320×240 ST7789** | Cara rectangular estilo Stack-chan | USD 19.95 (Adafruit); ~USD 4–6 genérica **(est.)** | [Adafruit 4311](https://www.adafruit.com/product/4311) |
 | OLED 0,96"/1,3" SSD1306/SH1106 (I2C) | Monocromo, 128×64 | ~USD 2–4 **(est.)** | xiaozhi la admite de serie ([config.h](https://github.com/78/xiaozhi-esp32)) |
+
+### Pantallas algo más grandes que la de 1,85" (búsqueda del 2026-11-17)
+
+No hay pantalla redonda **QSPI** entre 1,85" y 2,1": el siguiente tamaño redondo (2,1", 480×480, ST7701S) usa interfaz **RGB** (≈ 20 GPIO), que no cabe en la DevKit junto al audio I2S, el táctil y el TTP223, y xiaozhi no tiene configuración para usarla con la DevKit. **Decisión: A se queda con la 1,85".** La 2,1" se puede estudiar para la variante Delta de B.
+
+| Opción | Área visible | A favor | En contra | Precio | Fuente |
+|---|---|---|---|---|---|
+| Redonda táctil 1,85" ST77916 (actual) | Ø 4,57 cm · 16,4 cm² | QSPI, pocos cables; driver en xiaozhi | — | USD 17.99 | [Waveshare](https://www.waveshare.com/1.85inch-touch-lcd-module.htm) |
+| Módulo redondo 2,1" 480×480 ST7701S (suelto) | ≈ Ø 5,3 cm · ≈ 22 cm² (+36 %) | El aumento real de tamaño | RGB de ≈ 20 GPIO; sin configuración xiaozhi para la DevKit; varias fichas no aclaran si traen táctil | USD 11.75 (Electropeak, táctil por confirmar) · 19.90 (Newhaven, sin táctil) · 24.95 (Adafruit 5806, sin táctil) · 49.90 (DisplayModule, táctil) | [ficha ST7701S](https://files.waveshare.com/wiki/ESP32-S3-Touch-LCD-2.1/QT021WVC02-B1323A%EF%BC%882.1%20round_480X480_IPS_RGB%EF%BC%89.pdf), [Electropeak](https://electropeak.com/2-1-inch-round-tft-ips-lcd), [Newhaven](https://newhavendisplay.com/2-1-inch-round-ips-tft-lcd-display), [Adafruit](https://www.adafruit.com/products/5806), [DisplayModule](https://www.displaymodule.com/products/2-1-inch-480x480-tft-capacitive-touch-dm-tftr21-477) |
+| Waveshare ESP32-S3-Touch-LCD-2.1 (placa con pantalla) | igual que la anterior | ESP32-S3 y pantalla ya unidos | Sin micrófono ni altavoz; xiaozhi no la soporta | no leído | [Waveshare](https://www.waveshare.com/esp32-s3-touch-lcd-2.1.htm) |
+| Waveshare ESP32-S3-Touch-AMOLED-2.16 (placa con pantalla) | 480×480, **forma sin confirmar**; si es cuadrada, ≈ 3,9 × 3,9 cm · ≈ 15 cm² (no más grande) | Soporte oficial en xiaozhi; códec ES8311, 2 micrófonos (ES7210), batería opcional | Probablemente cuadrada; cambiaría toda la arquitectura de A | USD 29.99–31.99 | [Waveshare](https://www.waveshare.com/esp32-s3-touch-amoled-2.16.htm), [docs](https://docs.waveshare.com/ESP32-S3-Touch-AMOLED-2.16), [xiaozhi boards](https://github.com/78/xiaozhi-esp32/tree/main/main/boards) |
 
 ## 3. Audio
 
@@ -80,7 +92,8 @@
 
 | Ítem | Precio (est.) |
 |---|---|
-| Cables dupont, termorretráctil, placa perforada de 5×7 cm | USD 4–6 |
+| Cables dupont, termorretráctil | USD 3–4 |
+| Placa perforada de 5 × 7 cm y 2 cabeceras hembra de 36 pines | USD 0.6–2.2 (Adafruit 4786 y 598, prorrateado del pack) |
 | Tornillos M2/M2.5 con insertos térmicos | USD 3–5 |
 | Interruptor deslizante y conector JST | USD 1 |
 | microSD de 64 GB (Pi) | USD 10–14 |
@@ -88,21 +101,28 @@
 
 ## 8. BOM por nivel (resumen; el detalle está en el doc 05)
 
+> **Alcance desde el 2026-11-17:** el piloto se limita a **A (básico)** y **B (expresivo)**. A′ queda **aparcada** y C (Raspberry Pi 5) **descartada para el MVP** por precio; ambas se conservan aquí como investigación, pero salen del catálogo de piezas (archivadas en `tools/precios/catalogo-archivo.json`) y de la web. Carcasa elegida para A: **Delta suave** (doc 09).
+
+
 ### Nivel A — "Básico" (cliente ligero ESP32-S3, alimentación USB)
 
 | Ítem | Opción barata (AliExpress, est.) | Opción retail verificada |
 |---|---|---|
 | ESP32-S3 N16R8 DevKitC | 7 | 12.50 (Walmart) |
-| GC9A01 1,28" redonda | 3.5 | 8.90 (DisplayModule) |
+| Redonda táctil 1,85" ST77916 (Waveshare) | 12 (est.) | 17.99 (Waveshare) |
 | INMP441 | 1.8 | 4.95 (Vetco) |
 | MAX98357A | 2 | 5.95 (Adafruit) |
 | Altavoz de cavidad 8 Ω 2 W | 1.5 | 2.99 (Waveshare) |
 | TTP223 | 0.4 | 5.95 (Adafruit AT42QT1010) |
-| Carcasa PLA (~80 g) | 1.6 | 1.6 |
-| Cables, perfboard, tornillos | 4 | 6 |
-| **Total** | **≈ USD 22** | **≈ USD 49** |
+| Carcasa Delta suave en PLA (87,4 g + margen de purga, doc 09) | 1.8 | 1.8 |
+| Placa perforada de 5 × 7 cm (recortada a 6 × 4) | 0.3 (est.) | 0.98 (Adafruit 4786, pack de 3) |
+| 2 tiras de cabecera hembra de 36 pines, cortadas a 22 | 0.3 (est.) | 1.18 (Adafruit 598, pack de 5) |
+| Cables, 3 tornillos M2,5 × 40 con insertos, tornillos M2 de la pantalla, separadores | 3.4 | 3.84 |
+| Cable USB-A a USB-C de 1 m | 1 (est.) | 4.95 (Adafruit 4474) |
+| Cargador USB de 5 V 2 A (vale uno de móvil) | 2.5 (est.) | 7.95 (Adafruit 1994) |
+| **Total** | **≈ USD 34** | **≈ USD 71** |
 
-### Nivel A′ — "Todo en uno sin soldar"
+### Nivel A′ — "Todo en uno sin soldar" (aparcado desde el 2026-11-17)
 
 ESP32-S3-BOX-3 (USD 49.95) + carcasa impresa (~USD 2) = **≈ USD 52**. Alternativa: M5Stack CoreS3 SE (USD 38.60) = **≈ USD 40**.
 
@@ -120,13 +140,15 @@ ESP32-S3-BOX-3 (USD 49.95) + carcasa impresa (~USD 2) = **≈ USD 52**. Alternat
 | TTP223 | 0.4 | 5.95 |
 | 18650 de 2200 mAh con protección | 4 | 9.95 |
 | IP5306 o PowerBoost 1000C | 1 | 19.95 |
-| Interruptor, cables, tornillos | 5 | 7 |
+| Placa perforada de 5 × 7 cm y 2 tiras de cabecera hembra | 0.6 (est.) | 2.16 (Adafruit 4786 y 598) |
+| Interruptor, portapilas 18650, condensador de 470 µF, resistencias del divisor, cables y tornillos (est.) | 5.7 | 7.84 |
 | Carcasa PLA/PETG (~180 g) | 3.5 | 3.5 |
-| **Total** | **≈ USD 39** | **≈ USD 132** |
+| Cable USB-A a USB-C y cargador de 5 V 2 A (para cargar la 18650) | 3.5 (est.) | 12.90 (Adafruit) |
+| **Total** | **≈ USD 44** | **≈ USD 148** |
 
-Con servos **STS3032** (2× USD 41.66) en lugar de SG90, más un adaptador de bus serie (~USD 5, est.), el retail sube a ≈ USD 210.
+Con servos **STS3032** (2× USD 41.66) en lugar de SG90, más un adaptador de bus serie (~USD 5, est.), el retail sube a ≈ USD 226.
 
-### Nivel C — "Autónomo local" (Raspberry Pi 5 de 8 GB)
+### Nivel C — "Autónomo local" (Raspberry Pi 5 de 8 GB) · **descartado para el MVP** (2026-11-17, demasiado caro)
 
 | Ítem | Precio | Fuente |
 |---|---|---|

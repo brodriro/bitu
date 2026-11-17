@@ -96,6 +96,16 @@
 - https://tinycomputers.io/posts/rockchip-rk3588-npu-benchmarks.html
 - https://tts.ai/voices/piper/?lang=es
 
+- https://api-docs.deepseek.com/quick_start/pricing (consultada el 2026-11-17)
+- https://api-docs.deepseek.com/guides/thinking_mode
+- https://api-docs.deepseek.com/guides/safety
+- https://api-docs.deepseek.com/guides/tts
+- https://api-docs.deepseek.com/guides/asr
+- https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html
+- https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html
+- https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/main/xiaozhi-server/config.yaml (bloque DeepSeekLLM)
+- https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/main/xiaozhi-server/core/providers/llm/openai/openai.py (desactiva thinking en deepseek.com)
+
 ## Carcasas (doc 04)
 - https://www.makerworld.com/en/models/2781106
 - https://3dgo.app/models/makerworld/881711
@@ -125,3 +135,16 @@
 - https://compliancetesting.com/ce-certification-for-espressif-esp32-devices/
 - https://www.cpsc.gov/Business--Manufacturing/Business-Education/Childrens-Products
 - https://www.federalregister.gov/documents/2010/10/14/2010-25645/interpretation-of-childrens-product
+
+## Compra y verificación de piezas (auditoría del 2026-11-17)
+
+- https://dl.espressif.com/dl/schematics/esp_idf/DXF_ESP32-S3-DevKitC-1_V1.1_20220429.pdf (25,4 mm de ancho; filas a 22,86 mm)
+- https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html
+- https://www.waveshare.com/img/devkit/general/GH1.25-15PIN-15cm.jpg (cable de la pantalla: GH1.25 a hembras dupont)
+- https://www.adafruit.com/product/4474 (cable USB-A a USB-C)
+- https://www.adafruit.com/product/1994 (cargador de 5 V 2 A)
+- https://www.adafruit.com/product/4786 (placa perforada de 5 × 7 cm, pack de 3)
+- https://www.adafruit.com/product/598 (cabecera hembra de 36 pines, pack de 5)
+- https://www.adafruit.com/product/3008 (cabecera hembra «short»: no sirve para Bitu)
+- https://done.land/components/power/powersupplies/battery/chargers/charge-discharge/ip5306/ (apagado del IP5306 con poca carga)
+- https://www.github.com/M5ez/M5ez/issues/99

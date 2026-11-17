@@ -2,6 +2,8 @@
 
 > Investigación del 2026-11-16. Los precios se revisaron en 2026-11. Los tiempos y costes de impresión de nuestras propias piezas son **estimaciones**.
 
+> **Decisión del 2026-11-17:** la carcasa de Bitu (propuesta A) es el diseño propio **Delta suave**: prisma triangular de 11,8 cm de lado con la pantalla redonda de 1,85" (Ø 5,5 cm) en el centro, 9,8 × 8,4 × 8,8 cm, 3 piezas, 87,4 g de PLA, ≈ 7,3 h **(est.)**. Diseño, comprobaciones y archivos en el [doc 09](09-carcasas.md). Los diseños de esta sección quedan como referencia.
+
 ## 1. Diseños imprimibles existentes
 
 | Diseño | Para | Plataforma | Licencia | Notas | Enlace |
@@ -35,9 +37,9 @@ Precio del filamento: USD 15–22/kg en 2026 ([QIDI](https://kr.qidi3d.com/blogs
 
 | Pieza o nivel | Gramos | Tiempo | Coste del material |
 |---|---|---|---|
-| Nivel A: cabeza esférica o "lata" de ~70 mm con soporte para pantalla de 1,28" | 60–90 g | 3–5 h | USD 1.0–2.0 |
+| **Nivel A: Delta suave (elegida, gramos del CAD)** | 87,4 g | ≈ 7,3 h | USD 1.75 |
 | Nivel B: cabeza cúbica de ~55 mm, cuerpo y soporte pan/tilt | 150–200 g | 7–10 h | USD 2.3–4.4 |
-| Nivel C: cuerpo para Pi 5 con ventilación y cabeza | 220–300 g | 10–14 h | USD 3.5–6.6 |
+| Nivel C (descartado para el MVP): cuerpo para Pi 5 con ventilación y cabeza | 220–300 g | 10–14 h | USD 3.5–6.6 |
 
 Referencia real: Stack-chan Takao, 5,2 h en 4 placas ([MakerWorld](https://www.makerworld.com/en/models/2781106)).
 
@@ -65,7 +67,8 @@ Referencia real: Stack-chan Takao, 5,2 h en 4 placas ([MakerWorld](https://www.m
 
 | Elemento | Dimensión de referencia |
 |---|---|
-| Pantalla redonda GC9A01 de 1,28" | Diámetro visible de ~32 mm; PCB de ~38–40 mm de diámetro (medir el módulo concreto) |
+| Pantalla redonda táctil de 1,85" (elegida) | Vidrio Ø 5,5 cm, área activa Ø 4,57 cm, 0,91 cm de grueso (plano de Waveshare) |
+| Pantalla redonda GC9A01 de 1,28" (anterior) | Diámetro visible de ~32 mm; PCB de ~38–40 mm de diámetro (medir el módulo concreto) |
 | IPS 2" ST7789 (Adafruit 4311) | PCB de ~46×35 mm (medir) |
 | ESP32-S3 DevKitC-1 | ~63×25 mm (más ~5 mm si va con cabeceras) |
 | Altavoz cerrado de 3 W (Adafruit 4445) | ~30×20×10 mm **(verificar)** |
