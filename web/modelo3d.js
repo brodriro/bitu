@@ -1,4 +1,4 @@
-// Bitu · modelo 3D de las piezas y simulación del ensamblaje (propuesta A). Versión 2.
+// Bitu · modelo 3D de las piezas y simulación del ensamblaje (propuesta A en la carcasa Delta suave). Versión 3.
 // Unidades: milímetros. Fuente de verdad: docs/research/08-modelo-3d.md.
 // La versión anterior queda en modelo3d-v1.js (basta cambiar el <script> de index.html para volver).
 import * as THREE from "three";
@@ -6,6 +6,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { GLTFExporter } from "three/addons/exporters/GLTFExporter.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 function fallo(raiz, e) {
   console.error(e);
@@ -127,7 +128,7 @@ function crearCara(redonda) {
 /* Piezas                                                              */
 /* ------------------------------------------------------------------ */
 /* Medidas verificadas (mm). Fuente de cada una en docs/research/08-modelo-3d.md. */
-const HDR = 10.8; // media distancia entre filas de pines del DevKitC-1 v1.1 (DXF de Espressif)
+const HDR = 11.43; // media distancia entre filas de pines del DevKitC-1 v1.1: 22,86 mm = 9 × 2,54 (plano de Espressif: 25,4 de ancho, pines a 1,27 del borde)
 function esp32() {
   const g = grupo(pcb(62.87, 25.4, M.pcbNegro));
   g.add(en(caja(18, 0.8, 25.5, M.chip), 22.5, 2, 0)); // base del módulo WROOM-1
@@ -141,17 +142,16 @@ function esp32() {
   return g;
 }
 
-/** `girada`: la lengüeta del conector queda arriba al montarla en vertical y la imagen se gira 180°. */
-function gc9a01(cara, girada = false) {
-  // Waveshare 1.28inch LCD Module: PCB Ø 37,5, 40,4 con la lengüeta, área activa Ø 32,4
-  const g = grupo(pcbRedondo(18.75, M.pcbAzul));
-  g.add(en(caja(13, 1.6, 4.6, M.pcbAzul), 0, 0.8, 19.35)); // lengüeta del conector
-  g.add(en(tiraPines(8, true), 0, 0, 20.2));
-  g.add(en(cil(17.4, 2.6, M.vidrio, 64), 0, 2.9, 0));
-  const pantalla = new THREE.Mesh(new THREE.CircleGeometry(16.2, 64), new THREE.MeshBasicMaterial({ map: cara.tex, toneMapped: false }));
-  pantalla.rotation.x = -Math.PI / 2;
-  if (girada) pantalla.rotation.z = Math.PI;
-  pantalla.position.y = 4.25;
+function lcd185(cara) {
+  // Waveshare 1.85inch Touch LCD Module (plano oficial): vidrio Ø 55, área activa Ø 45,68, fondo total 9,1,
+  // PCB redonda detrás con conector GH1.25 de 15 pines y 3 separadores M2 de 4 mm
+  const g = grupo(en(cil(27.5, 0.7, M.vidrio, 96), 0, 8.75, 0));
+  g.add(en(cil(27.3, 2.4, M.pcbNegro, 96), 0, 7.2, 0)); // panel LCD
+  g.add(en(cil(25.5, 1.6, M.pcbAzul, 96), 0, 5.2, 0)); // PCB del controlador
+  g.add(en(cajaR(3.4, 2.6, 17, 0.4, M.metal), 13, 3.1, 0)); // conector GH1.25 15 pines
+  for (const [x, z] of [[0, -21], [-14.85, 14.85], [14.85, 14.85]]) g.add(en(cil(1.6, 4, M.metal, 16), x, 2, z));
+  const pantalla = new THREE.Mesh(new THREE.CircleGeometry(22.84, 96), new THREE.MeshBasicMaterial({ map: cara.tex, toneMapped: false }));
+  pantalla.rotation.x = -Math.PI / 2; pantalla.position.y = 9.12;
   g.add(pantalla);
   return g;
 }
@@ -333,185 +333,112 @@ function placaPerforada() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Carcasa impresa: cabeza de 70 mm en dos mitades huecas (pared 2 mm) */
+/* Carcasa Delta suave: mallas del GLB que genera tools/carcasas/carcasas.py */
 /* ------------------------------------------------------------------ */
-const INCL = THREE.MathUtils.degToRad(12);          // inclinación de la pantalla (doc 04: 10–15°)
-const PANT = { y: 3, z: 34.6 };                      // centro del PCB de la pantalla, relativo al centro de la cabeza
-const MARCO = { R: 21.5, labio: 5.4, fondo: -7 };    // marco inclinado (coordenadas locales de la pantalla)
-
-/** Recorta una geometría por el plano z = 0 y se queda con el lado `lado` (+1 frontal, −1 trasero). */
-function recortarZ(geo, lado, { invertir = false, sinCara = false } = {}, pos = [], nor = []) {
-  const g = geo.index ? geo.toNonIndexed() : geo;
-  const P = g.attributes.position.array, Nn = g.attributes.normal.array;
-  const v = (i) => ({ p: [P[i * 3], P[i * 3 + 1], P[i * 3 + 2]], n: [Nn[i * 3], Nn[i * 3 + 1], Nn[i * 3 + 2]] });
-  const corte = (a, b) => {
-    const k = a.p[2] / (a.p[2] - b.p[2]);
-    const n = a.n.map((x, j) => x + (b.n[j] - x) * k), l = Math.hypot(...n) || 1;
-    return { p: a.p.map((x, j) => (j === 2 ? 0 : x + (b.p[j] - x) * k)), n: n.map((x) => x / l) };
+// Medidas del CAD (doc 09). Escena: origen en el centro de la base, y hacia arriba, frente hacia +Z
+// (el CAD usa z hacia arriba y frente hacia −Y: x_escena = x, y_escena = z_CAD, z_escena = −y_CAD).
+const INCL = THREE.MathUtils.degToRad(12); // inclinación de la pantalla
+const D = (() => {
+  const a = 118, L = 70, pared = 2, suelo = 2, rf = 14, r3 = Math.sqrt(3);
+  const r = a / (2 * r3), h = 3 * r;                                  // inradio (centro de la pantalla) y alto
+  const aIn = a - 2 * pared * r3, hIn = (3 * aIn) / (2 * r3), rfIn = rf - pared;
+  const semiIn = (y) => (aIn / 2) * (1 - (y - suelo) / hIn);         // medio ancho interior a la altura y
+  const yMod = 0.67 * h, s = Math.max(rfIn + 2.6, 5.2), c30 = Math.cos(Math.PI / 6);
+  const nPant = [0, Math.sin(INCL), Math.cos(INCL)];
+  return {
+    L, h, suelo,
+    pila: { x: -7.5, z: -4, yPlaca: suelo + 3 },                      // placa perforada sobre postes de 3 mm
+    pant: [0, r, L / 2 + 1.5], nPant,                                  // centro del vidrio y normal
+    mic: [-semiIn(yMod), yMod, 8], nIzq: [-c30, 0.5, 0],               // cara interior izquierda (micrófono)
+    tac: [semiIn(yMod), yMod, -8], nDer: [c30, 0.5, 0],                // cara interior derecha (táctil)
+    esquinas: [[-(aIn / 2 - s * c30), suelo + s / 2], [aIn / 2 - s * c30, suelo + s / 2], [0, suelo + hIn - s]],
+    antena: [0, h - rf - 3, -10],
   };
-  for (let t = 0; t < P.length / 9; t++) {
-    const tri = [v(t * 3), v(t * 3 + 1), v(t * 3 + 2)];
-    if (sinCara && tri.every((q) => q.n[2] * lado > 0.999)) continue; // cara plana frontal: se sustituye por una con hueco
-    const out = [];
-    for (let i = 0; i < 3; i++) {
-      const a = tri[i], b = tri[(i + 1) % 3];
-      const da = a.p[2] * lado >= 0, db = b.p[2] * lado >= 0;
-      if (da) out.push(a);
-      if (da !== db) out.push(corte(a, b));
-    }
-    for (let i = 1; i + 1 < out.length; i++) {
-      const tr = invertir ? [out[0], out[i + 1], out[i]] : [out[0], out[i], out[i + 1]];
-      for (const q of tr) { pos.push(...q.p); nor.push(...(invertir ? q.n.map((x) => -x) : q.n)); }
-    }
-  }
-  return { pos, nor };
+})();
+const Y_ESP = D.pila.yPlaca + 12.6;     // DevKit: placa 1,6 + cabecera hembra 8,5 + plástico de los pines macho 2,5
+const Y_AMP = Y_ESP + 1.6 + 3.2 + 2;    // MAX98357A sobre cinta de espuma de doble cara de 2 mm encima del módulo WROOM
+
+let DELTA = null; // nodos «carcasa:*» del GLB
+async function cargarDelta(cargador) {
+  const gltf = await cargador.loadAsync("modelos/carcasa-delta-suave.glb");
+  DELTA = {};
+  gltf.scene.traverse((n) => { // GLTFLoader quita los «:» de n.name; el nombre original queda en userData.name
+    const nombre = n.userData.name || n.name;
+    if (/^carcasa:/.test(nombre)) DELTA[nombre.slice(8)] = n;
+  });
 }
-
-function rectR(ctx, w, h, r) {
-  const x = -w / 2, y = -h / 2;
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y); ctx.absarc(x + w - r, y + r, r, -Math.PI / 2, 0, false);
-  ctx.lineTo(x + w, y + h - r); ctx.absarc(x + w - r, y + h - r, r, 0, Math.PI / 2, false);
-  ctx.lineTo(x + r, y + h); ctx.absarc(x + r, y + h - r, r, Math.PI / 2, Math.PI, false);
-  ctx.lineTo(x, y + r); ctx.absarc(x + r, y + r, r, Math.PI, Math.PI * 1.5, false);
-  return ctx;
+/** Pieza de la carcasa en mm y ejes de la escena; `origen` es el punto que queda en el origen del grupo. */
+function piezaDelta(nombre, material, origen = [0, 0, 0]) {
+  const r = new THREE.Group();
+  r.rotation.x = -Math.PI / 2; r.scale.setScalar(1000); // el GLB viene en metros y con z hacia arriba
+  const m = DELTA[nombre].clone();
+  m.traverse((n) => { if (n.isMesh) { n.material = material; sombra(n); } });
+  r.add(m);
+  r.position.set(-origen[0], -origen[1], -origen[2]);
+  return grupo(r);
 }
+const antenaDelta = () => piezaDelta("antena", M.rosa, D.antena);
+const carcasaDelta = () => grupo(piezaDelta("trasera", M.pla), piezaDelta("frontal", M.plaFrente), en(antenaDelta(), ...D.antena));
 
-/** Media cabeza con el origen en el centro de la cabeza. */
-function carcasa(mitad) {
-  const frontal = mitad === "frontal", lado = frontal ? 1 : -1;
-  const m = frontal ? M.plaFrente : M.pla;
-  const g = new THREE.Group();
-
-  // Piel exterior + interior (pared de 2 mm)
-  const { pos, nor } = recortarZ(new RoundedBoxGeometry(70, 70, 70, 5, 9), lado, { sinCara: frontal });
-  recortarZ(new RoundedBoxGeometry(66, 66, 66, 5, 7), lado, { invertir: true, sinCara: frontal }, pos, nor);
-  const piel = new THREE.BufferGeometry();
-  piel.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
-  piel.setAttribute("normal", new THREE.Float32BufferAttribute(nor, 3));
-  g.add(sombra(new THREE.Mesh(piel, m)));
-
-  // Canto de la junta entre mitades
-  const canto = rectR(new THREE.Shape(), 70, 70, 9);
-  canto.holes.push(rectR(new THREE.Path(), 66, 66, 7));
-  const borde = new THREE.Mesh(new THREE.ShapeGeometry(canto, 10), m);
-  if (frontal) borde.rotation.y = Math.PI;
-  g.add(borde);
-
-  // Postes para la placa perforada (dos por mitad)
-  for (const x of [-26, 26]) g.add(en(cil(2, 3, m, 16), x, -31.5, frontal ? 14 : -18));
-
-  if (frontal) {
-    // Cara con el hueco elíptico por donde asoma el marco inclinado de la pantalla
-    const cy = PANT.y + ((35 - PANT.z) / Math.cos(INCL)) * Math.sin(INCL);
-    const placa = new THREE.Shape();
-    placa.moveTo(-26, -26); placa.lineTo(26, -26); placa.lineTo(26, 26); placa.lineTo(-26, 26); placa.closePath();
-    const hueco = new THREE.Path();
-    hueco.absellipse(0, cy, MARCO.R - 0.3, (MARCO.R - 0.3) / Math.cos(INCL), 0, Math.PI * 2, true);
-    placa.holes.push(hueco);
-    const geoPlaca = new THREE.ShapeGeometry(placa, 48);
-    g.add(en(sombra(new THREE.Mesh(geoPlaca, m)), 0, 0, 35));
-    const dentro = new THREE.Mesh(geoPlaca, m); dentro.rotation.y = Math.PI; g.add(en(dentro, 0, 0, 33));
-
-    // Marco de la pantalla: tubo inclinado 12° hacia arriba, con escalón que sujeta el PCB
-    const { R, labio, fondo } = MARCO;
-    const perfil = [[R, fondo], [R, labio - 0.8], [R - 0.8, labio], [19.2, labio], [18.4, labio - 0.8], [18.4, 1.7], [20, 1.7], [20, fondo]]
-      .map(([x, y]) => new THREE.Vector2(x, y));
-    const marco = sombra(new THREE.Mesh(new THREE.LatheGeometry(perfil, 72), M.plaMarco));
-    marco.rotation.x = Math.PI / 2 - INCL;
-    g.add(en(marco, 0, PANT.y, PANT.z));
-    g.add(en(cajaR(0.6, 5, 12, 0.25, M.hueco), -35.05, -14.2, 4.5)); // ranura USB-C (UART)
-  } else {
-    // Rejilla del altavoz (trasera), hueco USB-C, agujero del micrófono, marca táctil, alojamientos de tornillo
-    const reja = [];
-    for (let a = -4; a <= 4; a++) for (let b = -4; b <= 4; b++) {
-      const x = (a + (b % 2 ? 0.5 : 0)) * 3.3, y = b * 2.86;
-      if (Math.hypot(x, y) < 10.2) reja.push([-12 + x, 7 + y, -35.05]);
-    }
-    g.add(discos(reja, 0.95));
-    g.add(discos([[-25, -25, -35.05], [25, -25, -35.05], [-25, 25, -35.05], [25, 25, -35.05]], 2.8));
-    g.add(en(cajaR(0.6, 5, 12, 0.25, M.hueco), -35.05, -14.2, -8.5)); // ranura USB-C
-    g.add(discos([[16, 35.05, -11.5]], 1, "y")); // agujero del micrófono Ø 2
-    g.add(discos([[0, 35.05, -6]], 2.2, "y")); // encaje de la antena
-    const anillo = new THREE.Mesh(new THREE.TorusGeometry(5.5, 0.55, 8, 40), M.rosa); anillo.rotation.x = Math.PI / 2;
-    g.add(en(anillo, -18, 35.05, -14)); // marca táctil
-  }
-  return g;
-}
-
-const base = () => grupo(en(cil(26, 10, M.plaBase, 64), 0, 5, 0));
-const antena = () => grupo(en(cil(2, 10, M.pla, 20), 0, 5, 0), en(cajaR(10, 10, 10, 1.5, M.rosa), 0, 13, 0));
-
-/** Tornillo M2,5 × 8: cabeza en el origen, vástago hacia +Y local. */
-function tornillo() {
-  return grupo(cil(2.2, 1.6, M.metal, 24), en(cil(1.25, 8, M.metal, 16), 0, 4.8, 0),
+/** Tornillo M2,5: cabeza en el origen, vástago de `largo` mm hacia +Y local. */
+function tornillo(largo = 8) {
+  return grupo(cil(2.2, 1.6, M.metal, 24), en(cil(1.25, largo, M.metal, 16), 0, 0.8 + largo / 2, 0),
     en(caja(3.2, 0.3, 0.7, M.hueco), 0, -0.72, 0), en(caja(0.7, 0.3, 3.2, M.hueco), 0, -0.72, 0));
 }
 
-/** Cable USB-C: origen en la punta del conector, que entra hacia +X. */
-function cableUsb() {
+/** Cable USB-C: origen en la punta del conector, que entra hacia +X; el cable cae `alto` mm hasta la mesa. */
+function cableUsb(alto) {
   const g = grupo(en(caja(7, 2.4, 8.3, M.metal), -3.5, 0, 0), en(cajaR(20, 6.5, 12, 2, M.blanco), -17, 0, 0));
-  const curva = new THREE.CatmullRomCurve3([V(-26, 0, 0), V(-42, 0, 0), V(-60, -10, 5), V(-74, -24, 16), V(-92, -29.2, 36), V(-128, -29.2, 64)]);
+  const k = alto / 29.2;
+  const curva = new THREE.CatmullRomCurve3([V(-26, 0, 0), V(-42, 0, 0), V(-60, -10 * k, 5), V(-74, -24 * k, 16), V(-92, -29.2 * k, 36), V(-128, -29.2 * k, 64)]);
   g.add(sombra(new THREE.Mesh(new THREE.TubeGeometry(curva, 48, 1.7, 8), M.blanco)));
-  return g;
-}
-
-function cabezaCompleta() {
-  const g = new THREE.Group();
-  g.add(en(carcasa("trasera"), 0, 45, 0), en(carcasa("frontal"), 0, 45, 0), base(), en(antena(), 0, 80, -6));
   return g;
 }
 
 /* Catálogo de piezas del visor (ids = tools/precios/catalogo.json) */
 const PIEZAS = [
-  { id: "esp32s3", nombre: "ESP32-S3-DevKitC-1", medidas: "62,87 × 25,4 mm (plano DXF de Espressif, v1.1)", hacer: esp32 },
-  { id: "gc9a01", nombre: "Pantalla redonda GC9A01 1,28\"", medidas: "Ø 37,5 mm; 40,4 con lengüeta; área activa Ø 32,4 (Waveshare)", hacer: () => gc9a01(caraGaleria(true)) },
-  { id: "inmp441", nombre: "Micrófono INMP441", medidas: "Ø 14 × 2,2 mm (módulo redondo común)", hacer: inmp441 },
-  { id: "max98357a", nombre: "Amplificador MAX98357A", medidas: "19,4 × 17,8 × 3,0 mm (Adafruit 3006)", hacer: max98357a },
-  { id: "altavoz2030", nombre: "Altavoz de cavidad 8 Ω 2 W", medidas: "30 × 20 × 5,5 mm (Waveshare 2030)", hacer: altavoz },
-  { id: "altavoz", nombre: "Altavoz cerrado 3 W · 4 Ω", medidas: "70 × 31 × 17 mm (Adafruit 4445) · no cabe en A ni B", hacer: altavoz3w },
-  { id: "tactil", nombre: "Sensor táctil TTP223", medidas: "15 × 11 mm (módulo TTP223 común)", hacer: tactil },
-  { id: "perfboard", nombre: "Placa perforada + cabeceras", medidas: "60 × 40 mm", hacer: placaPerforada },
-  { id: "carcasa", nombre: "Carcasa impresa (A)", medidas: "Cabeza 70 × 70 × 70 mm · pantalla a 12°", hacer: cabezaCompleta },
-  { id: "ips2", nombre: "Pantalla IPS 2\" ST7789", medidas: "59,2 × 35,5 × 3,7 mm (Adafruit 4311)", hacer: () => ips2(caraGaleria(false)) },
-  { id: "servo", nombre: "Micro servo SG92R", medidas: "23 × 11 × 29 mm (Adafruit 169)", hacer: servo },
-  { id: "vl53l0x", nombre: "Sensor ToF VL53L0X", medidas: "21 × 18 × 2,8 mm (Adafruit 3317)", hacer: vl53l0x },
-  { id: "mpu6050", nombre: "IMU MPU-6050", medidas: "26 × 17,8 × 4,6 mm (Adafruit 3886)", hacer: mpu6050 },
-  { id: "bat18650", nombre: "Celda 18650", medidas: "69 × Ø 18 mm con protección (Adafruit 1781)", hacer: bat18650 },
-  { id: "cargador", nombre: "PowerBoost 1000C", medidas: "45 × 23 × 10 mm con USB-A (Adafruit 2465)", hacer: powerboost },
-  { id: "pi5_8gb", nombre: "Raspberry Pi 5", medidas: "85 × 56 mm (Raspberry Pi 5)", hacer: () => { const g = pi5(); g.add(en(cooler(), -4, 1.6, -2)); return g; } },
-  { id: "cooler", nombre: "Active Cooler", medidas: "63,5 × 42,5 × 13,7 mm (product brief oficial)", hacer: cooler },
-  { id: "fuente27w", nombre: "Fuente 27 W USB-C", medidas: "68,9 × 51,7 × 35,6 mm (Adafruit 5814)", hacer: fuente27w },
-  { id: "respeaker", nombre: "ReSpeaker Lite", medidas: "86 × 35 mm (sin plano oficial: aproximado)", hacer: respeaker },
-  { id: "amoled175", nombre: "Waveshare ESP32-S3-Touch-AMOLED-1.75", medidas: "Ø 48,96 × 10,4 mm (Core Electronics / Waveshare)", hacer: () => amoled175(caraGaleria(true)) },
-  { id: "box3", nombre: "ESP32-S3-BOX-3", medidas: "Sin plano oficial: proporciones aproximadas", hacer: () => box3(caraGaleria(false)) },
+  { id: "esp32s3", nombre: "ESP32-S3-DevKitC-1", medidas: "6,274 × 2,54 cm; filas de pines a 2,286 cm (plano de Espressif, v1.1)", hacer: esp32 },
+  { id: "lcd185", nombre: "Pantalla redonda táctil 1,85\" ST77916", medidas: "Ø 5,5 × 0,91 cm; área activa Ø 4,57 cm; 3 tornillos M2 (Waveshare)", hacer: () => lcd185(caraGaleria(true)) },
+  { id: "inmp441", nombre: "Micrófono INMP441", medidas: "Ø 1,4 × 0,22 cm (módulo redondo común)", hacer: inmp441 },
+  { id: "max98357a", nombre: "Amplificador MAX98357A", medidas: "1,94 × 1,78 × 0,3 cm (Adafruit 3006)", hacer: max98357a },
+  { id: "altavoz2030", nombre: "Altavoz de cavidad 8 Ω 2 W", medidas: "3 × 2 × 0,55 cm (Waveshare 2030)", hacer: altavoz },
+  { id: "tactil", nombre: "Sensor táctil TTP223", medidas: "1,5 × 1,1 cm (módulo TTP223 común)", hacer: tactil },
+  { id: "perfboard", nombre: "Placa perforada + cabeceras", medidas: "6 × 4 cm", hacer: placaPerforada },
+  { id: "cableusbc", nombre: "Cable USB-A a USB-C", medidas: "1 m (Adafruit 4474); se muestra el conector y el primer tramo", hacer: () => cableUsb(29.2) },
+  { id: "carcasa", nombre: "Carcasa Delta suave", medidas: "9,8 × 8,4 × 8,8 cm; frontal, trasera y antena en PLA (doc 09, generada con build123d)", hacer: carcasaDelta },
+  { id: "ips2", nombre: "Pantalla IPS 2\" ST7789", medidas: "5,92 × 3,55 × 0,37 cm (Adafruit 4311)", hacer: () => ips2(caraGaleria(false)) },
+  { id: "servo", nombre: "Micro servo SG92R", medidas: "2,3 × 1,1 × 2,9 cm (Adafruit 169)", hacer: servo },
+  { id: "vl53l0x", nombre: "Sensor ToF VL53L0X", medidas: "2,1 × 1,8 × 0,28 cm (Adafruit 3317)", hacer: vl53l0x },
+  { id: "mpu6050", nombre: "IMU MPU-6050", medidas: "2,6 × 1,78 × 0,46 cm (Adafruit 3886)", hacer: mpu6050 },
+  { id: "bat18650", nombre: "Celda 18650", medidas: "6,9 × Ø 1,8 cm con protección (Adafruit 1781)", hacer: bat18650 },
+  { id: "cargador", nombre: "PowerBoost 1000C", medidas: "4,5 × 2,3 × 1 cm con USB-A (Adafruit 2465)", hacer: powerboost },
 ];
 let caraGal = null;
 function caraGaleria(redonda) { caraGal = crearCara(redonda); caraGal.poner(1, 1, 0); return caraGal; }
 
 /* ------------------------------------------------------------------ */
-/* Ensamblaje de la propuesta A                                        */
+/* Ensamblaje de la propuesta A en la Delta suave                      */
 /* ------------------------------------------------------------------ */
 const PASOS = [
-  { titulo: "Despiece", dur: 0, texto: "Todas las piezas de la propuesta A sobre la mesa, a escala. El círculo marca dónde se monta Bitu. Arrastra para girar la vista; rueda o pellizco para acercar." },
-  { titulo: "Base y carcasa trasera", dur: 3.4, nuevo: "Base + carcasa trasera", texto: "Primero la base y, encima, la mitad trasera de la cabeza, que hace de chasis: trae la rejilla del altavoz, el agujero del micrófono, la marca táctil y los postes para la placa." },
-  { titulo: "Placa perforada", dur: 2.8, nuevo: "Placa perforada", texto: "La placa perforada de 60 × 40 mm, con dos tiras de cabeceras hembra, se apoya en los postes del fondo." },
-  { titulo: "ESP32-S3", dur: 2.8, nuevo: "ESP32-S3-DevKitC-1", texto: "El DevKit se encaja en las cabeceras, con los USB-C hacia el lateral izquierdo, frente a las ranuras de la carcasa." },
-  { titulo: "Micrófono", dur: 4.4, nuevo: "INMP441", texto: "El INMP441 va al techo, con el puerto bajo el agujero de la tapa. Sus cables bajan por la pared: WS, SCK y SD a GPIO 4, 5 y 6; VDD a 3V3; GND y L/R a GND." },
-  { titulo: "Amplificador y altavoz", dur: 4.8, nuevo: "MAX98357A + altavoz", texto: "Altavoz y MAX98357A a la pared trasera, frente a la rejilla. DIN, BCLK y LRC a GPIO 7, 15 y 16; VIN a 5 V; el altavoz, a la bornera." },
-  { titulo: "Pantalla y táctil", dur: 5.2, nuevo: "GC9A01 + TTP223", texto: "La GC9A01 queda inclinada 12° hacia arriba (SPI en GPIO 47, 21, 40, 45 y 41; retroiluminación en 42) y el TTP223 va al techo (GPIO 1). En el montaje real la pantalla se encaja antes en el marco de la mitad frontal." },
-  { titulo: "Cierre", dur: 6.6, nuevo: "Carcasa frontal + tornillos + antena", texto: "La mitad frontal cierra la cabeza y su marco inclinado sujeta la pantalla. Cuatro tornillos M2,5 entran por detrás en insertos térmicos y la antena «bit» se encaja arriba." },
-  { titulo: "Encendido", dur: 5.6, nuevo: "Cable USB-C", texto: "Con el USB-C conectado, la pantalla despierta y Bitu abre los ojos, parpadea y saluda. Lo siguiente es la prueba de 30 min y el red teaming del contenido." },
+  { titulo: "Despiece", dur: 0, texto: "Todas las piezas de la propuesta A sobre la mesa, a escala real, con la carcasa Delta suave. El contorno marca dónde se monta Bitu. Arrastra para girar la vista; rueda o pellizco para acercar." },
+  { titulo: "Carcasa trasera", dur: 3.4, nuevo: "Carcasa trasera", texto: "La mitad trasera de la Delta suave hace de chasis y se apoya de pie sobre su cara inferior. Trae la rejilla del altavoz, la ventana de los USB-C en la cara izquierda y dos de los cuatro postes de la placa." },
+  { titulo: "Placa perforada", dur: 2.8, nuevo: "Placa perforada", texto: "La placa perforada de 6 × 4 cm, con dos tiras de cabeceras hembra, se apoya en los postes de 0,3 cm. Va 0,75 cm a la izquierda del centro para que los USB-C queden cerca de la pared." },
+  { titulo: "ESP32-S3", dur: 2.8, nuevo: "ESP32-S3-DevKitC-1", texto: "El DevKit se encaja en las cabeceras, con los dos USB-C hacia la cara izquierda: quedan a 0,5 cm de la pared, frente a su ventana." },
+  { titulo: "Micrófono", dur: 4.4, nuevo: "INMP441", texto: "El INMP441 se pega por dentro de la cara inclinada izquierda, con el puerto sobre el agujero de Ø 0,2 cm. WS, SCK y SD van a GPIO 4, 5 y 6; VDD a 3V3; GND y L/R a GND. Está en la mitad frontal: en el montaje real se pega antes de cerrar." },
+  { titulo: "Amplificador y altavoz", dur: 4.8, nuevo: "MAX98357A + altavoz", texto: "El altavoz se pega a la cara trasera, detrás de la rejilla, y el MAX98357A va encima del DevKit sobre cinta de espuma de doble cara de 0,2 cm. DIN, BCLK y LRC van a GPIO 7, 15 y 16, VIN a 5 V y el altavoz a la bornera." },
+  { titulo: "Pantalla y táctil", dur: 5.6, nuevo: "Pantalla 1,85\" + TTP223", texto: "La pantalla redonda de 1,85\" va en el centro del triángulo frontal, inclinada 12° hacia arriba. QSPI: CLK 21, CS 41, datos 47, 40, 42 y 2; RST 39 y retroiluminación 14; su táctil por I2C en 8, 9 y 10 (pines sin probar). El TTP223 va en la cara derecha (GPIO 1). En el montaje real la pantalla se encaja antes en el marco frontal." },
+  { titulo: "Cierre", dur: 6.6, nuevo: "Carcasa frontal + tornillos + antena", texto: "La mitad frontal cierra el prisma y su marco sujeta la pantalla. Tres tornillos M2,5 × 40 entran por detrás, cruzan el hueco y roscan en los insertos de las columnas de las esquinas; la antena «bit» se encaja en la cima." },
+  { titulo: "Encendido", dur: 5.6, nuevo: "Cable USB-C", texto: "Con el USB-C conectado por la ventana lateral, la pantalla despierta y Bitu abre los ojos, parpadea y saluda. Lo siguiente es la prueba de 30 min y el red teaming del contenido." },
 ];
 
-/* Posición de cada GPIO en las cabeceras del DevKitC-1 (pin 1 en el extremo de la antena, +X).
+/* Posición de cada pin en las cabeceras del DevKitC-1 (pin 1 en el extremo de la antena, +X).
    J1 queda en la fila trasera y J3 en la delantera. Según el pinout de Espressif; verificar con la serigrafía. */
-const J1 = { "3V3": 0, "3V3b": 1, 4: 3, 5: 4, 6: 5, 7: 6, 15: 7, 16: 8, "5V": 20, GND: 21 };
-const J3 = { GND: 0, 1: 3, 42: 5, 41: 6, 40: 7, 45: 14, 47: 16, 21: 17, GNDb: 20 };
-const px = (i) => 26.67 - i * 2.54;
+const J1 = { "3V3": 0, "3V3b": 1, 4: 3, 5: 4, 6: 5, 7: 6, 15: 7, 16: 8, 8: 11, 9: 14, 10: 15, 14: 19, "5V": 20, GND: 21 };
+const J3 = { GND: 0, 1: 3, 2: 4, 42: 5, 41: 6, 40: 7, 39: 8, 47: 16, 21: 17, GNDb: 20 };
+const px = (i) => D.pila.x + 26.67 - i * 2.54;
 const ROSA = new THREE.Color(0xff4fa0);
 const C = { rojo: 0xd23b3b, cinco: 0xe8590c, negro: 0x26262b, amarillo: 0xf2c230, verde: 0x22a35a, blanco: 0xf5f5f5,
-  morado: 0x7c3aed, azul: 0x2563eb, naranja: 0xf97316, gris: 0x9aa0ab, cian: 0x0ea5b7 };
+  morado: 0x7c3aed, azul: 0x2563eb, naranja: 0xf97316, gris: 0x9aa0ab, cian: 0x0ea5b7, marron: 0x8a5a2b };
 
 function construirEnsamblaje(cara) {
   const g = new THREE.Group();
@@ -558,46 +485,51 @@ function construirEnsamblaje(cara) {
     g.add(obj);
     return p;
   };
+  /** Punto local de una pieza ya colocada, en coordenadas de la escena. */
+  const mundo = (p, x, y, z) => p.obj.localToWorld(V(x, y, z)).toArray();
+  const orientar = (obj, de, a) => obj.quaternion.setFromUnitVectors(V(...de), V(...a));
+  const mas = (p, n, k) => p.map((x, i) => x + n[i] * k);
 
-  // Paso 1 · base y carcasa trasera (chasis)
-  add(base(), { paso: 1, a: 0, b: 0.5, fin: [0, 0, 0], banco: [-50, -100], eje: [0, -1, 0], acerca: 14, alto: 45, etiqueta: "Base" });
-  add(carcasa("trasera"), { paso: 1, a: 0.3, b: 1, fin: [0, 45, 0], banco: [-128, -20], giroBanco: [0, 0.5, 0], eje: [0, -1, 0], acerca: 24, alto: 70, carcasa: true, etiqueta: "Carcasa trasera" });
+  const { pila } = D;
+  // Paso 1 · carcasa trasera (chasis)
+  add(piezaDelta("trasera", M.pla), { paso: 1, a: 0, b: 1, fin: [0, 0, 0], banco: [-170, -30], giroBanco: [0, 0.5, 0], eje: [0, -1, 0], acerca: 24, alto: 80, carcasa: true, etiqueta: "Carcasa trasera" });
 
-  // Paso 2 · placa perforada sobre los postes (cara inferior a y = 15)
-  add(placaPerforada(), { paso: 2, a: 0, b: 0.92, fin: [0, 15, -2], banco: [-80, 80], eje: [0, -1, 0], acerca: 14, c2: [0, 46, 22], etiqueta: "Placa perforada" });
+  // Paso 2 · placa perforada sobre los postes
+  add(placaPerforada(), { paso: 2, a: 0, b: 0.92, fin: [pila.x, pila.yPlaca, pila.z], banco: [-95, 95], eje: [0, -1, 0], acerca: 14, c2: [pila.x, 46, 34], etiqueta: "Placa perforada" });
 
   // Paso 3 · DevKit en las cabeceras hembra
-  add(esp32(), { paso: 3, a: 0, b: 0.92, fin: [0, 27.6, -2], banco: [-5, 82], eje: [0, -1, 0], acerca: 13, c2: [0, 56, 24], etiqueta: "ESP32-S3-DevKitC-1" });
+  add(esp32(), { paso: 3, a: 0, b: 0.92, fin: [pila.x, Y_ESP, pila.z], banco: [-15, 100], eje: [0, -1, 0], acerca: 13, c2: [pila.x, 60, 34], etiqueta: "ESP32-S3-DevKitC-1" });
 
-  // Paso 4 · micrófono al techo (PCB contra la tapa, puerto bajo el agujero)
-  const mic = inmp441(true); mic.rotation.x = Math.PI;
-  add(mic, { paso: 4, a: 0, b: 0.46, fin: [16, 78, -10], banco: [-60, 125], giroBanco: [0, 0.3, 0], eje: [0, 1, 0], acerca: 15, c2: [16, 48, 30], etiqueta: "Micrófono INMP441", subeEtiqueta: 12 });
+  // Paso 4 · micrófono contra la cara izquierda (puerto hacia fuera, pines hacia dentro)
+  const mic = inmp441(true); orientar(mic, [0, -1, 0], D.nIzq);
+  const pMic = add(mic, { paso: 4, a: 0, b: 0.46, fin: mas([D.mic[0], D.mic[1], D.mic[2] - 1.5], D.nIzq, -0.3), banco: [-65, 140], giroBanco: [0, 0.3, 0], eje: D.nIzq, acerca: 15, c2: [-20, 70, 50], etiqueta: "Micrófono INMP441", subeEtiqueta: 12 });
 
-  // Paso 5 · altavoz y amplificador a la pared trasera
+  // Paso 5 · altavoz a la cara trasera y amplificador encima del DevKit
   const spk = altavoz(); spk.rotation.x = -Math.PI / 2;
-  add(spk, { paso: 5, a: 0, b: 0.4, fin: [-12, 52, -27.5], banco: [10, 125], eje: [0, 0, -1], acerca: 18, etiqueta: "Altavoz 8 Ω 2 W" });
-  const amp = max98357a(true); amp.rotation.x = Math.PI / 2;
-  add(amp, { paso: 5, a: 0.14, b: 0.54, fin: [18, 54, -32], banco: [-28, 125], eje: [0, 0, -1], acerca: 18, etiqueta: "MAX98357A", subeEtiqueta: 14 });
+  const pSpk = add(spk, { paso: 5, a: 0, b: 0.4, fin: [0, 34, -27.5], banco: [15, 140], eje: [0, 0, -1], acerca: 18, c2: [0, 70, -8], etiqueta: "Altavoz 8 Ω 2 W" });
+  const pAmp = add(max98357a(true), { paso: 5, a: 0.14, b: 0.54, fin: [0, Y_AMP, -10], banco: [-30, 140], eje: [0, -1, 0], acerca: 16, c2: [0, 66, 26], etiqueta: "MAX98357A", subeEtiqueta: 14 });
 
-  // Paso 6 · pantalla inclinada 12° y táctil al techo
-  const disp = gc9a01(cara, true); disp.rotation.set(Math.PI / 2 - INCL, Math.PI, 0);
-  const nP = [0, Math.sin(INCL), Math.cos(INCL)];
-  add(disp, { paso: 6, a: 0, b: 0.44, fin: [0, 45 + PANT.y, PANT.z], banco: [68, 82], eje: nP.map((x) => -x), acerca: 20, etiqueta: "Pantalla GC9A01 · 12°" });
-  add(tactil(), { paso: 6, a: 0.1, b: 0.5, fin: [-14, 76, -14], banco: [52, 125], eje: [0, 1, 0], acerca: 15, c2: [-14, 46, 30], etiqueta: "Táctil TTP223", subeEtiqueta: 12 });
+  // Paso 6 · pantalla en el centro del triángulo frontal (12°) y táctil contra la cara derecha
+  const disp = lcd185(cara); disp.rotation.x = Math.PI / 2 - INCL;
+  const pDisp = add(disp, { paso: 6, a: 0, b: 0.4, fin: mas(D.pant, D.nPant, -9.12), banco: [100, 95], eje: D.nPant.map((x) => -x), acerca: 26, etiqueta: "Pantalla 1,85\" · 12°" });
+  const tac = tactil(); orientar(tac, [0, 1, 0], D.nDer);
+  const pTac = add(tac, { paso: 6, a: 0.08, b: 0.46, fin: mas(D.tac, D.nDer, -1.9), banco: [60, 140], eje: D.nDer, acerca: 15, c2: [24, 74, -40], etiqueta: "Táctil TTP223", subeEtiqueta: 12 });
 
-  // Paso 7 · carcasa frontal, tornillos (por detrás) y antena
-  add(carcasa("frontal"), { paso: 7, a: 0, b: 0.38, fin: [0, 45, 0], banco: [128, -10], giroBanco: [0, 0.15, 0], eje: [0, 0, -1], acerca: 26, c1: [128, 85, 50], c2: [0, 45, 68], carcasa: true, etiqueta: "Carcasa frontal", fugaz: true });
-  [[-25, 20], [25, 20], [-25, 70], [25, 70]].forEach(([x, y], i) => {
-    const t = tornillo(); t.rotation.x = Math.PI / 2;
-    add(t, { paso: 7, a: 0.4 + i * 0.05, b: 0.64 + i * 0.05, fin: [x, y, -35.6], banco: [55, -112 + i * 7], giroBanco: [0, 0, Math.PI / 2], eje: [0, 0, 1], acerca: 11, alto: 40, vuelo: 0.42, vueltas: 8, etiqueta: i === 3 ? "4 tornillos M2,5" : null, fugaz: true });
+  // Paso 7 · carcasa frontal, 3 tornillos (por detrás) y antena
+  add(piezaDelta("frontal", M.plaFrente), { paso: 7, a: 0, b: 0.38, fin: [0, 0, 0], banco: [170, -20], giroBanco: [0, 0.15, 0], eje: [0, 0, -1], acerca: 30, c1: [170, 110, 60], c2: [0, 8, 84], carcasa: true, etiqueta: "Carcasa frontal", fugaz: true });
+  D.esquinas.forEach(([x, y], i) => {
+    const t = tornillo(40); t.rotation.x = Math.PI / 2;
+    add(t, { paso: 7, a: 0.4 + i * 0.06, b: 0.66 + i * 0.06, fin: [x, y, -34.2], banco: [75, -130 + i * 9], giroBanco: [0, 0, Math.PI / 2], eje: [0, 0, 1], acerca: 12, alto: 40, vuelo: 0.42, vueltas: 8, etiqueta: i === 2 ? "3 tornillos M2,5 × 40" : null, fugaz: true });
   });
-  add(antena(), { paso: 7, a: 0.8, b: 1, fin: [0, 80, -6], banco: [5, -100], eje: [0, -1, 0], acerca: 14, alto: 50, etiqueta: "Antena «bit»" });
+  add(antenaDelta(), { paso: 7, a: 0.82, b: 1, fin: D.antena, banco: [10, -120], eje: [0, -1, 0], acerca: 14, alto: 50, etiqueta: "Antena «bit»" });
 
-  // Paso 8 · cable USB-C por la ranura lateral
-  add(cableUsb(), { paso: 8, a: 0, b: 0.3, fin: [-33, 30.8, 4.5], desde: [-85, 30.8, 4.5], eje: [1, 0, 0], acerca: 10, etiqueta: "Cable USB-C" });
+  // Paso 8 · cable USB-C por la ventana de la cara izquierda
+  const yUsb = Y_ESP + 3.2, xUsb = pila.x - 33, zUsb = pila.z + 6.5;
+  add(cableUsb(yUsb - 1.7), { paso: 8, a: 0, b: 0.3, fin: [xUsb, yUsb, zUsb], desde: [xUsb - 62, yUsb, zUsb], eje: [1, 0, 0], acerca: 10, etiqueta: "Cable USB-C" });
 
   /* ---- Cables: crecen desde el módulo hasta su punto de soldadura junto a la cabecera ---- */
-  const zA = -2 - HDR - 2.54, zA2 = zA - 2.54, zB = -2 + HDR + 2.54, zB2 = zB + 2.54, zB3 = zB2 + 2.54, yP = 16.6; // filas de la placa
+  const zA = pila.z - HDR - 2.54, zA2 = zA - 2.54, zB = pila.z + HDR + 2.54, zB2 = zB + 2.54, yP = pila.yPlaca + 1.6; // filas de la placa
+  const zDetras = -22.5; // pasillo entre el amplificador y el altavoz por donde bajan los cables de la fila trasera
   const cable = (paso, a, b, color, pts, r = 0.5) => {
     const curva = new THREE.CatmullRomCurve3(pts.map((p) => V(...p)), false, "catmullrom", 0.12);
     const geo = new THREE.TubeGeometry(curva, Math.max(24, pts.length * 12), r, 6);
@@ -609,60 +541,64 @@ function construirEnsamblaje(cara) {
     cables.push({ m, paso, a, b, total: geo.index.count, ult: -1 });
   };
   const rep = (a, b, i, n) => [a + ((b - a) * 0.5 * i) / n, a + (b - a) * (0.5 + (0.5 * (i + 1)) / n)]; // escalonado
+  /** Tramo final: baja a la fila trasera (zA) por detrás del amplificador, o a la delantera (zB) por delante del DevKit. */
+  const aFila = (x, fila) => (fila <= zA
+    ? [[x, 26, zDetras], [x, 22.5, fila - 1.5], [x, 20.6, fila], [x, yP, fila]]
+    : [[x, 28, fila + 5], [x, 23, fila + 0.6], [x, 20.6, fila], [x, yP, fila]]);
 
-  // Micrófono (pines: SD, VDD, GND, L/R, WS, SCK · orden est.). Bajan por la pared derecha.
-  const micX = (i) => 16 + (i - 2.5) * 2.54, micT = [69.25, -15.6];
-  [[0, C.blanco, J1[6], 24.2, -20], [5, C.verde, J1[5], 23, -18.6], [4, C.amarillo, J1[4], 21.8, -17.2], [1, C.rojo, J1["3V3"], 20.6, -15.8]]
-    .forEach(([pin, color, idx, h, zl], i) => {
-      const [a, b] = rep(0.46, 1, i, 5);
-      cable(4, a, b, color, [[micX(pin), micT[0], micT[1]], [micX(pin) + 1.5, 66.5, zl + 1], [29, 64.5, zl], [32, 60, zl], [32, h + 2.5, zl],
-        [30.6, h, zA], [px(idx) + 1.2, h, zA], [px(idx), h - 1.4, zA], [px(idx), yP, zA]]);
-    });
+  // Micrófono (pines: SD, VDD, GND, L/R, WS, SCK · orden est.). Bajan pegados a la cara izquierda.
+  const micPin = (i) => mundo(pMic, -6.35 + i * 2.54, 8.75, 5.6);
+  const haciaDentro = (p, n, k) => mas(p, n, -k);
+  [[0, C.blanco, J1[6]], [5, C.verde, J1[5]], [4, C.amarillo, J1[4]], [1, C.rojo, J1["3V3"]]].forEach(([pin, color, idx], i) => {
+    const [a, b] = rep(0.46, 1, i, 5), s = micPin(pin);
+    cable(4, a, b, color, [s, haciaDentro(s, D.nIzq, 3), [-22 - i * 0.8, 52, 4], [-31 - i * 0.8, 32, -10], [-24, 29, zDetras], [px(idx) - 4, 27, zDetras], ...aFila(px(idx), zA)]);
+  });
   { // GND del micrófono → GND de J3 (pin 1), y puente L/R–GND
-    const [a, b] = rep(0.46, 1, 4, 5);
-    cable(4, a, b, C.negro, [[micX(2), micT[0], micT[1]], [micX(2) + 2, 66.5, -13], [29, 64.5, -13], [32.1, 60, -13], [32.1, 22.5, -13], [32.1, 20.2, -9],
-      [32.1, 20.2, 12], [30.6, 20.2, zB2], [px(J3.GND) + 1.2, 20.2, zB2], [px(J3.GND), 19, zB2], [px(J3.GND), yP, zB2]]);
-    cable(4, 0.5, 0.62, C.negro, [[micX(2), micT[0], micT[1]], [micX(2) + 0.6, 67.6, -15.6], [micX(3) - 0.6, 67.6, -15.6], [micX(3), micT[0], micT[1]]], 0.4);
+    const [a, b] = rep(0.46, 1, 4, 5), s = micPin(2);
+    cable(4, a, b, C.negro, [s, haciaDentro(s, D.nIzq, 3), [-22, 50, 14], [-24, 32, 18], [px(J3.GND) - 6, 28, zB + 6], ...aFila(px(J3.GND), zB).slice(1)]);
+    const s3 = micPin(3), arco = mas(mas(s, s3, 1).map((x) => x / 2), D.nIzq, -1.6);
+    cable(4, 0.5, 0.62, C.negro, [s, mas(s, D.nIzq, -1), arco, mas(s3, D.nIzq, -1), s3], 0.4);
   }
 
-  // Amplificador (pines: LRC, BCLK, DIN, GAIN, SD, GND, VIN). Bajan por la pared trasera.
-  const ampX = (i) => 18 - 7.62 + i * 2.54, ampT = [45.8, -23.4];
-  [[0, C.naranja, J1[16]], [1, C.azul, J1[15]], [2, C.morado, J1[7]]].forEach(([pin, color, idx], i) => {
-    const [a, b] = rep(0.54, 1, i, 7);
-    cable(5, a, b, color, [[ampX(pin), ampT[0], ampT[1]], [ampX(pin), 42.5, -27], [ampX(pin), 39, -31.6], [px(idx) + 1, 25, -31.6],
-      [px(idx), 21, -28], [px(idx), 19.2, -20], [px(idx), 18.6, zA], [px(idx), yP, zA]]);
+  // Amplificador (pines hacia arriba: LRC, BCLK, DIN, GAIN, SD, GND, VIN). Pasan por encima de la bornera y bajan por detrás.
+  const ampPin = (i) => mundo(pAmp, -7.62 + i * 2.54, 8.75, 8.2);
+  [[0, C.naranja, J1[16]], [1, C.azul, J1[15]], [2, C.morado, J1[7]], [5, C.negro, J1.GND], [6, C.cinco, J1["5V"]]].forEach(([pin, color, idx], i) => {
+    const [a, b] = rep(0.54, 1, i, 7), s = ampPin(pin);
+    cable(5, a, b, color, [s, [s[0], s[1] + 3, s[2] - 1], [s[0], 37.5 + i * 0.5, -12], [s[0] + (px(idx) - s[0]) * 0.4, 35, -19.5], [px(idx), 29, zDetras], ...aFila(px(idx), zA)]);
   });
-  [[5, C.negro, J1.GND, 0], [6, C.cinco, J1["5V"], 1.3]].forEach(([pin, color, idx, dy], i) => {
-    const [a, b] = rep(0.54, 1, 3 + i, 7);
-    cable(5, a, b, color, [[ampX(pin), ampT[0], ampT[1]], [ampX(pin), 42.5, -27], [ampX(pin), 38, -30.2], [ampX(pin) - 2.5, 25 + dy, -30.2],
-      [-20, 24.5 + dy, -30.2], [px(idx), 23, -28.5], [px(idx), 19.6, -21], [px(idx), 18.6, zA], [px(idx), yP, zA]]);
-  });
-  [[16.1, C.rojo, 55], [19.9, C.negro, 50]].forEach(([x, color, y0], i) => { // altavoz → bornera
-    const [a, b] = rep(0.54, 1, 5 + i, 7);
-    cable(5, a, b, color, [[3, y0, -28.5], [5.5, y0 + 4, -28], [8 + i * 2, 66 + i, -28.2], [x, 66.5 + i, -27.3], [x, 63.3, -26.7]]);
-  });
-
-  // Pantalla (pines: GND, VCC, SCL, SDA, RES, DC, CS, BLK). Cinta que baja por detrás de la pantalla.
-  const dispT = [45 + PANT.y + 18.05, PANT.z - 12.3];
-  const dispX = (i) => 8.89 - i * 2.54;
-  [[0, C.negro, J3.GNDb], [2, C.azul, J3[21]], [3, C.verde, J3[47]], [4, C.amarillo, J3[45]], [5, C.naranja, J3[40]], [6, C.morado, J3[41]], [7, C.blanco, J3[42]]]
-    .forEach(([pin, color, idx], i) => {
-      const [a, b] = rep(0.5, 1, i, 11), zi = 20 - pin * 1.0;
-      cable(6, a, b, color, [[dispX(pin), dispT[0], dispT[1]], [dispX(pin), 65.5, zi], [px(idx), 42, zi], [px(idx), 27, 12.7], [px(idx), 21, zB], [px(idx), yP, zB]]);
+  { // altavoz → bornera
+    const s = mundo(pSpk, 13, 2.75, 7), born = (x) => mundo(pAmp, x, 9.4, -6.5);
+    [[-1.9, C.rojo], [1.9, C.negro]].forEach(([x, color], i) => {
+      const [a, b] = rep(0.54, 1, 5 + i, 7), f = born(x);
+      cable(5, a, b, color, [[s[0], s[1], s[2] + 1], [s[0] - 2, s[1] + 3, -26], [f[0] + 4, 41 + i, -19], [f[0], f[1] + 3, f[2]], f]);
     });
-  { // VCC de la pantalla → 3V3: cruza por encima del DevKit hasta la fila trasera
-    const [a, b] = rep(0.5, 1, 7, 11), x = px(J1["3V3"]);
-    cable(6, a, b, C.rojo, [[dispX(1), dispT[0], dispT[1]], [dispX(1), 65.5, 19], [x, 45, 19], [x, 37.5, 9], [x, 36.5, -13], [x, 33, zA2], [x, yP, zA2]]);
   }
-  // Táctil (pines: VCC, I/O, GND · orden est.). Por el techo a la pared trasera y esquina derecha.
-  const tacZ = (k) => -14 - (k - 1) * 2.54;
-  [[0, C.rojo, [30.3, -31.2], 20], [1, C.cian, [29.2, -32], 17.6], [2, C.negro, [28, -32.3], 18.7]].forEach(([k, color, [cx, cz], yb], i) => {
-    const [a, b] = rep(0.5, 1, 8 + i, 11), h = 70 + k * 1.1;
-    const fin = k === 0 ? [[28, 18.6, -22.5], [px(J1["3V3b"]), 18.3, -19.5], [px(J1["3V3b"]), 18.3, zA], [px(J1["3V3b"]), yP, zA]]
-      : k === 1 ? [[30.6, yb, 9], [29.4, yb, zB], [px(J3[1]) + 1.2, yb, zB], [px(J3[1]), yP, zB]]
-        : [[30.6, yb, 14.5], [29.6, yb, zB3], [px(J3.GND) + 1.2, yb, zB3], [px(J3.GND), yP, zB3]];
-    cable(6, a, b, color, [[-7.8, 67.75, tacZ(k)], [-7.8, 65.5, tacZ(k) - 2], [-3.2, h - 2, -27], [-1, h, -31.8], [22, h, -31.8],
-      [cx, h - 2.5, cz], [cx, 24 + k, cz], [30.6, yb, -27], ...fin]);
+
+  // Pantalla: 13 hilos del cable GH1.25 de 15 pines (2 sin usar). Salen por detrás de la pantalla.
+  const dispPin = (k) => mundo(pDisp, 13, 1.2, -7.5 + k * 1.25);
+  const atras = D.nPant.map((x) => -x);
+  const hilosPant = [ // [pin, color, fila, índice]
+    ["GND", C.negro, zB, J3.GNDb], ["CLK", C.amarillo, zB, J3[21]], ["CS", C.morado, zB, J3[41]], ["IO0", C.verde, zB, J3[47]],
+    ["IO1", C.azul, zB, J3[40]], ["IO2", C.naranja, zB, J3[42]], ["IO3", C.cian, zB, J3[2]], ["RST", C.blanco, zB, J3[39]],
+    ["VCC", C.rojo, zA2, J1["3V3b"]], ["BL", C.gris, zA, J1[14]], ["SDA", C.verde, zA, J1[8]], ["SCL", C.amarillo, zA, J1[9]], ["INT", C.marron, zA, J1[10]],
+  ];
+  hilosPant.forEach(([, color, fila, idx], k) => {
+    const [a, b] = rep(0.42, 1, k, 15), s = dispPin(k), s2 = mas(s, atras, 5), x = px(idx);
+    const ruta = fila >= zB
+      ? [s, s2, [x * 0.5 + s[0] * 0.5, 34 - k * 0.3, 22], [x, 29, fila + 6], ...aFila(x, fila).slice(1)]
+      : [s, s2, [x * 0.5 + s[0] * 0.5, 41 + k * 0.3, 18], [x, 41.5 + k * 0.3, 2], [x, 39 + k * 0.3, -14], [x, 30, zDetras], ...aFila(x, fila).slice(1)];
+    cable(6, a, b, color, ruta, 0.4);
+  });
+
+  // Táctil TTP223 (pines: VCC, I/O, GND · orden est.). Bajan pegados a la cara derecha.
+  const tacPin = (k) => mundo(pTac, 6.2, -8.25, 2.54 - k * 2.54);
+  [[0, C.rojo, zA2, J1["3V3"]], [1, C.cian, zB, J3[1]], [2, C.negro, zB2, J3.GND]].forEach(([k, color, fila, idx], i) => {
+    const [a, b] = rep(0.5, 1, 13 + i, 16), s = tacPin(k), x = px(idx);
+    const medio = [[s[0] + 3 - (s[0] - 26) * 0.3, 52, s[2] - 2], [30 - i, 33, fila < 0 ? -18 : 0]];
+    const ruta = fila < 0
+      ? [s, haciaDentro(s, D.nDer, 3), ...medio, [x + 3, 28, zDetras], [x, 22.5, fila - 1.5], [x, 20.6, fila], [x, yP, fila]]
+      : [s, haciaDentro(s, D.nDer, 3), ...medio, [x + 4, 28, fila + 5], [x, 23, fila + 0.6], [x, 20.6, fila], [x, yP, fila]];
+    cable(6, a, b, color, ruta);
   });
 
   return { g, partes, cables };
@@ -672,18 +608,18 @@ function construirEnsamblaje(cara) {
 /* Cámara guiada: encuadre por fotogramas clave a lo largo de la línea de tiempo */
 /* ------------------------------------------------------------------ */
 const E = {
-  mesa: { c: [0, 14, 12], r: 172, az: 22, el: 40 },
-  p1: { c: [0, 42, 0], r: 78, az: 30, el: 22 },
-  p2: { c: [0, 28, 4], r: 60, az: 24, el: 36 },
-  p3: { c: [0, 30, 4], r: 56, az: 20, el: 33 },
-  p4: { c: [12, 50, -6], r: 56, az: -24, el: 5 },
-  p5: { c: [2, 42, -14], r: 56, az: 8, el: 14 },
-  p6: { c: [0, 46, 10], r: 62, az: 50, el: 14 },
-  p7a: { c: [0, 46, 8], r: 86, az: 38, el: 16 },
-  p7b: { c: [0, 45, -14], r: 78, az: 154, el: 12 },
-  p7c: { c: [0, 54, 2], r: 76, az: 28, el: 15 },
-  p8a: { c: [-10, 40, 4], r: 70, az: -44, el: 10 },
-  p8b: { c: [0, 49, 8], r: 62, az: 13, el: 7 },
+  mesa: { c: [0, 18, 12], r: 215, az: 22, el: 40 },
+  p1: { c: [0, 44, 0], r: 94, az: 30, el: 24 },
+  p2: { c: [-7, 12, 0], r: 64, az: 24, el: 42 },
+  p3: { c: [-7, 18, 0], r: 62, az: 20, el: 36 },
+  p4: { c: [-14, 52, 6], r: 64, az: -38, el: 12 },
+  p5: { c: [0, 32, -14], r: 66, az: 14, el: 30 },
+  p6: { c: [4, 46, 14], r: 76, az: 46, el: 16 },
+  p7a: { c: [0, 46, 8], r: 106, az: 38, el: 16 },
+  p7b: { c: [0, 45, -16], r: 102, az: 154, el: 12 },
+  p7c: { c: [0, 56, 2], r: 98, az: 28, el: 15 },
+  p8a: { c: [-30, 26, 4], r: 84, az: -52, el: 12 },
+  p8b: { c: [0, 48, 10], r: 80, az: 13, el: 7 },
 };
 const CLAVES = [[0, E.mesa], [0.28, E.p1], [1, E.p1], [1.28, E.p2], [2, E.p2], [2.28, E.p3], [3, E.p3], [3.28, E.p4], [4, E.p4],
   [4.28, E.p5], [5, E.p5], [5.28, E.p6], [6, E.p6], [6.14, E.p7a], [6.38, E.p7a], [6.52, E.p7b], [6.8, E.p7b], [6.94, E.p7c], [7, E.p7c],
@@ -745,11 +681,13 @@ async function iniciar(raiz) {
   suelo.rotation.x = -Math.PI / 2; suelo.receiveShadow = true;
   escena.add(suelo);
   // Marca en la mesa: aquí se monta Bitu
-  const marca = new THREE.Mesh(new THREE.RingGeometry(27.2, 28.4, 72), new THREE.MeshBasicMaterial({ color: 0x2c3fd6, transparent: true, opacity: 0.35 }));
+  const marca = new THREE.Mesh(new THREE.RingGeometry(58, 59.4, 96), new THREE.MeshBasicMaterial({ color: 0x2c3fd6, transparent: true, opacity: 0.35 }));
   marca.rotation.x = -Math.PI / 2; marca.position.y = 0.06;
   escena.add(marca);
 
   const cara = crearCara(true);
+  const cargador = new GLTFLoader();
+  await cargarDelta(cargador); // la simulación usa las mallas reales de la carcasa Delta suave
   const ens = construirEnsamblaje(cara);
   escena.add(ens.g);
 
@@ -846,11 +784,14 @@ async function iniciar(raiz) {
     estado.modo = m;
     ens.g.visible = marca.visible = m === "ensamble";
     galeria.visible = m === "piezas";
+    carcGrupo.visible = m === "carcasas";
     capa.hidden = m !== "ensamble";
     ui.panelEns.hidden = m !== "ensamble";
     ui.panelPie.hidden = m !== "piezas";
+    if (ui.panelCarc) ui.panelCarc.hidden = m !== "carcasas";
     ui.modo.forEach((b) => b.setAttribute("aria-pressed", b.dataset.modo3d === m));
     if (m === "piezas") { pausar(); elegirPieza(estado.pieza || PIEZAS[0].id); }
+    else if (m === "carcasas") { pausar(); elegirCarcasa(estado.carcasa || "delta-suave"); }
     else { estado.camLibre = false; estado.saltarCam = true; }
     estado.sucio = true;
   }
@@ -950,7 +891,7 @@ async function iniciar(raiz) {
     const w = lienzo.clientWidth, h = lienzo.clientHeight, u8 = estado.t - (N - 1);
     for (const e of etiquetas) {
       let on;
-      if (e.hola) { on = u8 > 0.76; proy.set(26, 88, 20); }
+      if (e.hola) { on = u8 > 0.76; proy.set(34, 100, 26); }
       else {
         const p = e.p;
         on = estado.paso === p.paso && p.u > 0.02 && !(p.paso === N && u8 > 0.6)
@@ -989,9 +930,77 @@ async function iniciar(raiz) {
   ui.barra.addEventListener("input", () => { pausar(); estado.objetivo = null; estado.t = +ui.barra.value; aplicar(estado.t); });
   ui.rayos.addEventListener("click", () => {
     estado.rayos = !estado.rayos; ui.rayos.setAttribute("aria-pressed", estado.rayos); estado.sucio = true;
+    opacidadCarcasa();
   });
 
+  /* ---------- Diseños de carcasa (generados con build123d: tools/carcasas/carcasas.py) ---------- */
+  const carcGrupo = new THREE.Group();
+  carcGrupo.visible = false;
+  escena.add(carcGrupo);
+  ui.panelCarc = raiz.querySelector(".v3d-panel-carcasas");
+  const cacheCarc = new Map();
+  let infoCarc = null;
+  const fmt = (n, d = 1) => Number(n).toLocaleString("es", { minimumFractionDigits: d, maximumFractionDigits: d });
+  function opacidadCarcasa() {
+    carcGrupo.traverse((n) => {
+      if (!n.isMesh || !n.userData.carcasa) return;
+      n.material.transparent = estado.rayos; n.material.opacity = estado.rayos ? 0.22 : 1; n.material.depthWrite = !estado.rayos;
+    });
+    estado.sucio = true;
+  }
+  async function datosCarcasas() {
+    for (let intento = 0; !infoCarc && intento < 3; intento++) {
+      try { infoCarc = await fetch("modelos/carcasas.json", { cache: "no-cache" }).then((r) => r.json()); }
+      catch (e) { if (intento === 2) { ui.panelCarc.querySelector("#v3d-carc-idea").textContent = "No se pudieron cargar los diseños (¿se abrió la web sin servidor?)."; throw e; } await new Promise((r) => setTimeout(r, 400)); }
+    }
+    return infoCarc;
+  }
+  async function elegirCarcasa(id) {
+    estado.carcasa = id;
+    const lista = await datosCarcasas();
+    const d = lista.find((x) => x.id === id) || lista[0];
+    ui.panelCarc.querySelectorAll("[data-carcasa]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.carcasa === d.id));
+    const q = (sel) => ui.panelCarc.querySelector(sel);
+    q("#v3d-carc-nombre").textContent = d.nombre;
+    q("#v3d-carc-idea").textContent = d.idea;
+    q("#v3d-carc-datos").innerHTML = [
+      ["Medidas", d.medidas_exteriores], ["PLA", `${fmt(d.gramos_pla)} g · USD ${fmt(d.coste_pla_usd, 2)}`],
+      ["Impresión (est.)", `≈ ${fmt(d.horas_impresion_est)} h`], ["Piezas", Object.keys(d.partes).length],
+      ["Micrófono–altavoz", `${fmt(d.comprobaciones.distancia_mic_altavoz_mm / 10)} cm`],
+      ["Choques con la electrónica", d.todo_cabe ? "ninguno" : "revisar"],
+    ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+    q("#v3d-carc-imp").textContent = d.impresion;
+    let modelo = cacheCarc.get(d.id);
+    if (!modelo) {
+      const gltf = await cargador.loadAsync(`modelos/carcasa-${d.id}.glb`);
+      modelo = gltf.scene;
+      modelo.scale.setScalar(1000); // el GLB viene en metros
+      modelo.traverse((n) => {
+        if (!n.isMesh) return;
+        n.castShadow = n.receiveShadow = true;
+        const nombre = (x) => x.userData.name || x.name || ""; // GLTFLoader quita los «:» de x.name
+        let p = n; while (p && !/^(carcasa|pieza):/.test(nombre(p))) p = p.parent;
+        n.userData.carcasa = !!(p && nombre(p).startsWith("carcasa:"));
+        n.material = n.material.clone();
+        if (n.userData.carcasa) { n.material.roughness = 0.6; n.material.metalness = 0; }
+      });
+      const b = new THREE.Box3().setFromObject(modelo);
+      modelo.position.y -= b.min.y;
+      cacheCarc.set(d.id, modelo);
+    }
+    carcGrupo.clear();
+    carcGrupo.add(modelo);
+    opacidadCarcasa();
+    encuadrar(carcGrupo, 1, 0.42);
+    estado.sucio = true;
+  }
+  ui.panelCarc?.querySelectorAll("[data-carcasa]").forEach((b) => b.addEventListener("click", () => elegirCarcasa(b.dataset.carcasa)));
+
   ui.exportar.addEventListener("click", () => {
+    if (estado.modo === "carcasas") { // el GLB ya está generado por la herramienta CAD
+      const a = document.createElement("a"); a.href = `modelos/carcasa-${estado.carcasa}.glb`; a.download = `bitu-carcasa-${estado.carcasa}.glb`; a.click();
+      return;
+    }
     const objetivo = estado.modo === "piezas" ? galeria : ens.g;
     new GLTFExporter().parse(objetivo, (glb) => {
       const a = document.createElement("a");
@@ -1079,9 +1088,9 @@ async function iniciar(raiz) {
     requestAnimationFrame(tick);
   }
 
-  /* ---------- Enlaces directos: #3d-paso-N o #3d-pieza-<id> ---------- */
+  /* ---------- Enlaces directos: #3d-paso-N, #3d-pieza-<id> o #3d-carcasa-<id> ---------- */
   function desdeHash(inicial) {
-    const h = location.hash.match(/^#3d-(paso|pieza)-(.+)$/);
+    const h = location.hash.match(/^#3d-(paso|pieza|carcasa)-(.+)$/);
     if (!h) return false;
     primeraVez = false;
     if (h[1] === "paso") {
@@ -1090,12 +1099,13 @@ async function iniciar(raiz) {
       if (estado.modo !== "ensamble") setModo("ensamble");
       estado.camLibre = false; estado.saltarCam = true;
       aplicar(estado.t);
-    } else { estado.pieza = h[2]; setModo("piezas"); }
-    if (!inicial) raiz.scrollIntoView({ block: "nearest" });
+    } else if (h[1] === "carcasa") { estado.carcasa = h[2]; setModo("carcasas"); }
+    else { estado.pieza = h[2]; setModo("piezas"); }
+    raiz.scrollIntoView({ block: inicial ? "center" : "nearest" });
     return true;
   }
   if (!desdeHash(true)) { if (reducido) estado.t = N; aplicar(estado.t); }
-  else if (estado.modo === "piezas") aplicar(estado.t);
+  else if (estado.modo !== "ensamble") aplicar(estado.t);
   addEventListener("hashchange", () => desdeHash(false));
   raiz.classList.add("listo");
 }
