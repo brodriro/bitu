@@ -1,0 +1,378 @@
+[
+  {
+    "id": "cubo",
+    "nombre": "Cubo 70",
+    "idea": "Cabeza cúbica de 7 cm con esquinas redondeadas, en dos mitades (frontal y trasera) sobre una base redonda. Es la evolución directa del modelo de la simulación.",
+    "medidas_exteriores": "7 × 7 × 8 cm con base (sin antena)",
+    "impresion": "Mitades de pie sobre la junta, sin soportes salvo el marco de la pantalla.",
+    "partes": {
+      "carcasa_frontal": {
+        "gramos": 38.1,
+        "caja_mm": [
+          70.0,
+          47.0,
+          70.0
+        ]
+      },
+      "carcasa_trasera": {
+        "gramos": 30.4,
+        "caja_mm": [
+          70.0,
+          35.0,
+          70.0
+        ]
+      },
+      "base": {
+        "gramos": 26.0,
+        "caja_mm": [
+          52.0,
+          52.0,
+          10.0
+        ]
+      },
+      "antena": {
+        "gramos": 1.3,
+        "caja_mm": [
+          10.0,
+          10.0,
+          19.0
+        ]
+      }
+    },
+    "gramos_pla": 95.7,
+    "coste_pla_usd": 1.91,
+    "horas_impresion_est": 8.0,
+    "comprobaciones": {
+      "pila_devkit": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "pantalla": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "altavoz": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "amplificador": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "microfono": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "tactil": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "distancia_mic_altavoz_mm": 39.9
+    },
+    "todo_cabe": true
+  },
+  {
+    "id": "capsula",
+    "nombre": "Cápsula",
+    "idea": "Cuerpo cilíndrico de Ø 8 cm con cúpula: una sola pieza a la vista, sin base. Se separa en horizontal (copa con la electrónica y cúpula con pantalla, micrófono y táctil).",
+    "medidas_exteriores": "Ø 8 × 9,2 cm (sin antena)",
+    "impresion": "Copa boca arriba; cúpula boca abajo sobre la junta, con soportes solo en el marco de la pantalla.",
+    "partes": {
+      "copa": {
+        "gramos": 27.6,
+        "caja_mm": [
+          80.0,
+          80.0,
+          30.0
+        ]
+      },
+      "cupula": {
+        "gramos": 43.5,
+        "caja_mm": [
+          80.0,
+          91.5,
+          62.0
+        ]
+      },
+      "antena": {
+        "gramos": 1.2,
+        "caja_mm": [
+          10.0,
+          10.0,
+          15.0
+        ]
+      }
+    },
+    "gramos_pla": 72.3,
+    "coste_pla_usd": 1.45,
+    "horas_impresion_est": 6.0,
+    "comprobaciones": {
+      "pila_devkit": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "pantalla": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "altavoz": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "amplificador": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "microfono": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "tactil": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "distancia_mic_altavoz_mm": 58.8
+    },
+    "todo_cabe": true
+  },
+  {
+    "id": "lampara",
+    "nombre": "Lámpara",
+    "idea": "Cabeza pequeña (5,4 × 3,8 × 5 cm) sobre un cuello hueco y una base de 8,4 × 6,4 cm que guarda la electrónica y el altavoz. Recuerda a un flexo y deja sitio para añadir el cuello motorizado de la propuesta B.",
+    "medidas_exteriores": "8,4 × 6,4 × 11,2 cm (sin antena)",
+    "impresion": "Bandeja y tapa boca arriba; mitades de la cabeza sobre la junta. Cuello impreso de pie con la tapa.",
+    "partes": {
+      "base_bandeja": {
+        "gramos": 33.5,
+        "caja_mm": [
+          84.0,
+          64.0,
+          30.0
+        ]
+      },
+      "base_tapa_cuello": {
+        "gramos": 19.6,
+        "caja_mm": [
+          84.0,
+          64.0,
+          32.0
+        ]
+      },
+      "cabeza_frontal": {
+        "gramos": 15.9,
+        "caja_mm": [
+          54.0,
+          27.1,
+          50.0
+        ]
+      },
+      "cabeza_trasera": {
+        "gramos": 12.0,
+        "caja_mm": [
+          54.0,
+          19.0,
+          50.0
+        ]
+      },
+      "antena": {
+        "gramos": 1.3,
+        "caja_mm": [
+          10.0,
+          10.0,
+          19.0
+        ]
+      }
+    },
+    "gramos_pla": 82.3,
+    "coste_pla_usd": 1.65,
+    "horas_impresion_est": 6.9,
+    "comprobaciones": {
+      "pila_devkit": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "pantalla": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "altavoz": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "amplificador": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "microfono": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "tactil": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "distancia_mic_altavoz_mm": 94.2
+    },
+    "todo_cabe": true
+  },
+  {
+    "id": "delta",
+    "nombre": "Delta",
+    "idea": "Prisma triangular equilátero de 10 cm de lado y 6,4 cm de fondo, de pie sobre su base. La pantalla redonda (Ø 3,75 cm) va en el centro exacto del triángulo frontal (centroide, a 2,9 cm del suelo); micrófono y táctil en las caras inclinadas y altavoz en la cara trasera. Aristas redondeadas a 0,5 cm.",
+    "medidas_exteriores": "9,3 × 7,6 × 8,2 cm (ancho × fondo con marco × alto, sin antena); triángulo de 10 cm de lado antes del redondeo",
+    "impresion": "Cada mitad de pie sobre la junta; sin soportes salvo el marco de la pantalla. Las tres columnas de las esquinas reciben insertos M2,5.",
+    "partes": {
+      "frontal": {
+        "gramos": 37.0,
+        "caja_mm": [
+          92.7,
+          44.0,
+          81.6
+        ]
+      },
+      "trasera": {
+        "gramos": 30.4,
+        "caja_mm": [
+          92.7,
+          32.0,
+          81.6
+        ]
+      },
+      "antena": {
+        "gramos": 1.3,
+        "caja_mm": [
+          10.0,
+          10.0,
+          17.0
+        ]
+      }
+    },
+    "gramos_pla": 68.6,
+    "coste_pla_usd": 1.37,
+    "horas_impresion_est": 5.7,
+    "comprobaciones": {
+      "pila_devkit": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "pantalla": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "altavoz": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "amplificador": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "microfono": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "tactil": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "distancia_mic_altavoz_mm": 44.2,
+      "usb_pared_mm": 3.4
+    },
+    "todo_cabe": true
+  },
+  {
+    "id": "delta-suave",
+    "nombre": "Delta suave",
+    "idea": "Prisma triangular equilátero de 11,8 cm de lado y 7 cm de fondo, de pie sobre su base. La pantalla redonda (Ø 5,5 cm) va en el centro exacto del triángulo frontal (centroide, a 3,4 cm del suelo); micrófono y táctil en las caras inclinadas y altavoz en la cara trasera. Aristas redondeadas a 1,4 cm.",
+    "medidas_exteriores": "9,8 × 8,4 × 8,8 cm (ancho × fondo con marco × alto, sin antena); triángulo de 11,8 cm de lado antes del redondeo",
+    "impresion": "Cada mitad de pie sobre la junta; sin soportes salvo el marco de la pantalla. Las tres columnas de las esquinas reciben insertos M2,5.",
+    "partes": {
+      "frontal": {
+        "gramos": 49.0,
+        "caja_mm": [
+          97.5,
+          48.8,
+          88.2
+        ]
+      },
+      "trasera": {
+        "gramos": 37.1,
+        "caja_mm": [
+          97.5,
+          35.0,
+          88.2
+        ]
+      },
+      "antena": {
+        "gramos": 1.3,
+        "caja_mm": [
+          10.0,
+          10.0,
+          17.0
+        ]
+      }
+    },
+    "gramos_pla": 87.4,
+    "coste_pla_usd": 1.75,
+    "horas_impresion_est": 7.3,
+    "comprobaciones": {
+      "pila_devkit": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "pantalla": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "altavoz": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "amplificador": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "microfono": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "tactil": {
+        "choque_mm3": 0,
+        "fuera_mm3": 0,
+        "ok": true
+      },
+      "distancia_mic_altavoz_mm": 53.5,
+      "usb_pared_mm": 4.9
+    },
+    "todo_cabe": true
+  }
+]
