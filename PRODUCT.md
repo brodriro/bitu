@@ -12,7 +12,7 @@ delegated: HTML/CSS/JS estático sin build, en `web/`. Elegido porque el sitio e
 
 ## Users
 
-Lector principal (confirmado): el **equipo técnico / makers** que construirá el piloto. Necesitan decidir qué hardware comprar, cuánto cuesta, cómo cablearlo y ensamblarlo, y qué arquitectura de software usar. Usuario final del robot (no de la web): jóvenes y adolescentes de 12–19 años, principalmente hispanohablantes.
+Lector principal (confirmado, reforzado el 2026-11-18): el **programador y el ensamblador** del piloto, no el cliente ni el usuario final. Necesitan saber qué comprar, cómo cablearlo por bus, cómo compilar y grabar el firmware, cómo desplegar el servidor y cómo verificar cada etapa. Tono técnico, sin divulgación. Usuario final del robot (no de la web): jóvenes y adolescentes de 12–19 años, principalmente hispanohablantes.
 
 ## Product Purpose
 
