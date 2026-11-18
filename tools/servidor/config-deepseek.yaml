@@ -11,6 +11,13 @@
 # NUNCA subir la clave real al repositorio: dejar el marcador y escribir la clave
 # solo en el servidor.
 
+server:
+  # Dirección que el OTA (puerto 8003) entrega al robot. En Docker la autogenerada
+  # puede salir mal: poner la IP del servidor en la red local (doc 10 §3).
+  websocket: ws://IP_DEL_SERVIDOR:8000/xiaozhi/v1/
+  # Upstream trae +8 (China). Poner el huso local.
+  timezone_offset: -5
+
 # No guardar audio en disco (por defecto ya es true en el servidor)
 delete_audio: true
 

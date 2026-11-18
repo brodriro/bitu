@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bitu · Zine del piloto</title>
-<meta name="description" content="Investigación y propuestas de ensamble de Bitu, un mini robot asistente IA de escritorio para jóvenes: componentes, precios, software, carcasas, seguridad y plan de mejora.">
+<title>Bitu · Hoja técnica</title>
+<meta name="description" content="Hoja técnica del piloto Bitu (ESP32-S3 + xiaozhi): piezas, cableado, firmware, despliegue del servidor, puesta en marcha, carcasa y plan.">
 <meta name="theme-color" content="#2c3fd6">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='26' height='22' rx='7' fill='%232c3fd6'/%3E%3Crect x='9' y='15' width='4' height='7' fill='%23ffd23f'/%3E%3Crect x='19' y='15' width='4' height='7' fill='%23ffd23f'/%3E%3Crect x='13' y='1' width='6' height='5' fill='%23ff4fa0'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261118">
 </head>
 <body>
 
@@ -20,11 +20,14 @@
   <div class="wrap">
     <a class="marca" href="#portada"><i aria-hidden="true"></i>BITU</a>
     <ol>
-      <li><a href="#arte">Estado del arte</a></li>
-      <li><a href="#componentes">Componentes</a></li>
+            <li><a href="#componentes">Componentes</a></li>
       <li><a href="#software">Software</a></li>
       <li><a href="#carcasa">Carcasa</a></li>
       <li><a href="#ensamble">Ensamble</a></li>
+      <li><a href="#cableado">Cableado</a></li>
+      <li><a href="#firmware">Firmware</a></li>
+      <li><a href="#servidor">Servidor</a></li>
+      <li><a href="#puesta">Puesta en marcha</a></li>
       <li><a href="#modelo-3d">3D</a></li>
       <li><a href="#catalogo">Catálogo</a></li>
       <li><a href="#seguridad">Seguridad</a></li>
@@ -36,106 +39,41 @@
 
 <header class="portada" id="portada">
   <div class="wrap">
-    <p class="folio"><span>Zine de investigación · Nº 1</span><span>Piloto de mini robot asistente IA</span><span>Revisado el 17-11-2026</span></p>
+    <p class="folio"><span>Hoja técnica · rev. 18-11-2026</span><span>Piloto Bitu · propuesta A</span><span>Fuente de verdad: <code>docs/</code></span></p>
     <div class="portada-grid">
       <div>
-        <h1 class="masthead"><span data-ink="BITU">BITU</span></h1>
-        <p class="lema">Tu <em>bit</em> de genio.</p>
-        <p class="intro">Un robot de escritorio que escucha, piensa con un LLM en la nube (DeepSeek) o en un PC propio, y responde con voz y una cara en pantalla. Pensado para que adolescentes lo armen con piezas de unos USD 34–71.</p>
-      </div>
-      <figure class="sello">
-        <svg viewBox="0 0 320 300" role="img" aria-labelledby="sello-t">
-          <title id="sello-t">Cara de Bitu: cabeza azul con dos ojos rectangulares de píxel y un bit rosa flotando como antena</title>
-          <g>
-            <rect class="bit" x="138" y="6" width="44" height="40" rx="4" fill="#ff4fa0"/>
-            <rect x="153" y="46" width="14" height="30" fill="#2c3fd6"/>
-            <rect x="28" y="72" width="270" height="210" rx="58" fill="#ff4fa0" transform="translate(8 8)"/>
-            <rect x="28" y="72" width="270" height="210" rx="58" fill="#2c3fd6"/>
-            <rect x="62" y="104" width="202" height="134" rx="30" fill="#17143a"/>
-          </g>
-          <g class="ojos" style="transition: transform .4s cubic-bezier(.16,1,.3,1)">
-            <rect class="eye" x="104" y="138" width="30" height="58" rx="4" fill="#ffd23f"/>
-            <rect class="eye" x="190" y="138" width="30" height="58" rx="4" fill="#ffd23f"/>
-          </g>
-          <rect x="146" y="214" width="34" height="8" rx="4" fill="#ff4fa0"/>
-        </svg>
-        <figcaption>Concepto de cara de Bitu</figcaption>
-      </figure>
-    </div>
-
-    <div class="portada-grid" style="margin-top:clamp(28px,4vw,48px);align-items:start">
-      <div class="prose">
-        <p><b>Qué hay en este zine.</b> Lo que existe hoy (Emo, Vector, Stack-chan, xiaozhi), cada componente con su precio y fuente, la arquitectura de voz, la carcasa elegida (Delta suave), dos formas de armarlo (básico y expresivo) con su tabla de pines, las normas de seguridad para un aula y un plan con puertas de decisión.</p>
-        <p>Los precios se revisaron en noviembre de 2026 y no incluyen envío. Lo marcado <span class="est">est.</span> es estimación propia, no medida.</p>
+        <h1 class="titulo-tec">Bitu · propuesta A<small>ESP32-S3 como cliente ligero de <code>xiaozhi-esp32-server</code></small></h1>
+        <p class="intro">Para quien programa y ensambla: piezas, cableado por bus, placa propia del firmware, despliegue del servidor y puesta en marcha por etapas. <b>Sin probar en hardware:</b> pines de la pantalla, placa <code>bitu-a</code> y volumen de Vosk en Docker.</p>
+        <ol class="atajos">
+          <li><a href="#cableado"><span class="num">01</span>Cableado</a></li>
+          <li><a href="#firmware"><span class="num">02</span>Firmware</a></li>
+          <li><a href="#servidor"><span class="num">03</span>Servidor</a></li>
+          <li><a href="#puesta"><span class="num">04</span>Puesta en marcha</a></li>
+          <li><a href="#catalogo"><span class="num">05</span>Catálogo y compra</a></li>
+          <li><a href="#modelo-3d"><span class="num">06</span>Montaje en 3D</a></li>
+        </ol>
       </div>
       <aside class="pedido" aria-labelledby="pedido-t">
-        <h2 id="pedido-t">Recomendada para el piloto</h2>
-        <p class="nombre">Propuesta A · ESP32-S3</p>
-        <p class="precio"><span>USD 34–71</span><small>por robot<br>barato · retail</small></p>
-        <dl>
-          <dt>Montaje</dt><dd>3–5 h</dd>
-          <dt>Latencia</dt><dd>1,5–3 s <span class="est">est.</span></dd>
-          <dt>LLM DeepSeek</dt><dd>≈ USD 0,04–0,19/mes <span class="est">est.</span></dd>
-          <dt>Batería</dt><dd>No (USB-C)</dd>
-          <dt>Carcasa</dt><dd>Delta suave · 9,8 × 8,4 × 8,8 cm</dd>
-          <dt>Pantalla</dt><dd>Redonda táctil 1,85″ (Ø 5,5 cm)</dd>
+        <h2 id="pedido-t">Especificación</h2>
+        <dl class="spec">
+          <dt>MCU</dt><dd>ESP32-S3 N16R8 · 240 MHz · 16 MB flash · 8 MB PSRAM octal</dd>
+          <dt>Pantalla</dt><dd>ST77916 360 × 360 QSPI · Ø 5,5 cm · táctil CST816S I2C</dd>
+          <dt>Micrófono</dt><dd>INMP441 · I2S · 16 kHz</dd>
+          <dt>Salida</dt><dd>MAX98357A · I2S · 24 kHz · 8 Ω 2 W</dd>
+          <dt>Energía</dt><dd>USB-C 5 V 2 A · sin batería</dd>
+          <dt>Firmware</dt><dd>xiaozhi-esp32 · ESP-IDF ≥ 5.4 · placa <code>bitu-a</code></dd>
+          <dt>Servidor</dt><dd>WS :8000 · OTA HTTP :8003</dd>
+          <dt>Voz</dt><dd>VAD Silero · ASR Vosk es (local) · TTS EdgeTTS es-MX</dd>
+          <dt>LLM</dt><dd><code>deepseek-flash</code> sin razonamiento · 300 tokens</dd>
+          <dt>Carcasa</dt><dd>Delta suave · 9,8 × 8,4 × 8,8 cm · PLA 87,4 g</dd>
+          <dt>BOM</dt><dd>USD 34–71 · montaje 3–5 h</dd>
         </dl>
-        <a class="boton" href="#ensamble">Ir al ensamble
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"/></svg>
-        </a>
       </aside>
     </div>
   </div>
 </header>
 
 <main id="contenido">
-
-<!-- ============ ESTADO DEL ARTE ============ -->
-<section class="hoja" id="arte" aria-labelledby="arte-t">
-  <div class="wrap">
-    <div class="hoja-head">
-      <h2 class="h-riso" id="arte-t">Qué existe ya</h2>
-      <p>Dos familias: mascotas comerciales cerradas y plataformas maker abiertas. El producto de referencia es un clon chino «Xiaozhi AI desk bot».</p>
-    </div>
-
-    <div class="dos-col">
-      <div class="familia">
-        <h3>Mascotas comerciales <span class="rango num">USD 140–380</span></h3>
-        <ul class="lista-limpia">
-          <li class="prod"><b>Living AI Emo</b><span class="r">279–379</span><p>Cara animada, reconoce hasta 10 caras, 4 micrófonos. Precio de blogs de un competidor: confirmar.</p></li>
-          <li class="prod"><b>DDL Vector 2.0</b><span class="r">~299–399</span><p>Ruedas, ojos en pantalla, ToF. Suscripción de USD 9,99/mes para todo.</p></li>
-          <li class="prod"><b>Eilik</b><span class="r">~139,99</span><p>Muy expresivo, sin LLM de serie. Sucesor Eiliko desde USD 59,90.</p></li>
-          <li class="prod"><b>LOOI</b><span class="r">129–239</span><p>Base con ruedas que usa tu teléfono como cara y cerebro.</p></li>
-          <li class="prod"><b>M5Stack StackChan</b><span class="r">~£95–120</span><p>Versión de serie de Stack-chan: ESP32-S3, IPS 2", pan/tilt.</p></li>
-          <li class="prod"><b>Clones Xiaozhi (referencia)</b><span class="r">46–89</span><p>ESP32-S3 N16R8, pantalla redonda 1,28"/1,54", altavoz.</p></li>
-        </ul>
-      </div>
-      <div class="familia">
-        <h3>Plataformas abiertas <span class="rango num">USD 20–120</span></h3>
-        <ul class="lista-limpia">
-          <li class="prod"><b>xiaozhi-esp32</b><span class="r">15–40</span><p>Firmware MIT, ~33 300 estrellas en GitHub. Wake word local y audio Opus por WebSocket/MQTT a un servidor. Más de 138 placas.</p></li>
-          <li class="prod"><b>xiaozhi-esp32-server</b><span class="r">gratis</span><p>Backend autoalojado: VAD, ASR, LLM conectable, TTS, memoria, MCP.</p></li>
-          <li class="prod"><b>Stack-chan</b><span class="r">kit 396</span><p>Robot «super-kawaii» sobre M5Stack con servos y carcasa abierta.</p></li>
-          <li class="prod"><b>ESP-SparkBot</b><span class="r">variable</span><p>Espressif: voz, reconocimiento facial local, hardware abierto.</p></li>
-          <li class="prod"><b>ESP32-S3-BOX-3</b><span class="r">49,95</span><p>Todo en uno sin soldar; placa de referencia de xiaozhi.</p></li>
-          <li class="prod"><b>Pi + Wyoming / OVOS</b><span class="r">200+</span><p>openWakeWord + Whisper + Piper en local.</p></li>
-        </ul>
-      </div>
-    </div>
-
-    <h3>Seis lecciones para Bitu</h3>
-    <ol class="lecciones">
-      <li><b>La cara da la personalidad, no el motor.</b><p>Ojos animados (escucha, piensa, habla, emociones) aportan más que ruedas.</p></li>
-      <li><b>Nada de nube cerrada.</b><p>Vector quedó atado a sus servidores. Bitu debe poder cambiar de servidor y de LLM.</p></li>
-      <li><b>El cliente ligero gana.</b><p>Un ESP32-S3 de ~USD 12 da conversación con un LLM de primer nivel.</p></li>
-      <li><b>Lo 100 % local es caro y lento en 2026.</b><p>Un LLM de 1–3B en la Pi 5 da 4–12 tokens/s. Mejor un servidor en un PC.</p></li>
-      <li><b>Controles para adolescentes.</b><p>Los comerciales casi no los tienen; nosotros controlamos prompt, filtro y registros.</p></li>
-      <li><b>Las licencias importan.</b><p>xiaozhi es MIT; varias carcasas de MakerWorld son BY-NC o exclusivas.</p></li>
-    </ol>
-  </div>
-</section>
-
-<div class="grapa" aria-hidden="true"></div>
 
 <!-- ============ COMPONENTES ============ -->
 <section class="hoja" id="componentes" aria-labelledby="comp-t">
@@ -224,7 +162,7 @@
 <section class="hoja tinta" id="software" aria-labelledby="sw-t">
   <div class="wrap">
     <div class="hoja-head">
-      <h2 class="h-riso" id="sw-t">Cómo piensa</h2>
+      <h2 class="h-riso" id="sw-t">Arquitectura de software</h2>
       <p>Cliente ligero estilo xiaozhi: el ESP32-S3 solo escucha y habla. Todo lo demás corre en un servidor propio, que manda a la API de DeepSeek solo el texto de cada frase.</p>
     </div>
 
@@ -371,7 +309,7 @@
 <section class="hoja rosa" id="ensamble" aria-labelledby="ens-t">
   <div class="wrap">
     <div class="hoja-head">
-      <h2 class="h-riso" id="ens-t">Dos formas de armarlo</h2>
+      <h2 class="h-riso" id="ens-t">Propuestas A y B</h2>
       <p>Elige una propuesta para ver su inventario, el precio, la tabla de pines y los pasos.</p>
     </div>
 
@@ -418,6 +356,304 @@
       <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M22 4 41 38H3z"/><path d="M22 16v11M22 32v1" stroke-linecap="round"/></svg>
       <p><b>Para el piloto:</b> arranca con 3 unidades <b>A en la carcasa Delta suave</b> y lleva esa misma A a los talleres. La B es el «nivel 2» cuando la conversación ya funcione. La variante A′ (ESP32-S3-BOX-3) queda aparcada y la C (Raspberry Pi 5) queda <b>descartada para el MVP</b> por precio; el modo local usa Ollama en un PC del aula. Herramientas para A: soldador de 60 W regulable, estaño con flux, pinzas, pelacables, multímetro, protoboard, PC con Chrome o ESP-IDF e impresora 3D o servicio.</p>
     </div>
+  </div>
+</section>
+
+<!-- ============ CABLEADO ============ -->
+<section class="hoja" id="cableado" aria-labelledby="cab-t">
+  <div class="wrap">
+    <div class="hoja-head">
+      <h2 class="h-riso" id="cab-t">Cableado</h2>
+      <p>Audio según <code>bread-compact-wifi-lcd/config.h</code> de xiaozhi-esp32 (verificado). Pantalla y táctil: asignación propia entre los GPIO libres del DevKitC-1 N16R8, sin probar.</p>
+    </div>
+    <figure class="esquema"><svg viewBox="0 0 960 520" role="img" aria-labelledby="esq-t esq-d" class="esq">
+<title id="esq-t">Esquema de conexiones de la propuesta A</title>
+<desc id="esq-d">ESP32-S3-DevKitC-1 en el centro. A la izquierda, micrófono INMP441 por I2S en GPIO 4, 5 y 6; amplificador MAX98357A por I2S en GPIO 7, 15 y 16 con altavoz de 8 ohmios; TTP223 opcional en GPIO 1. A la derecha, pantalla ST77916 por QSPI en GPIO 21, 41, 47, 40, 42, 2, reset 39 y retroiluminación 14, y táctil CST816S por I2C en GPIO 8, 9 e interrupción 10.</desc>
+<rect class="esq-mcu" x="400" y="50" width="160" height="400" rx="10"/>
+<text class="esq-tit" x="480" y="250" text-anchor="middle">ESP32-S3</text>
+<text class="esq-sub" x="480" y="270" text-anchor="middle">DevKitC-1 N16R8</text>
+<text class="esq-sub" x="480" y="430" text-anchor="middle">USB-C · 5V VBUS · 3V3 LDO</text>
+<text class="esq-sub" x="480" y="412" text-anchor="middle">BOOT = GPIO 0</text>
+<rect class="esq-mod" x="150" y="70" width="140" height="110" rx="8"/>
+<text class="esq-tit" x="160" y="92">INMP441</text>
+<text class="esq-sub" x="160" y="156">3V3 · GND</text>
+<text class="esq-sub" x="160" y="170">L/R → GND</text>
+<line class="esq-net b-mic" x1="290" y1="100" x2="400" y2="100"/>
+<circle class="esq-pt b-mic" cx="290" cy="100" r="3.5"/><circle class="esq-pt b-mic" cx="400" cy="100" r="3.5"/>
+<text class="esq-net-t b-mic" x="345.0" y="95" text-anchor="middle">WS</text>
+<text class="esq-gpio" x="408" y="104">4</text>
+<line class="esq-net b-mic" x1="290" y1="120" x2="400" y2="120"/>
+<circle class="esq-pt b-mic" cx="290" cy="120" r="3.5"/><circle class="esq-pt b-mic" cx="400" cy="120" r="3.5"/>
+<text class="esq-net-t b-mic" x="345.0" y="115" text-anchor="middle">SCK</text>
+<text class="esq-gpio" x="408" y="124">5</text>
+<line class="esq-net b-mic" x1="290" y1="140" x2="400" y2="140"/>
+<circle class="esq-pt b-mic" cx="290" cy="140" r="3.5"/><circle class="esq-pt b-mic" cx="400" cy="140" r="3.5"/>
+<text class="esq-net-t b-mic" x="345.0" y="135" text-anchor="middle">SD</text>
+<text class="esq-gpio" x="408" y="144">6</text>
+<rect class="esq-mod" x="150" y="190" width="140" height="110" rx="8"/>
+<text class="esq-tit" x="160" y="212">MAX98357A</text>
+<text class="esq-sub" x="160" y="290">VIN 5V · GND</text>
+<line class="esq-net b-spk" x1="290" y1="220" x2="400" y2="220"/>
+<circle class="esq-pt b-spk" cx="290" cy="220" r="3.5"/><circle class="esq-pt b-spk" cx="400" cy="220" r="3.5"/>
+<text class="esq-net-t b-spk" x="345.0" y="215" text-anchor="middle">DIN</text>
+<text class="esq-gpio" x="408" y="224">7</text>
+<line class="esq-net b-spk" x1="290" y1="240" x2="400" y2="240"/>
+<circle class="esq-pt b-spk" cx="290" cy="240" r="3.5"/><circle class="esq-pt b-spk" cx="400" cy="240" r="3.5"/>
+<text class="esq-net-t b-spk" x="345.0" y="235" text-anchor="middle">BCLK</text>
+<text class="esq-gpio" x="408" y="244">15</text>
+<line class="esq-net b-spk" x1="290" y1="260" x2="400" y2="260"/>
+<circle class="esq-pt b-spk" cx="290" cy="260" r="3.5"/><circle class="esq-pt b-spk" cx="400" cy="260" r="3.5"/>
+<text class="esq-net-t b-spk" x="345.0" y="255" text-anchor="middle">LRC</text>
+<text class="esq-gpio" x="408" y="264">16</text>
+<rect class="esq-mod" x="20" y="215" width="80" height="50" rx="8"/>
+<text class="esq-tit" x="30" y="237">Altavoz</text><text class="esq-sub" x="30" y="255">8 Ω 2 W</text>
+<line class="esq-net b-pwr" x1="100" y1="232" x2="150" y2="232"/><line class="esq-net b-pwr" x1="100" y1="250" x2="150" y2="250"/>
+<text class="esq-sub" x="125" y="226" text-anchor="middle">+</text><text class="esq-sub" x="125" y="264" text-anchor="middle">−</text>
+<rect class="esq-mod" x="150" y="320" width="140" height="70" rx="8"/>
+<text class="esq-tit" x="160" y="342">TTP223 (opc.)</text>
+<text class="esq-sub" x="160" y="380">3V3 · GND</text>
+<line class="esq-net b-io" x1="290" y1="345" x2="400" y2="345"/>
+<circle class="esq-pt b-io" cx="290" cy="345" r="3.5"/><circle class="esq-pt b-io" cx="400" cy="345" r="3.5"/>
+<text class="esq-net-t b-io" x="345.0" y="340" text-anchor="middle">OUT</text>
+<text class="esq-gpio" x="408" y="349">1</text>
+<rect class="esq-mod" x="670" y="70" width="190" height="330" rx="8"/>
+<text class="esq-tit" x="680" y="92">LCD 1,85″ ST77916</text>
+<text class="esq-sub" x="680" y="376">360 × 360 · cable GH1.25</text>
+<text class="esq-sub" x="680" y="390">VCC 3V3 · GND</text>
+<line class="esq-net b-qspi" x1="560" y1="105" x2="670" y2="105"/>
+<circle class="esq-pt b-qspi" cx="560" cy="105" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="105" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="100" text-anchor="middle">CLK</text>
+<text class="esq-gpio" x="552" y="109" text-anchor="end">21</text>
+<line class="esq-net b-qspi" x1="560" y1="125" x2="670" y2="125"/>
+<circle class="esq-pt b-qspi" cx="560" cy="125" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="125" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="120" text-anchor="middle">CS</text>
+<text class="esq-gpio" x="552" y="129" text-anchor="end">41</text>
+<line class="esq-net b-qspi" x1="560" y1="145" x2="670" y2="145"/>
+<circle class="esq-pt b-qspi" cx="560" cy="145" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="145" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="140" text-anchor="middle">IO0</text>
+<text class="esq-gpio" x="552" y="149" text-anchor="end">47</text>
+<line class="esq-net b-qspi" x1="560" y1="165" x2="670" y2="165"/>
+<circle class="esq-pt b-qspi" cx="560" cy="165" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="165" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="160" text-anchor="middle">IO1</text>
+<text class="esq-gpio" x="552" y="169" text-anchor="end">40</text>
+<line class="esq-net b-qspi" x1="560" y1="185" x2="670" y2="185"/>
+<circle class="esq-pt b-qspi" cx="560" cy="185" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="185" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="180" text-anchor="middle">IO2</text>
+<text class="esq-gpio" x="552" y="189" text-anchor="end">42</text>
+<line class="esq-net b-qspi" x1="560" y1="205" x2="670" y2="205"/>
+<circle class="esq-pt b-qspi" cx="560" cy="205" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="205" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="200" text-anchor="middle">IO3</text>
+<text class="esq-gpio" x="552" y="209" text-anchor="end">2</text>
+<line class="esq-net b-qspi" x1="560" y1="225" x2="670" y2="225"/>
+<circle class="esq-pt b-qspi" cx="560" cy="225" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="225" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="220" text-anchor="middle">RST</text>
+<text class="esq-gpio" x="552" y="229" text-anchor="end">39</text>
+<line class="esq-net b-qspi" x1="560" y1="245" x2="670" y2="245"/>
+<circle class="esq-pt b-qspi" cx="560" cy="245" r="3.5"/><circle class="esq-pt b-qspi" cx="670" cy="245" r="3.5"/>
+<text class="esq-net-t b-qspi" x="615.0" y="240" text-anchor="middle">BL</text>
+<text class="esq-gpio" x="552" y="249" text-anchor="end">14</text>
+<text class="esq-sub" x="680" y="292">Táctil CST816S</text>
+<line class="esq-net b-i2c" x1="560" y1="310" x2="670" y2="310"/>
+<circle class="esq-pt b-i2c" cx="560" cy="310" r="3.5"/><circle class="esq-pt b-i2c" cx="670" cy="310" r="3.5"/>
+<text class="esq-net-t b-i2c" x="615.0" y="305" text-anchor="middle">TP_SDA</text>
+<text class="esq-gpio" x="552" y="314" text-anchor="end">8</text>
+<line class="esq-net b-i2c" x1="560" y1="330" x2="670" y2="330"/>
+<circle class="esq-pt b-i2c" cx="560" cy="330" r="3.5"/><circle class="esq-pt b-i2c" cx="670" cy="330" r="3.5"/>
+<text class="esq-net-t b-i2c" x="615.0" y="325" text-anchor="middle">TP_SCL</text>
+<text class="esq-gpio" x="552" y="334" text-anchor="end">9</text>
+<line class="esq-net b-i2c" x1="560" y1="350" x2="670" y2="350"/>
+<circle class="esq-pt b-i2c" cx="560" cy="350" r="3.5"/><circle class="esq-pt b-i2c" cx="670" cy="350" r="3.5"/>
+<text class="esq-net-t b-i2c" x="615.0" y="345" text-anchor="middle">TP_INT</text>
+<text class="esq-gpio" x="552" y="354" text-anchor="end">10</text>
+<line class="esq-net b-mic" x1="20" y1="490" x2="46" y2="490"/><text class="esq-sub" x="52" y="494">I2S0 entrada</text>
+<line class="esq-net b-spk" x1="186" y1="490" x2="212" y2="490"/><text class="esq-sub" x="218" y="494">I2S1 salida</text>
+<line class="esq-net b-qspi" x1="343" y1="490" x2="369" y2="490"/><text class="esq-sub" x="375" y="494">QSPI · SPI2_HOST</text>
+<line class="esq-net b-i2c" x1="545" y1="490" x2="571" y2="490"/><text class="esq-sub" x="577" y="494">I2C táctil</text>
+<line class="esq-net b-io" x1="693" y1="490" x2="719" y2="490"/><text class="esq-sub" x="725" y="494">GPIO</text>
+<line class="esq-net b-pwr" x1="787" y1="490" x2="813" y2="490"/><text class="esq-sub" x="819" y="494">Potencia</text>
+</svg></figure>
+    <div class="dos-col">
+      <div>
+        <h3 style="margin-top:0">Redes por bus</h3>
+        <div class="tabla"><table class="pines"><thead><tr><th>Bus</th><th>Señal</th><th>GPIO</th><th>Módulo · pin</th><th>Estado</th></tr></thead><tbody><tr><td>I2S0 entrada</td><td>WS</td><td><span class="num">4</span></td><td>INMP441 · WS</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td></td><td>SCK</td><td><span class="num">5</span></td><td>INMP441 · SCK</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td></td><td>DIN</td><td><span class="num">6</span></td><td>INMP441 · SD</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td>I2S1 salida</td><td>DOUT</td><td><span class="num">7</span></td><td>MAX98357A · DIN</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td></td><td>BCLK</td><td><span class="num">15</span></td><td>MAX98357A · BCLK</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td></td><td>LRCK</td><td><span class="num">16</span></td><td>MAX98357A · LRC</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td>QSPI (SPI2_HOST)</td><td>PCLK</td><td><span class="num">21</span></td><td>LCD_CLK</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td></td><td>CS</td><td><span class="num">41</span></td><td>LCD_CS</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td></td><td>D0–D3</td><td><span class="num">47 · 40 · 42 · 2</span></td><td>LCD_IO0–IO3</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td></td><td>RST</td><td><span class="num">39</span></td><td>LCD_RST</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td></td><td>BL</td><td><span class="num">14</span></td><td>LCD_BL</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td>I2C táctil</td><td>SDA · SCL</td><td><span class="num">8 · 9</span></td><td>TP_SDA · TP_SCL</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td></td><td>INT</td><td><span class="num">10</span></td><td>TP_INT (TP_RST sin conectar)</td><td><span class="sello-estado aviso">propuesto</span></td></tr><tr><td>Botones</td><td>BOOT</td><td><span class="num">0</span></td><td>Hablar / Wi-Fi</td><td><span class="sello-estado ok">verificado</span></td></tr><tr><td></td><td>TOUCH</td><td><span class="num">1</span></td><td>TTP223 · OUT (opcional)</td><td><span class="sello-estado aviso">propuesto</span></td></tr></tbody></table></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0">Alimentación</h3>
+        <div class="tabla"><table><thead><tr><th>Raíl</th><th>Origen</th><th>Carga</th></tr></thead><tbody><tr><td><b class="num">5V</b></td><td>VBUS del USB-C</td><td>MAX98357A VIN (más volumen que a 3,3 V)</td></tr><tr><td><b class="num">3V3</b></td><td>LDO del DevKit</td><td>INMP441, pantalla, TTP223</td></tr><tr><td><b class="num">GND</b></td><td>DevKit</td><td>Un solo punto de masa; masa del micrófono corta</td></tr></tbody></table></div>
+        <h3>No usar</h3>
+        <p class="prose"><span class="num">45/46</span> arranque · <span class="num">19/20</span> USB · <span class="num">26–37</span> flash y PSRAM octal · <span class="num">38/48</span> LED RGB según versión de la placa.</p>
+        <div class="alerta">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M22 4 41 38H3z"/><path d="M22 16v11M22 32v1" stroke-linecap="round"/></svg>
+          <p><b>No copiar los pines de la placa Waveshare ESP32-S3-Touch-LCD-1.85.</b> Esa placa resetea la pantalla por un expansor TCA9554 y usa PCLK 40, CS 21, D0–D3 46/45/42/41. Con el módulo suelto el reset va directo al GPIO 39.</p>
+        </div>
+        <h3>Reglas</h3>
+        <ul class="reglas">
+          <li>Hilo AWG 26–28; pares de reloj trenzados con su masa si pasan de 10 cm.</li>
+          <li>No alargar el cable GH1.25 de 15 pines de la pantalla (QSPI).</li>
+          <li>Micrófono y altavoz en caras opuestas de la Delta suave.</li>
+          <li>Multímetro 3V3–GND y 5V–GND <b>antes</b> de conectar el USB.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIRMWARE ============ -->
+<section class="hoja tinta" id="firmware" aria-labelledby="fw-t">
+  <div class="wrap">
+    <div class="hoja-head">
+      <h2 class="h-riso" id="fw-t">Firmware: placa <code>bitu-a</code></h2>
+      <p>xiaozhi-esp32 no trae esta combinación (audio de <code>bread-compact-wifi-lcd</code> + ST77916 sin expansor). Se crea una placa nueva; la guía upstream prohíbe modificar una existente. ESP-IDF ≥ 5.4, objetivo <code>esp32s3</code>.</p>
+    </div>
+    <div class="dos-col">
+      <div>
+        <h3 style="margin-top:0">1 · Archivos</h3>
+        <div class="codigo"><span class="leng">árbol</span><pre><code>git clone https://github.com/78/xiaozhi-esp32.git
+main/boards/bitu-a/
+├── config.h          # pines
+├── config.json       # tipo de placa y build
+└── bitu_a_board.cc   # I2S simplex, QSPI + ST77916, táctil, botones</code></pre></div>
+        <p><code>bitu_a_board.cc</code>: partir de <code>waveshare/esp32-s3-touch-lcd-1.85/esp32-s3-touch-lcd-1.85.cc</code> para el panel y el táctil, quitar el TCA9554 (reset directo por GPIO 39), tomar el códec I2S simplex de <code>bread-compact-wifi-lcd</code> y cerrar con <code>DECLARE_BOARD(BituABoard);</code>.</p>
+        <h3>2 · <code>config.json</code></h3>
+        <p>16 MB ya es el valor por defecto del proyecto: sin <code>sdkconfig_append</code>.</p>
+        <div class="codigo"><span class="leng">json</span><pre><code>{
+  "type": "bitu-a",
+  "target": "esp32s3",
+  "builds": [{ "name": "bitu-a", "sdkconfig_append": [] }]
+}</code></pre></div>
+        <h3>3 · Registrar la placa</h3>
+        <div class="codigo"><span class="leng">kconfig</span><pre><code># main/Kconfig.projbuild, dentro de choice BOARD_TYPE
+config BOARD_TYPE_BITU_A
+    bool "Bitu A (DevKitC-1 N16R8 + ST77916 1.85\")"
+    depends on IDF_TARGET_ESP32S3</code></pre></div>
+        <div class="codigo"><span class="leng">cmake</span><pre><code># main/CMakeLists.txt, cadena de placas
+elseif(CONFIG_BOARD_TYPE_BITU_A)
+    set(BOARD_DIR "bitu-a")
+    set(BUILTIN_TEXT_FONT font_noto_sans_basic_16_4)
+    set(BUILTIN_ICON_FONT font_material_symbols_16_4)
+    set(DEFAULT_EMOJI_COLLECTION noto-color-emoji_64)</code></pre></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0">4 · <code>config.h</code> (extracto)</h3>
+        <div class="codigo"><span class="leng">c</span><pre><code>#define AUDIO_INPUT_SAMPLE_RATE  16000
+#define AUDIO_OUTPUT_SAMPLE_RATE 24000
+#define AUDIO_I2S_METHOD_SIMPLEX
+#define AUDIO_I2S_MIC_GPIO_WS   GPIO_NUM_4
+#define AUDIO_I2S_MIC_GPIO_SCK  GPIO_NUM_5
+#define AUDIO_I2S_MIC_GPIO_DIN  GPIO_NUM_6
+#define AUDIO_I2S_SPK_GPIO_DOUT GPIO_NUM_7
+#define AUDIO_I2S_SPK_GPIO_BCLK GPIO_NUM_15
+#define AUDIO_I2S_SPK_GPIO_LRCK GPIO_NUM_16
+
+#define BOOT_BUTTON_GPIO        GPIO_NUM_0
+#define TOUCH_BUTTON_GPIO       GPIO_NUM_NC   // GPIO_NUM_1 si se monta el TTP223
+
+#define DISPLAY_WIDTH           360
+#define DISPLAY_HEIGHT          360
+#define QSPI_LCD_HOST           SPI2_HOST
+#define QSPI_PIN_NUM_LCD_PCLK   GPIO_NUM_21
+#define QSPI_PIN_NUM_LCD_CS     GPIO_NUM_41
+#define QSPI_PIN_NUM_LCD_DATA0  GPIO_NUM_47
+#define QSPI_PIN_NUM_LCD_DATA1  GPIO_NUM_40
+#define QSPI_PIN_NUM_LCD_DATA2  GPIO_NUM_42
+#define QSPI_PIN_NUM_LCD_DATA3  GPIO_NUM_2
+#define QSPI_PIN_NUM_LCD_RST    GPIO_NUM_39
+#define QSPI_PIN_NUM_LCD_BL     GPIO_NUM_14
+#define TP_PIN_NUM_SDA          GPIO_NUM_8
+#define TP_PIN_NUM_SCL          GPIO_NUM_9
+#define TP_PIN_NUM_INT          GPIO_NUM_10
+#define TP_PIN_NUM_RST          GPIO_NUM_NC</code></pre></div>
+        <h3>5 · Compilar y grabar</h3>
+        <p><code>build.py</code> lee <code>config.json</code>. El idioma por defecto es inglés: pedir <code>es-ES</code>.</p>
+        <div class="codigo"><span class="leng">bash</span><pre><code>python scripts/build.py bitu-a --language es-ES</code></pre></div>
+        <div class="codigo"><span class="leng">bash · manual</span><pre><code>idf.py set-target esp32s3
+idf.py fullclean
+idf.py menuconfig   # Xiaozhi Assistant → Board Type → Bitu A
+idf.py build
+idf.py -p /dev/ttyACM0 flash monitor</code></pre></div>
+        <p>USB-C «USB» = <code>/dev/ttyACM0</code> (USB-Serial-JTAG); «UART» = <code>/dev/ttyUSB0</code>. Sin modo descarga: mantener BOOT, pulsar RST, soltar BOOT.</p>
+        <h3>6 · Apuntar al servidor propio</h3>
+        <p>El firmware consulta la URL OTA y de ahí recibe el WebSocket. Por defecto va al servidor público (<code>https://api.tenclass.net/xiaozhi/ota/</code>). En <code>menuconfig</code> → <i>Xiaozhi Assistant</i> → <i>Default OTA URL</i>:</p>
+        <div class="codigo"><span class="leng">CONFIG_OTA_URL</span><pre><code>http://&lt;IP-del-servidor&gt;:8003/xiaozhi/ota/</code></pre></div>
+        <p>Wi-Fi: portal cautivo del ESP32 en el primer arranque (AP <code>Xiaozhi-XXXX</code>).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVIDOR ============ -->
+<section class="hoja" id="servidor" aria-labelledby="srv-t">
+  <div class="wrap">
+    <div class="hoja-head">
+      <h2 class="h-riso" id="srv-t">Servidor: <code>xiaozhi-esp32-server</code></h2>
+      <p>Solo servidor, sin consola web. Plantilla en <code>tools/servidor/config-deepseek.yaml</code> → <code>data/.config.yaml</code>. La clave de DeepSeek vive solo en el servidor.</p>
+    </div>
+    <div class="tabla"><table><thead><tr><th>Puerto</th><th>Servicio</th><th>URL que usa el robot</th></tr></thead><tbody><tr><td><span class="num">8000/tcp</span></td><td>WebSocket de voz</td><td><code>ws://&lt;IP&gt;:8000/xiaozhi/v1/</code></td></tr><tr><td><span class="num">8003/tcp</span></td><td>HTTP: OTA y visión</td><td><code>http://&lt;IP&gt;:8003/xiaozhi/ota/</code></td></tr></tbody></table></div>
+    <div class="dos-col">
+      <div>
+        <h3 style="margin-top:0">Docker <span class="reco">recomendado</span></h3>
+        <div class="codigo"><span class="leng">árbol</span><pre><code>xiaozhi-server/
+├── docker-compose.yml   # main/xiaozhi-server/docker-compose.yml
+├── data/
+│   └── .config.yaml     # config-deepseek.yaml + clave real
+└── models/
+    └── vosk/vosk-model-small-es-0.42/</code></pre></div>
+        <div class="codigo"><span class="leng">bash</span><pre><code>docker compose up -d
+docker logs -f xiaozhi-esp32-server   # imprime las URL de OTA y WebSocket</code></pre></div>
+        <p>El <code>docker-compose.yml</code> upstream solo monta SenseVoice. Para Vosk, añadir el volumen (sin probar; comprobar que la imagen trae <code>vosk</code>):</p>
+        <div class="codigo"><span class="leng">yaml</span><pre><code>    volumes:
+      - ./data:/opt/xiaozhi-esp32-server/data
+      - ./models/vosk:/opt/xiaozhi-esp32-server/models/vosk</code></pre></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0">Desde el código</h3>
+        <div class="codigo"><span class="leng">bash</span><pre><code>git clone https://github.com/xinnan-tech/xiaozhi-esp32-server.git
+cd xiaozhi-esp32-server/main/xiaozhi-server
+conda create -n xiaozhi-esp32-server python=3.10 -y
+conda activate xiaozhi-esp32-server
+conda install libopus ffmpeg -y
+pip install -r requirements.txt
+mkdir -p data &amp;&amp; cp /ruta/a/minirobot/tools/servidor/config-deepseek.yaml data/.config.yaml
+python app.py</code></pre></div>
+        <h3>Configuración</h3>
+        <div class="codigo"><span class="leng">data/.config.yaml (extracto)</span><pre><code>server:
+  websocket: ws://IP_DEL_SERVIDOR:8000/xiaozhi/v1/
+  timezone_offset: -5          # upstream trae +8
+selected_module:
+  VAD: SileroVAD
+  ASR: VoskASR                 # local
+  LLM: DeepSeekLLM
+  TTS: EdgeTTS                 # es-MX-DaliaNeural
+  Memory: nomem
+  Intent: nointent
+LLM:
+  DeepSeekLLM:
+    type: openai
+    model_name: deepseek-flash
+    url: https://api.deepseek.com
+    api_key: TU_CLAVE_DE_DEEPSEEK
+    max_tokens: 300</code></pre></div>
+        <ul class="reglas">
+          <li><code>.config.yaml</code> se lee primero y se completa con <code>config.yaml</code>. Con la consola web (智控台) no se aplica.</li>
+          <li>Modelo ASR: <code>vosk-model-small-es-0.42</code> de <a href="https://alphacephei.com/vosk/models">alphacephei.com/vosk/models</a> en <code>models/vosk/</code>.</li>
+          <li>En Docker, fijar <code>server.websocket</code> con la IP de la red local: la autogenerada puede salir mal.</li>
+          <li>Comprobar <code>http://&lt;IP&gt;:8003/xiaozhi/ota/</code> en el navegador antes de encender el robot.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PUESTA EN MARCHA ============ -->
+<section class="hoja rosa" id="puesta" aria-labelledby="pm-t">
+  <div class="wrap">
+    <div class="hoja-head">
+      <h2 class="h-riso" id="pm-t">Puesta en marcha</h2>
+      <p>Una etapa cada vez; no avanzar si falla la condición de paso.</p>
+    </div>
+    <div class="tabla"><table class="ancha etapas"><thead><tr><th class="r"></th><th>Etapa</th><th>Prueba</th><th>Pasa si</th></tr></thead><tbody><tr><td><b class="num">0</b></td><td><b>Placa sin módulos</b></td><td>Multímetro 3V3–GND y 5V–GND sin USB</td><td>Sin continuidad</td></tr><tr><td><b class="num">1</b></td><td><b>Alimentación</b></td><td>USB al cargador; medir raíles</td><td>5V ≈ 4,8–5,2 V · 3V3 ≈ 3,25–3,35 V</td></tr><tr><td><b class="num">2</b></td><td><b>Arranque</b></td><td><code>idf.py monitor</code> tras grabar</td><td>Sin reinicios; PSRAM de 8 MB detectada</td></tr><tr><td><b class="num">3</b></td><td><b>Pantalla</b></td><td>Arranque normal</td><td>Retroiluminación y UI de xiaozhi, sin desplazamiento ni colores invertidos</td></tr><tr><td><b class="num">4</b></td><td><b>Táctil</b></td><td>Tocar la pantalla</td><td>Eventos del CST816S en el log</td></tr><tr><td><b class="num">5</b></td><td><b>Wi-Fi</b></td><td>Portal cautivo <code>Xiaozhi-XXXX</code></td><td>Conecta y muestra la IP en el log</td></tr><tr><td><b class="num">6</b></td><td><b>OTA</b></td><td>Logs del robot y del servidor</td><td>Pide <code>/xiaozhi/ota/</code> y recibe <code>ws://&lt;IP&gt;:8000/xiaozhi/v1/</code></td></tr><tr><td><b class="num">7</b></td><td><b>Altavoz</b></td><td>Sonido de bienvenida</td><td>Sin zumbido ni recortes</td></tr><tr><td><b class="num">8</b></td><td><b>Micrófono</b></td><td>Pulsar BOOT y hablar</td><td>El servidor registra el texto de Vosk</td></tr><tr><td><b class="num">9</b></td><td><b>Extremo a extremo</b></td><td>Pregunta corta en español</td><td>Respuesta hablada; medir fin de frase → primer audio (G1: p90 ≤ 3 s)</td></tr><tr><td><b class="num">10</b></td><td><b>Contenido</b></td><td>Guion de red teaming (doc 03 §9)</td><td>Rechazos correctos</td></tr><tr><td><b class="num">11</b></td><td><b>Térmica</b></td><td>30 min con la carcasa cerrada</td><td>Sin reinicios ni cortes de audio</td></tr></tbody></table></div>
+    <h3>Fallos típicos <span class="est">sin probar</span></h3>
+    <div class="tabla"><table><thead><tr><th>Síntoma</th><th>Causa probable</th><th>Acción</th></tr></thead><tbody><tr><td>Pantalla negra con retroiluminación</td><td>Reset (GPIO 39) o D0–D3 cruzadas</td><td>Revisar el orden IO0–IO3 y el reset</td></tr><tr><td>Pitido o zumbido</td><td>Masa del amplificador compartida con el micrófono en un tramo largo</td><td>Separar retornos de masa</td></tr><tr><td>El robot va al servidor público</td><td>OTA URL sin cambiar o configuración vieja en NVS</td><td><code>idf.py erase-flash</code> y grabar de nuevo</td></tr><tr><td>ASR vacío</td><td>Modelo Vosk sin montar o ruta distinta de <code>model_path</code></td><td>Revisar volumen y <code>models/vosk/</code></td></tr></tbody></table></div>
   </div>
 </section>
 
@@ -535,7 +771,7 @@
 <section class="hoja" id="seguridad" aria-labelledby="seg-t">
   <div class="wrap">
     <div class="hoja-head">
-      <h2 class="h-riso" id="seg-t">Seguro en el aula</h2>
+      <h2 class="h-riso" id="seg-t">Seguridad eléctrica y de uso</h2>
       <p>No es asesoría legal. El piloto (A) no lleva batería: eso elimina el riesgo principal.</p>
     </div>
 
@@ -629,7 +865,8 @@
         <li><a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32 (firmware, MIT)</a></li>
         <li><a href="https://docs.xiaozhi.me/en/hardware/breadboard-esp32-s3.html">Tutorial de protoboard ESP32-S3</a></li>
         <li><a href="https://cdn.jsdelivr.net/gh/xinnan-tech/xiaozhi-esp32-server@main/docs/readme/README_en.md">xiaozhi-esp32-server</a></li>
-        <li><a href="https://github.com/stack-chan/stack-chan">Stack-chan</a></li>
+        <li><a href="https://github.com/78/xiaozhi-esp32/blob/main/docs/custom-board.md">xiaozhi-esp32: placa propia</a></li>
+        <li><a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/Deployment.md">xiaozhi-esp32-server: despliegue</a></li>
         <li><a href="https://www.adafruit.com/product/5835">ESP32-S3-BOX-3 en Adafruit</a></li>
         <li><a href="https://api-docs.deepseek.com/quick_start/pricing">Modelos y precios de la API de DeepSeek</a></li>
         <li><a href="https://api-docs.deepseek.com/guides/safety">DeepSeek: moderación con safety_check</a></li>
@@ -639,11 +876,11 @@
         <li><a href="https://omgubuntu.co.uk/2026/11/raspberry-pi-5-price-goes-up-and-up">Subida de precio de la Pi 5 (nov-2026)</a></li>
       </ul>
     </div>
-    <p class="pie"><span>Bitu · zine Nº 1 · piloto</span><span>docs/research · docs/plan</span><span>17-11-2026</span></p>
+    <p class="pie"><span>Bitu · hoja técnica · piloto</span><span>docs/research · docs/plan</span><span>18-11-2026</span></p>
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js?v=20261118"></script>
 <script src="catalogo-datos.js"></script>
 <script src="catalogo.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>

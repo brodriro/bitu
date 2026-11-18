@@ -171,20 +171,21 @@ function iniciarEnsamble() {
   render(false);
 }
 
-// Los ojos del sello siguen el puntero (sutil).
-function iniciarMirada() {
-  const ojos = document.querySelector(".sello .ojos");
-  if (!ojos || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  let raf = 0;
-  addEventListener("pointermove", (e) => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      const r = ojos.closest("svg").getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
-      const dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
-      ojos.style.transform = `translate(${(dx * 14).toFixed(1)}px, ${(dy * 10).toFixed(1)}px)`;
+// Botón «Copiar» en los bloques de código.
+function iniciarCopiar() {
+  if (!navigator.clipboard) return;
+  document.querySelectorAll(".codigo").forEach((bloque) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+    b.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(bloque.querySelector("code").textContent);
+        b.textContent = "Copiado";
+      } catch { b.textContent = "Error"; }
+      setTimeout(() => { b.textContent = "Copiar"; }, 1600);
     });
-  }, { passive: true });
+    bloque.append(b);
+  });
 }
 
 // Marca en el sumario la hoja visible.
@@ -202,5 +203,5 @@ function iniciarSumario() {
 }
 
 iniciarEnsamble();
-iniciarMirada();
+iniciarCopiar();
 iniciarSumario();

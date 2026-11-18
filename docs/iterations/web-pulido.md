@@ -106,3 +106,13 @@
   - La distancia entre filas del DevKit estaba mal en el doc 08 y en el modelo 3D: 21,6 en lugar de 22,86 mm.
 - Pasada 2: el catálogo marca como referencia los enlaces equivocados y deja avisos en el uso de cada pieza. Los consumibles se detallaron. Se corrigió `HDR` en `modelo3d.js` (11,43). Se cambiaron los separadores del amplificador por cinta de espuma de 2 mm. El doc 07 tiene una lista nueva «Antes de pagar» (15 puntos), y la web, un resumen de 10 en la sección del catálogo.
 - Pasada 3: totales cuadrados (A 34,00 / 71,03; B 44,00 / 148,39; leídos hoy, 69,99 y 147,35); 16 piezas en el catálogo y en la web; render del catálogo revisado.
+
+## Iteración · hoja técnica para programador y ensamblador (2026-11-18)
+
+- Petición del usuario: la web es para quien programa y ensambla, no para el cliente. Se mantiene la identidad visual («zine más denso») y se quita lo divulgativo.
+- Fuera: portada con masthead, lema y sello de la cara; sección «Estado del arte» (sigue en `docs/research/01-estado-del-arte.md`).
+- Cabecera nueva: título técnico, atajos numerados a las secciones de trabajo y ficha de especificación (MCU, pantalla, audio, energía, firmware, puertos, voz, LLM, carcasa, BOM).
+- Secciones nuevas desde `docs/research/10-guia-tecnica.md`: **Cableado** (esquema SVG por bus, redes con estado verificado/propuesto, raíles, pines a evitar), **Firmware** (placa propia `bitu-a`, `config.h`, `config.json`, Kconfig, CMake, build y flash, URL OTA), **Servidor** (puertos, Docker, código fuente, `.config.yaml`) y **Puesta en marcha** (12 etapas con condición de paso y fallos típicos).
+- Bloques de código con botón «Copiar» (`app.js`); se retira el seguimiento de los ojos del sello.
+- Títulos renombrados: «Arquitectura de software», «Propuestas A y B», «Seguridad eléctrica y de uso».
+- `styles.css` y `app.js` con `?v=20261118` en `index.html` para evitar la caché del navegador.
